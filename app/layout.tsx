@@ -54,6 +54,13 @@ export const metadata: Metadata = {
     description: 'Premium websites and web applications for ambitious businesses.',
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: [
+      { url: '/images/favicon.png', type: 'image/png' },
+    ],
+    apple: '/images/favicon.png',
+    shortcut: '/images/favicon.png',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
