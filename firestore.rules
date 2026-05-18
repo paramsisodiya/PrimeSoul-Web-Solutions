@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Leads — anyone can write (contact form), only admin can read
+    match /leads/{leadId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+
+    // Blogs — anyone can read published, only admin can write
+    match /blogs/{blogId} {
+      allow read: if resource.data.status == 'published' || request.auth != null;
+      allow create, update, delete: if request.auth != null;
+    }
+
+    // Portfolio — anyone can read, only admin can write
+    match /portfolio/{projectId} {
+      allow read: if true;
+      allow create, update, delete: if request.auth != null;
+    }
+
+    // Testimonials — anyone can read visible, only admin can write
+    match /testimonials/{testimonialId} {
+      allow read: if resource.data.visible == true || request.auth != null;
+      allow create, update, delete: if request.auth != null;
+    }
+
+    // FAQs — anyone can read visible, only admin can write
+    match /faqs/{faqId} {
+      allow read: if resource.data.visible == true || request.auth != null;
+      allow create, update, delete: if request.auth != null;
+    }
+
+    // Pricing — anyone can read visible, only admin can write
+    match /pricing/{planId} {
+      allow read: if resource.data.visible == true || request.auth != null;
+      allow create, update, delete: if request.auth != null;
+    }
+
+    // Announcements — anyone can read active, only admin can write
+    match /announcements/{announcementId} {
+      allow read: if resource.data.active == true || request.auth != null;
+      allow create, update, delete: if request.auth != null;
+    }
+
+    // Media — only admin can read/write
+    match /media/{mediaId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Settings — anyone can read, only admin can write
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
