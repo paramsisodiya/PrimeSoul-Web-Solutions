@@ -8,6 +8,7 @@ import ScrollProgress from '@/components/shared/ScrollProgress'
 import BackToTop from '@/components/shared/BackToTop'
 import WhatsAppFloat from '@/components/shared/WhatsAppFloat'
 import AnnouncementBar from '@/components/shared/AnnouncementBar'
+import ThemeProvider from '@/components/shared/ThemeProvider'
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -19,6 +20,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <>
+      <ThemeProvider />
       <CustomCursor />
       <ScrollProgress />
       <AnnouncementBar />

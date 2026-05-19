@@ -22,6 +22,7 @@ import {
   Menu,
   X,
   Flame,
+  Palette,
 } from 'lucide-react'
 
 const navItems = [
@@ -35,6 +36,7 @@ const navItems = [
   { href: '/admin/announcements', label: 'Announcements', icon: Megaphone },
   { href: '/admin/media', label: 'Media', icon: Image },
   { href: '/admin/analytics', label: 'Analytics', icon: BarChart2 },
+  { href: '/admin/theme', label: 'Theme', icon: Palette },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
 
