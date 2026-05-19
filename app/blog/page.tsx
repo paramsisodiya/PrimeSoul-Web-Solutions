@@ -32,10 +32,9 @@ export default function BlogPage() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const snap = await getDocs(
-          query(collection(db, 'blogs'), where('status', '==', 'published'), orderBy('createdAt', 'desc'))
-        )
-        setBlogs(snap.docs.map(d => ({ id: d.id, ...d.data() } as Blog)))
+        const snap = await getDocs(query(collection(db, 'blogs'), orderBy('createdAt', 'desc')))
+        const all = snap.docs.map(d => ({ id: d.id, ...d.data() } as Blog))
+        setBlogs(all.filter(b => (b as any).status === 'published'))
       } catch (err) {
         console.error(err)
       } finally {

@@ -52,11 +52,11 @@ export default function BlogPostPage() {
     if (!slug) return
     const fetchBlog = async () => {
       try {
-        const snap = await getDocs(
-          query(collection(db, 'blogs'), where('slug', '==', slug), where('status', '==', 'published'), limit(1))
-        )
+        const snap = await getDocs(query(collection(db, 'blogs'), where('slug', '==', slug), limit(1)))
         if (snap.empty) { setNotFound(true); return }
-        setBlog({ id: snap.docs[0].id, ...snap.docs[0].data() } as Blog)
+        const docData = snap.docs[0].data()
+        if ((docData as any).status !== 'published') { setNotFound(true); return }
+        setBlog({ id: snap.docs[0].id, ...docData } as Blog)
       } catch (err) {
         console.error(err)
         setNotFound(true)

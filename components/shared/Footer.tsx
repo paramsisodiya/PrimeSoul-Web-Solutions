@@ -1,5 +1,10 @@
+"use client"
+
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 
 const LINKS = {
   pages: [
@@ -20,6 +25,29 @@ const LINKS = {
 }
 
 export default function Footer() {
+  const [settings, setSettings] = useState<any>(null)
+
+  useEffect(() => {
+    let mounted = true
+    const fetchSettings = async () => {
+      try {
+        const snap = await getDoc(doc(db, 'settings', 'site'))
+        if (snap.exists() && mounted) setSettings(snap.data())
+      } catch (err) {
+        // ignore
+      }
+    }
+    fetchSettings()
+    return () => { mounted = false }
+  }, [])
+
+  const social = {
+    instagram: settings?.instagram || 'https://www.instagram.com/primesoul.tech/?utm_source=ig_web_button_share_sheet',
+    whatsapp: settings?.whatsapp ? `https://wa.me/${settings.whatsapp.replace(/^\+?/, '')}` : 'https://wa.me/918770404559',
+    linkedin: settings?.linkedin || '#',
+    github: settings?.github || '#',
+  }
+
   return (
     <footer className="relative overflow-hidden" style={{ background: '#0E0E2C' }}>
       {/* Gradient accent top */}
