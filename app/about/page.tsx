@@ -6,8 +6,9 @@ import SectionLabel from '@/components/ui/SectionLabel'
 import { AGENCY } from '@/lib/data'
 
 export const metadata: Metadata = {
-  title: 'About',
-  description: 'The story behind PrimeSoul — a digital agency built on craft, honesty, and measurable results.',
+  title: 'About | PrimeSoul Web Solutions',
+  description:
+    'PrimeSoul Web Solutions is a leading web development company in Rajgarh, Madhya Pradesh, helping businesses with website development, admin panels, UI/UX design and digital solutions across India.',
 }
 
 const VALUES = [
