@@ -331,6 +331,129 @@ html.lenis { height: auto; }
   width: 100%;
 }
 
+/* ============================================
+   SOCIAL PROOF TOAST ANIMATIONS
+   ============================================ */
+@keyframes toast-enter {
+  0% { opacity: 0; transform: translateX(-100%) translateY(20px) scale(0.95); }
+  100% { opacity: 1; transform: translateX(0) translateY(0) scale(1); }
+}
+
+@keyframes toast-exit {
+  0% { opacity: 1; transform: translateX(0) translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateX(-100%) translateY(10px) scale(0.95); }
+}
+
+@keyframes toast-progress {
+  0% { width: 100%; }
+  100% { width: 0%; }
+}
+
+.animate-toast-enter {
+  animation: toast-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-toast-exit {
+  animation: toast-exit 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-toast-progress {
+  animation: toast-progress 5s linear forwards;
+}
+
+/* ============================================
+   3D TILT CARD HOVER
+   ============================================ */
+.tilt-card {
+  transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.tilt-card:hover {
+  transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(123, 47, 242, 0.15), 0 4px 12px rgba(0,0,0,0.04);
+}
+
+/* ============================================
+   STAGGER REVEAL ANIMATION
+   ============================================ */
+@keyframes reveal-up {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.reveal-up {
+  animation: reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+/* Shimmer effect for loading states */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(123,47,242,0.05) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Glow pulse for interactive elements */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(123,47,242,0.2); }
+  50% { box-shadow: 0 0 20px rgba(123,47,242,0.4); }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Slide-in from right for panels */
+@keyframes slide-in-right {
+  0% { transform: translateX(100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Custom range slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7B2FF2, #A855F7);
+  cursor: pointer;
+  box-shadow: 0 4px 12px -2px rgba(123, 47, 242, 0.4);
+  border: 3px solid white;
+  transition: transform 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7B2FF2, #A855F7);
+  cursor: pointer;
+  box-shadow: 0 4px 12px -2px rgba(123, 47, 242, 0.4);
+  border: 3px solid white;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

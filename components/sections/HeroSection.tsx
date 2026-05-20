@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
+import MagneticButton from '@/components/ui/MagneticButton'
 import Image from 'next/image'
 
 export default function HeroSection() {
@@ -123,25 +124,29 @@ export default function HeroSection() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Link
-                href="/portfolio"
-                className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-semibold text-white text-sm transition-all duration-300 hover:-translate-y-px hover:shadow-brand-lg"
-                style={{
-                  background: 'linear-gradient(135deg, #7B2FF2 0%, #8B5CF6 100%)',
-                  boxShadow: '0 8px 32px -8px rgba(123,47,242,0.45)',
-                }}
-              >
-                View Our Work
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-1 transition-transform">
-                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-ink text-sm border border-surface-border bg-white hover:border-brand-primary/20 hover:bg-brand-light transition-all duration-300"
-              >
-                Start a Project
-              </Link>
+              <MagneticButton strength={0.25} radius={150}>
+                <Link
+                  href="/portfolio"
+                  className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-semibold text-white text-sm transition-all duration-300 hover:-translate-y-px hover:shadow-brand-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, #7B2FF2 0%, #8B5CF6 100%)',
+                    boxShadow: '0 8px 32px -8px rgba(123,47,242,0.45)',
+                  }}
+                >
+                  View Our Work
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-1 transition-transform">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </Link>
+              </MagneticButton>
+              <MagneticButton strength={0.2} radius={120}>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-ink text-sm border border-surface-border bg-white hover:border-brand-primary/20 hover:bg-brand-light transition-all duration-300"
+                >
+                  Start a Project
+                </Link>
+              </MagneticButton>
             </div>
           </div>
 
@@ -149,7 +154,7 @@ export default function HeroSection() {
           <div className="hidden lg:block relative h-[560px]">
             {/* Main card */}
             <div
-              className="absolute top-8 right-0 w-[400px] rounded-3xl overflow-hidden animate-float-rotate"
+              className="absolute top-8 right-0 w-[400px] rounded-3xl overflow-hidden animate-float-rotate tilt-card"
               style={{
                 boxShadow: '0 24px 80px -16px rgba(123,47,242,0.20), 0 4px 16px rgba(123,47,242,0.08)',
                 border: '1px solid rgba(255,255,255,0.8)',

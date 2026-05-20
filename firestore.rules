@@ -54,5 +54,10 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth != null;
     }
+
+    // Activity Log — only admin can read/write
+    match /activity_log/{logId} {
+      allow read, write: if request.auth != null;
+    }
   }
 }

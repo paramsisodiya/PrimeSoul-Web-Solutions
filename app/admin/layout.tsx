@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { signOut } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 import { useAuth } from '@/hooks/useAuth'
+import AdminNotifications from '@/components/shared/AdminNotifications'
 import {
   LayoutDashboard,
   Mail,
@@ -23,6 +24,7 @@ import {
   X,
   Flame,
   Palette,
+  Activity,
 } from 'lucide-react'
 
 const navItems = [
@@ -36,6 +38,7 @@ const navItems = [
   { href: '/admin/announcements', label: 'Announcements', icon: Megaphone },
   { href: '/admin/media', label: 'Media', icon: Image },
   { href: '/admin/analytics', label: 'Analytics', icon: BarChart2 },
+  { href: '/admin/activity', label: 'Activity Log', icon: Activity },
   { href: '/admin/theme', label: 'Theme', icon: Palette },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
@@ -143,9 +146,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               View Site →
             </Link>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-[#7A7A9E] text-xs">Live</span>
+          <div className="flex items-center gap-3">
+            <AdminNotifications />
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="text-[#7A7A9E] text-xs">Live</span>
+            </div>
           </div>
         </header>
         <main className="flex-1 p-6">{children}</main>

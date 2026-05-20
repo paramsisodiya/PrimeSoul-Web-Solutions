@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
+import PricingCalculator from '@/components/sections/PricingCalculator'
 import { SERVICES, PROCESS_STEPS, PRICING_PLANS } from '@/lib/data'
 
 export const metadata: Metadata = {
@@ -152,6 +153,41 @@ export default function ServicesPage() {
                 </div>
               </AnimatedSection>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Calculator */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <AnimatedSection>
+              <SectionLabel>Estimate Your Project</SectionLabel>
+              <h2
+                className="text-3xl md:text-4xl font-bold text-ink mb-4"
+                style={{ fontFamily: 'Playfair Display, serif' }}
+              >
+                Get an Instant Quote
+              </h2>
+              <p className="text-ink-secondary mb-8 max-w-md">
+                Use our interactive estimator to get a ballpark figure for your project. Configure your requirements and see the price update in real-time.
+              </p>
+              <div className="space-y-4">
+                {['Transparent pricing, no hidden fees', 'Custom scope for every project', 'Flexible payment plans available'].map(item => (
+                  <div key={item} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-[#7B2FF2]/10 flex items-center justify-center flex-shrink-0">
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                        <path d="M2 5l2 2 4-4" stroke="#7B2FF2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                    <span className="text-sm text-ink-secondary">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+            <AnimatedSection delay={100}>
+              <PricingCalculator />
+            </AnimatedSection>
           </div>
         </div>
       </section>
