@@ -7,7 +7,7 @@ import { AGENCY } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'The story behind PrimeSoul — a digital agency built on craft, honesty, and measurable results.',
+  description: 'PrimeSoul Web Solutions is a premium web development agency serving businesses in Rajgarh, Madhya Pradesh and across India.',
 }
 
 const VALUES = [
