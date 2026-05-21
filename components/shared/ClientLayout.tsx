@@ -11,6 +11,7 @@ import AnnouncementBar from '@/components/shared/AnnouncementBar'
 import ThemeProvider from '@/components/shared/ThemeProvider'
 import SocialProofToast from '@/components/shared/SocialProofToast'
 import ExitIntentPopup from '@/components/shared/ExitIntentPopup'
+import PageTransition from '@/components/shared/PageTransition'
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -27,7 +28,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <ScrollProgress />
       <AnnouncementBar />
       <Navbar />
-      <main>{children}</main>
+      <PageTransition>
+        <main>{children}</main>
+      </PageTransition>
       <Footer />
       <BackToTop />
       <WhatsAppFloat />

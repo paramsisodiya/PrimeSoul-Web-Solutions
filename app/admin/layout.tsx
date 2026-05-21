@@ -25,6 +25,7 @@ import {
   Flame,
   Palette,
   Activity,
+  Search,
 } from 'lucide-react'
 
 const navItems = [
@@ -38,6 +39,7 @@ const navItems = [
   { href: '/admin/announcements', label: 'Announcements', icon: Megaphone },
   { href: '/admin/media', label: 'Media', icon: Image },
   { href: '/admin/analytics', label: 'Analytics', icon: BarChart2 },
+  { href: '/admin/seo', label: 'SEO Manager', icon: Search },
   { href: '/admin/activity', label: 'Activity Log', icon: Activity },
   { href: '/admin/theme', label: 'Theme', icon: Palette },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
@@ -154,7 +156,36 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </div>
           </div>
         </header>
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 p-6 pb-24 lg:pb-6">{children}</main>
+
+        {/* Mobile Bottom Nav */}
+        <nav className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-[#0E0E2C]/95 backdrop-blur-xl border-t border-white/10">
+          <div className="flex items-center justify-around py-2">
+            {[
+              { href: '/admin', icon: LayoutDashboard, label: 'Home' },
+              { href: '/admin/leads', icon: Mail, label: 'Leads' },
+              { href: '/admin/blogs', icon: FileText, label: 'Blog' },
+              { href: '/admin/portfolio', icon: Briefcase, label: 'Work' },
+              { href: '/admin/settings', icon: Settings, label: 'Settings' },
+            ].map((item) => {
+              const Icon = item.icon
+              const isActive = pathname === item.href
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all ${
+                    isActive ? 'text-[#7B2FF2]' : 'text-[#7A7A9E]'
+                  }`}
+                >
+                  <Icon size={20} />
+                  <span className="text-[10px] font-medium">{item.label}</span>
+                  {isActive && <div className="w-4 h-0.5 rounded-full bg-[#7B2FF2]" />}
+                </Link>
+              )
+            })}
+          </div>
+        </nav>
       </div>
     </div>
   )

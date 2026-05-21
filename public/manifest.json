@@ -1,0 +1,27 @@
+{
+  "name": "PrimeSoul Web Solutions",
+  "short_name": "PrimeSoul",
+  "description": "Premium Digital Agency — Web Design & Development",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAFE",
+  "theme_color": "#7B2FF2",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/images/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "en",
+  "dir": "ltr"
+}

@@ -6,6 +6,7 @@ import { db } from '@/lib/firebase'
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
+import BookingWidget from '@/components/shared/BookingWidget'
 
 const services = [
   'Website Design & Development',
@@ -190,6 +191,38 @@ export default function ContactPage() {
                   </form>
                 )}
               </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Booking Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <AnimatedSection>
+              <SectionLabel>Book a Call</SectionLabel>
+              <h2 className="text-3xl font-bold text-[#0E0E2C] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Prefer a Live Conversation?
+              </h2>
+              <p className="text-[#7A7A9E] mb-6">
+                Skip the form and jump straight to a free strategy session. We&apos;ll discuss your goals, timeline, and budget — and give you actionable advice, even if you don&apos;t hire us.
+              </p>
+              <div className="space-y-3">
+                {['No sales pressure — just honest advice', 'Get a roadmap for your project', 'Learn about pricing and timelines'].map(item => (
+                  <div key={item} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-[#7B2FF2]/10 flex items-center justify-center flex-shrink-0">
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                        <path d="M2 5l2 2 4-4" stroke="#7B2FF2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                    <span className="text-sm text-[#4A4A6A]">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+            <AnimatedSection delay={100}>
+              <BookingWidget />
             </AnimatedSection>
           </div>
         </div>

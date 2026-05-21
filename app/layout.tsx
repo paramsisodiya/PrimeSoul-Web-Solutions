@@ -61,6 +61,7 @@ export const metadata: Metadata = {
     apple: '/images/favicon.png',
     shortcut: '/images/favicon.png',
   },
+  manifest: '/manifest.json',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -69,6 +70,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${poppins.variable} ${dmSans.variable} ${playfair.variable} ${dmMono.variable} font-body antialiased`}>
         <JsonLd />
         <ClientLayout>{children}</ClientLayout>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js')})}`
+          }}
+        />
       </body>
     </html>
   )
