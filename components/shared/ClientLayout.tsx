@@ -12,6 +12,7 @@ import ThemeProvider from '@/components/shared/ThemeProvider'
 import SocialProofToast from '@/components/shared/SocialProofToast'
 import ExitIntentPopup from '@/components/shared/ExitIntentPopup'
 import PageTransition from '@/components/shared/PageTransition'
+import ScrollToTop from '@/components/shared/ScrollToTop'
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -26,6 +27,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <ThemeProvider />
       <CustomCursor />
       <ScrollProgress />
+      <ScrollToTop />
       <AnnouncementBar />
       <Navbar />
       <PageTransition>
@@ -39,4 +41,5 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     </>
   )
 }
+
 
