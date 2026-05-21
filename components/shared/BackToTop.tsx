@@ -15,7 +15,7 @@ export default function BackToTop() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Back to top"
-      className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 z-40 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-500 group"
+      className="fixed bottom-[11.5rem] right-[2.15rem] z-40 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-500 group"
       style={{
         background: 'linear-gradient(135deg, #7B2FF2 0%, #A855F7 100%)',
         boxShadow: show ? '0 8px 24px -8px rgba(123,47,242,0.5)' : 'none',
