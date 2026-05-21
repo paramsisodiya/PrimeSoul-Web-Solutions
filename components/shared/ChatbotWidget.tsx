@@ -149,7 +149,7 @@ export default function ChatbotWidget() {
       {!isOpen && (
         <button
           onClick={handleOpen}
-          className="fixed bottom-24 right-6 z-40 w-14 h-14 rounded-full flex items-center justify-center text-white shadow-2xl transition-all hover:scale-110 hover:-translate-y-1 animate-glow-pulse"
+          className="fixed bottom-24 left-6 z-40 w-14 h-14 rounded-full flex items-center justify-center text-white shadow-2xl transition-all hover:scale-110 hover:-translate-y-1 animate-glow-pulse"
           style={{ background: 'linear-gradient(135deg, #7B2FF2 0%, #A855F7 100%)', boxShadow: '0 8px 32px -4px rgba(123,47,242,0.5)' }}
           aria-label="Open chat"
         >
@@ -161,7 +161,7 @@ export default function ChatbotWidget() {
 
       {/* Chat window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-48px)] rounded-3xl overflow-hidden shadow-2xl" style={{ boxShadow: '0 24px 80px -12px rgba(123,47,242,0.3), 0 8px 24px rgba(0,0,0,0.1)', animation: 'scale-in 0.3s cubic-bezier(0.22,1,0.36,1) forwards' }}>
+        <div className="fixed bottom-6 left-6 z-50 w-[360px] max-w-[calc(100vw-48px)] rounded-3xl overflow-hidden shadow-2xl" style={{ boxShadow: '0 24px 80px -12px rgba(123,47,242,0.3), 0 8px 24px rgba(0,0,0,0.1)', animation: 'scale-in 0.3s cubic-bezier(0.22,1,0.36,1) forwards' }}>
           {/* Header */}
           <div className="px-5 py-4 flex items-center gap-3" style={{ background: 'linear-gradient(135deg, #7B2FF2 0%, #A855F7 100%)' }}>
             <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
