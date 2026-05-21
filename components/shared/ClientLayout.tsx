@@ -13,6 +13,7 @@ import SocialProofToast from '@/components/shared/SocialProofToast'
 import ExitIntentPopup from '@/components/shared/ExitIntentPopup'
 import PageTransition from '@/components/shared/PageTransition'
 import ScrollToTop from '@/components/shared/ScrollToTop'
+import ChatbotWidget from '@/components/shared/ChatbotWidget'
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -38,6 +39,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <WhatsAppFloat />
       <SocialProofToast />
       <ExitIntentPopup />
+      <ChatbotWidget />
     </>
   )
 }

@@ -26,6 +26,10 @@ import {
   Palette,
   Activity,
   Search,
+  Receipt,
+  LayoutList,
+  Shuffle,
+  Webhook,
 } from 'lucide-react'
 
 const navItems = [
@@ -38,8 +42,12 @@ const navItems = [
   { href: '/admin/pricing', label: 'Pricing', icon: DollarSign },
   { href: '/admin/announcements', label: 'Announcements', icon: Megaphone },
   { href: '/admin/media', label: 'Media', icon: Image },
+  { href: '/admin/invoices', label: 'Invoices', icon: Receipt },
   { href: '/admin/analytics', label: 'Analytics', icon: BarChart2 },
   { href: '/admin/seo', label: 'SEO Manager', icon: Search },
+  { href: '/admin/ab-testing', label: 'A/B Testing', icon: Shuffle },
+  { href: '/admin/webhooks', label: 'Webhooks', icon: Webhook },
+  { href: '/admin/sections', label: 'Sections', icon: LayoutList },
   { href: '/admin/activity', label: 'Activity Log', icon: Activity },
   { href: '/admin/theme', label: 'Theme', icon: Palette },
   { href: '/admin/settings', label: 'Settings', icon: Settings },

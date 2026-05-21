@@ -58,6 +58,29 @@ export default function ContactPage() {
 
       if (!emailRes.ok) throw new Error('Email failed')
 
+      // Send auto-reply confirmation to client (fire-and-forget)
+      try {
+        const autoReplyTemplateId = process.env.NEXT_PUBLIC_EMAILJS_AUTOREPLY_TEMPLATE_ID
+        if (autoReplyTemplateId) {
+          await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              service_id: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+              template_id: autoReplyTemplateId,
+              user_id: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
+              template_params: {
+                to_name: form.name,
+                to_email: form.email,
+                service: form.service,
+              },
+            }),
+          })
+        }
+      } catch {
+        // Auto-reply failure should not block main submission
+      }
+
       setStatus('success')
       setForm({ name: '', email: '', phone: '', service: services[0], message: '' })
     } catch (err) {
