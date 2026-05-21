@@ -61,17 +61,17 @@ export default function TestimonialsSection() {
   const goPrev = () => goTo((active - 1 + testimonials.length) % testimonials.length)
 
   return (
-    <section className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#0E0E2C' }}>
+    <section className="py-14 sm:py-18 relative overflow-hidden" style={{ background: '#0E0E2C' }}>
       {/* Mesh gradient */}
       <div className="absolute inset-0 opacity-20" style={{
         backgroundImage: 'radial-gradient(circle at 30% 70%, rgba(123,47,242,0.4) 0%, transparent 50%), radial-gradient(circle at 70% 30%, rgba(232,121,249,0.2) 0%, transparent 40%)'
       }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        <AnimatedSection className="mb-10 sm:mb-16 text-center">
+        <AnimatedSection className="mb-8 sm:mb-10 text-center">
           <SectionLabel dark>Client Stories</SectionLabel>
           <h2
-            className="text-[1.6rem] sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-4 text-white"
+            className="text-[1.4rem] sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-[-0.03em] mb-3 text-white"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             See What Our{' '}
@@ -90,7 +90,7 @@ export default function TestimonialsSection() {
         <AnimatedSection>
           <div className="max-w-3xl mx-auto text-center relative">
             {/* Quote icon */}
-            <svg width="36" height="28" viewBox="0 0 48 36" fill="none" className="mx-auto mb-4 sm:mb-6">
+            <svg width="28" height="22" viewBox="0 0 48 36" fill="none" className="mx-auto mb-3 sm:mb-4">
               <path d="M0 36V20.727C0 7.527 8 0 24 0v6.545C16 6.545 12 10.455 12 18.327V21.6h12V36H0zm24 0V20.727C24 7.527 32 0 48 0v6.545c-8 0-12 3.91-12 11.782V21.6h12V36H24z" fill="rgba(123,47,242,0.2)" />
             </svg>
 
@@ -105,12 +105,12 @@ export default function TestimonialsSection() {
                   position: i === 0 ? 'relative' : 'absolute',
                 }}
               >
-                <p className="text-base sm:text-xl md:text-2xl text-white/70 leading-relaxed font-light mb-6 sm:mb-8">
+                <p className="text-sm sm:text-lg md:text-xl text-white/70 leading-relaxed font-light mb-4 sm:mb-6">
                   &ldquo;{t.message || t.content}&rdquo;
                 </p>
 
                 {typeof t.rating === 'number' && (
-                  <div className="flex items-center justify-center gap-1 mb-6" aria-label={`${t.rating} out of 5 rating`}>
+                  <div className="flex items-center justify-center gap-1 mb-4" aria-label={`${t.rating} out of 5 rating`}>
                     {[1, 2, 3, 4, 5].map((star) => (
                       <svg key={star} width="16" height="16" viewBox="0 0 20 20" fill={star <= t.rating! ? '#F59E0B' : 'rgba(255,255,255,0.14)'}>
                         <path d="M10 1.5l2.5 5.1 5.6.8-4 3.9.9 5.5-5-2.6-5 2.6.9-5.5-4-3.9 5.6-.8L10 1.5z" />
@@ -122,10 +122,10 @@ export default function TestimonialsSection() {
                 {/* Author */}
                 <div className="flex items-center justify-center gap-4">
                   {t.photo ? (
-                    <img src={t.photo} alt={t.name} className="w-12 h-12 rounded-full object-cover ring-2 ring-[#7B2FF2]/30" />
+                    <img src={t.photo} alt={t.name} className="w-10 h-10 rounded-full object-cover ring-2 ring-[#7B2FF2]/30" />
                   ) : (
                     <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold text-white"
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold text-white"
                       style={{ background: 'linear-gradient(135deg, #7B2FF2 0%, #E879F9 100%)' }}
                     >
                       {t.name.charAt(0)}
@@ -141,7 +141,7 @@ export default function TestimonialsSection() {
 
             {/* Navigation arrows */}
             {testimonials.length > 1 && (
-              <div className="flex items-center justify-center gap-4 mt-8">
+              <div className="flex items-center justify-center gap-4 mt-6">
                 <button
                   onClick={goPrev}
                   className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-[#7B2FF2] hover:bg-[#7B2FF2]/10 transition-all"

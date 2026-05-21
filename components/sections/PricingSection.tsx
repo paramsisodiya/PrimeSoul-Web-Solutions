@@ -47,7 +47,7 @@ export default function PricingSection() {
   return (
     <section
       id="pricing"
-      className="relative py-20 sm:py-32 overflow-hidden"
+      className="relative py-14 sm:py-20 overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #0B0B24 0%, #0E0E2C 50%, #120F30 100%)' }}
     >
       {/* Ambient glow effects */}
@@ -76,10 +76,10 @@ export default function PricingSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <AnimatedSection className="mb-12 sm:mb-20 text-center">
+        <AnimatedSection className="mb-8 sm:mb-12 text-center">
           <SectionLabel dark>Pricing</SectionLabel>
           <h2
-            className="text-[1.6rem] sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-[-0.03em] mb-4 sm:mb-5"
+            className="text-[1.4rem] sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-[-0.03em] mb-3"
             style={{ fontFamily: "'Poppins', sans-serif", color: '#FFFFFF' }}
           >
             Invest in Your{' '}
@@ -166,11 +166,11 @@ export default function PricingSection() {
                 )}
 
                 {/* Card content */}
-                <div className="relative z-10 p-6 sm:p-8 lg:p-9 flex flex-col h-full">
+                <div className="relative z-10 p-5 sm:p-6 flex flex-col h-full">
                   {/* Plan name */}
-                  <div className="mb-6">
+                  <div className="mb-4">
                     <span
-                      className="text-xs font-semibold uppercase tracking-[0.2em]"
+                      className="text-[10px] font-semibold uppercase tracking-[0.2em]"
                       style={{
                         fontFamily: "'Poppins', sans-serif",
                         color: plan.highlighted ? '#A855F7' : 'rgba(255,255,255,0.35)',
@@ -181,10 +181,10 @@ export default function PricingSection() {
                   </div>
 
                   {/* Price block */}
-                  <div className="mb-6">
+                  <div className="mb-4">
                     <div className="flex items-baseline gap-1">
                       <span
-                        className="text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold tracking-tight"
+                        className="text-3xl sm:text-4xl font-extrabold tracking-tight"
                         style={{
                           fontFamily: "'Poppins', sans-serif",
                           ...(plan.highlighted
@@ -212,7 +212,7 @@ export default function PricingSection() {
 
                   {/* Timeline badge */}
                   <div
-                    className="inline-flex items-center gap-2 text-xs font-medium mb-5 px-3.5 py-2 rounded-xl w-fit"
+                    className="inline-flex items-center gap-2 text-[11px] font-medium mb-4 px-3 py-1.5 rounded-lg w-fit"
                     style={{
                       background: plan.highlighted
                         ? 'rgba(123,47,242,0.15)'
@@ -230,7 +230,7 @@ export default function PricingSection() {
 
                   {/* Description */}
                   <p
-                    className="text-sm leading-relaxed mb-7"
+                    className="text-xs leading-relaxed mb-5"
                     style={{ color: 'rgba(255,255,255,0.35)' }}
                   >
                     {plan.description}
@@ -238,7 +238,7 @@ export default function PricingSection() {
 
                   {/* Divider */}
                   <div
-                    className="h-px mb-7"
+                    className="h-px mb-5"
                     style={{
                       background: plan.highlighted
                         ? 'linear-gradient(90deg, transparent, rgba(123,47,242,0.3), transparent)'
@@ -247,9 +247,9 @@ export default function PricingSection() {
                   />
 
                   {/* Features */}
-                  <ul className="flex flex-col gap-3.5 flex-1 mb-8">
+                  <ul className="flex flex-col gap-2.5 flex-1 mb-6">
                     {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-sm">
+                      <li key={feature} className="flex items-start gap-2 text-xs">
                         <div
                           className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5"
                           style={{
@@ -278,7 +278,7 @@ export default function PricingSection() {
                   {/* CTA Button */}
                   <Link
                     href="/contact"
-                    className="w-full text-center py-4 rounded-2xl text-sm font-semibold transition-all duration-300 block relative overflow-hidden group"
+                    className="w-full text-center py-3 rounded-xl text-sm font-semibold transition-all duration-300 block relative overflow-hidden group"
                     style={
                       plan.highlighted
                         ? {
@@ -313,7 +313,7 @@ export default function PricingSection() {
         </div>
 
         {/* Bottom trust text */}
-        <AnimatedSection className="mt-16 text-center">
+        <AnimatedSection className="mt-10 text-center">
           <div className="flex items-center justify-center gap-6 flex-wrap">
             {['Free consultation', 'No hidden fees', 'Secure payment'].map((item) => (
               <div key={item} className="flex items-center gap-2">
