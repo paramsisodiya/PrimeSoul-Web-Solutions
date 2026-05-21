@@ -4,7 +4,6 @@ import MarqueeSection from '@/components/sections/MarqueeSection'
 import VideoSection from '@/components/sections/VideoSection'
 import ClientLogos from '@/components/sections/ClientLogos'
 import TrustSection from '@/components/sections/TrustSection'
-import StatsSection from '@/components/sections/StatsSection'
 import AboutSection from '@/components/sections/AboutSection'
 import ServicesSection from '@/components/sections/ServicesSection'
 import PortfolioSection from '@/components/sections/PortfolioSection'
@@ -28,7 +27,6 @@ export default function HomePage() {
       <VideoSection />
       <ClientLogos />
       <TrustSection />
-      <StatsSection />
       <AboutSection />
       <ServicesSection />
       <PortfolioSection />
