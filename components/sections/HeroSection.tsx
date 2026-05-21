@@ -59,6 +59,11 @@ export default function HeroSection() {
         }}
       />
 
+      {/* Floating gradient orbs */}
+      <div className="absolute top-20 left-[10%] w-72 h-72 rounded-full opacity-20 blur-[100px] pointer-events-none" style={{ background: 'linear-gradient(135deg, #7B2FF2, #E879F9)', animation: 'float-orb 20s ease-in-out infinite' }} />
+      <div className="absolute bottom-20 right-[15%] w-56 h-56 rounded-full opacity-15 blur-[80px] pointer-events-none" style={{ background: 'linear-gradient(135deg, #A855F7, #3B82F6)', animation: 'float-orb 25s ease-in-out infinite reverse' }} />
+      <div className="absolute top-1/2 left-1/2 w-96 h-96 rounded-full opacity-10 blur-[120px] pointer-events-none -translate-x-1/2 -translate-y-1/2" style={{ background: 'radial-gradient(circle, #7B2FF2, transparent 70%)', animation: 'float-orb 30s ease-in-out infinite' }} />
+
       {/* Large watermark text */}
       <div
         className="watermark-text text-[clamp(120px,18vw,280px)] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
