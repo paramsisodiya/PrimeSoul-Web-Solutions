@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { sendWebhookNotification } from '@/lib/webhooks'
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
@@ -80,6 +81,9 @@ export default function ContactPage() {
       } catch {
         // Auto-reply failure should not block main submission
       }
+
+      // Send webhook notifications (Slack/Discord) — fire-and-forget
+      sendWebhookNotification(form).catch(() => {})
 
       setStatus('success')
       setForm({ name: '', email: '', phone: '', service: services[0], message: '' })
