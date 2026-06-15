@@ -25,7 +25,7 @@ export default function FounderSection() {
     <section className="py-20 sm:py-32 relative overflow-hidden bg-white">
       {/* Decorative large text background */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/4 pointer-events-none opacity-[0.02] select-none z-0">
-        <span className="text-[20vw] font-black tracking-tighter leading-none whitespace-nowrap" style={{ fontFamily: "'Poppins', sans-serif" }}>CRAFT</span>
+        <span className="text-[20vw] font-black tracking-tighter leading-none whitespace-nowrap">CRAFT</span>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
@@ -35,11 +35,11 @@ export default function FounderSection() {
             <SectionLabel>About the Founder</SectionLabel>
             <h2
               className="text-[2rem] sm:text-4xl md:text-5xl font-extrabold leading-[1.1] tracking-[-0.03em] mb-6 sm:mb-8"
-              style={{ fontFamily: "'Poppins', sans-serif", color: '#0E0E2C' }}
+              style={{ color: '#0E0E2C' }}
             >
               Not an Agency.
               <br />
-              <span className="text-gradient-purple relative inline-block mt-2">
+              <span className="text-gradient-purple font-display italic relative inline-block mt-2">
                 A Craftsman.
                 <svg className="absolute -bottom-2 left-0 w-full h-3 text-brand-primary opacity-30" viewBox="0 0 100 10" preserveAspectRatio="none">
                   <path d="M0 5 Q 50 10 100 5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
@@ -128,7 +128,7 @@ export default function FounderSection() {
                   <div className="flex items-end justify-between">
                     <div>
                       <p className="text-white/80 text-sm font-medium mb-1 uppercase tracking-widest">{AGENCY.founder.role}</p>
-                      <p className="text-white text-3xl font-bold" style={{ fontFamily: "'Poppins', sans-serif" }}>{AGENCY.founder.name}</p>
+                      <p className="text-white text-3xl font-bold">{AGENCY.founder.name}</p>
                     </div>
                     
                     {/* Status beacon */}

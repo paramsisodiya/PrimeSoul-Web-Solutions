@@ -229,7 +229,7 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <AnimatedSection>
               <SectionLabel>Book a Call</SectionLabel>
-              <h2 className="text-3xl font-bold text-[#0E0E2C] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h2 className="text-3xl font-bold text-[#0E0E2C] mb-4">
                 Prefer a Live Conversation?
               </h2>
               <p className="text-[#7A7A9E] mb-6">

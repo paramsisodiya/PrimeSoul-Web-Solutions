@@ -75,7 +75,6 @@ export default function ExitIntentPopup() {
             <div className="text-4xl mb-4">⚡</div>
             <h3
               className="text-2xl font-bold text-white mb-2"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Wait — Don&apos;t Leave Yet!
             </h3>

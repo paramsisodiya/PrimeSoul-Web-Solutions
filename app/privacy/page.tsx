@@ -9,7 +9,7 @@ export default function PrivacyPage() {
   return (
     <section className="pt-32 pb-20 bg-white min-h-screen">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 prose prose-sm sm:prose-base prose-gray">
-        <h1 className="text-3xl sm:text-4xl font-extrabold mb-8" style={{ fontFamily: "'Poppins', sans-serif", color: '#0E0E2C' }}>
+        <h1 className="text-3xl sm:text-4xl font-extrabold mb-8" style={{ color: '#0E0E2C' }}>
           Privacy Policy
         </h1>
         <p className="text-ink-muted text-sm mb-8">Last updated: May 2025</p>

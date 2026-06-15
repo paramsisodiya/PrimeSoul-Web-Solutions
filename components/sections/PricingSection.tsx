@@ -80,7 +80,7 @@ export default function PricingSection() {
           <SectionLabel dark>Pricing</SectionLabel>
           <h2
             className="text-[1.4rem] sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-[-0.03em] mb-3"
-            style={{ fontFamily: "'Poppins', sans-serif", color: '#FFFFFF' }}
+            style={{ color: '#FFFFFF' }}
           >
             Invest in Your{' '}
             <span
@@ -156,8 +156,7 @@ export default function PricingSection() {
                           background: 'linear-gradient(135deg, #7B2FF2, #9D5CF5)',
                           color: '#FFFFFF',
                           boxShadow: '0 4px 16px -4px rgba(123,47,242,0.5)',
-                          fontFamily: "'Poppins', sans-serif",
-                        }}
+                          }}
                       >
                         {plan.badge || 'Most Popular'}
                       </span>
@@ -172,7 +171,6 @@ export default function PricingSection() {
                     <span
                       className="text-[10px] font-semibold uppercase tracking-[0.2em]"
                       style={{
-                        fontFamily: "'Poppins', sans-serif",
                         color: plan.highlighted ? '#A855F7' : 'rgba(255,255,255,0.35)',
                       }}
                     >
@@ -186,7 +184,6 @@ export default function PricingSection() {
                       <span
                         className="text-3xl sm:text-4xl font-extrabold tracking-tight"
                         style={{
-                          fontFamily: "'Poppins', sans-serif",
                           ...(plan.highlighted
                             ? {
                               background: 'linear-gradient(135deg, #FFFFFF 0%, #E0D4FF 100%)',

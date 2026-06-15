@@ -3,13 +3,13 @@
 import { useEffect, useState } from 'react'
 import { collection, getDocs, addDoc, query, orderBy, limit, serverTimestamp, Timestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
-import { Activity, Mail, FileText, Briefcase, Star, Settings, Palette, Clock, Filter } from 'lucide-react'
+import { Activity, Mail, FileText, Briefcase, Star, Settings, Clock, Filter } from 'lucide-react'
 
 interface ActivityItem {
   id: string
   action: string
   entity: string
-  entityType: 'lead' | 'blog' | 'portfolio' | 'testimonial' | 'settings' | 'theme' | 'faq' | 'pricing'
+  entityType: 'lead' | 'blog' | 'portfolio' | 'testimonial' | 'settings' | 'faq' | 'pricing'
   user: string
   timestamp: Timestamp
 }
@@ -21,7 +21,7 @@ const typeIcon = (type: string) => {
     case 'portfolio': return <Briefcase size={14} className="text-cyan-400" />
     case 'testimonial': return <Star size={14} className="text-yellow-400" />
     case 'settings': return <Settings size={14} className="text-gray-400" />
-    case 'theme': return <Palette size={14} className="text-purple-400" />
+
     default: return <Activity size={14} className="text-[#7B2FF2]" />
   }
 }
@@ -33,7 +33,7 @@ const typeColor = (type: string) => {
     case 'portfolio': return '#06B6D4'
     case 'testimonial': return '#F59E0B'
     case 'settings': return '#6B7280'
-    case 'theme': return '#A855F7'
+
     default: return '#7B2FF2'
   }
 }
@@ -69,7 +69,7 @@ export default function ActivityLogPage() {
     return date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
   }
 
-  const types = ['all', 'lead', 'blog', 'portfolio', 'testimonial', 'settings', 'theme']
+  const types = ['all', 'lead', 'blog', 'portfolio', 'testimonial', 'settings']
   const filtered = filterType === 'all' ? activities : activities.filter(a => a.entityType === filterType)
 
   if (loading) return (

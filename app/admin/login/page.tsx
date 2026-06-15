@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#0E0E2C] flex items-center justify-center p-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+        <div className="min-h-screen bg-[#0E0E2C] flex items-center justify-center p-4">
             <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#7B2FF2] opacity-10 rounded-full blur-[120px] pointer-events-none" />
             <div className="relative w-full max-w-md">
                 <div className="bg-[#161640] border border-white/10 rounded-2xl p-8 shadow-2xl">

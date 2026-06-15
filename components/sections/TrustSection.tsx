@@ -59,7 +59,6 @@ function StatCounter({
       <div
         className="absolute -top-4 sm:-top-8 -left-2 text-[80px] sm:text-[120px] md:text-[160px] font-black leading-none pointer-events-none select-none transition-all duration-700"
         style={{
-          fontFamily: "'Poppins', sans-serif",
           color: 'rgba(123,47,242,0.04)',
         }}
         aria-hidden="true"
@@ -72,7 +71,6 @@ function StatCounter({
         <span
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight inline-block transition-transform duration-500 group-hover:scale-105"
           style={{
-            fontFamily: "'Poppins', sans-serif",
             background: 'linear-gradient(135deg, #7B2FF2 0%, #A855F7 50%, #E879F9 100%)',
             backgroundSize: '200% 200%',
             animation: isVisible ? 'gradient-shift 4s ease infinite' : 'none',
@@ -98,7 +96,6 @@ function StatCounter({
       <h3
         className="text-lg md:text-xl font-bold mb-3 tracking-tight"
         style={{
-          fontFamily: "'Poppins', sans-serif",
           color: '#0E0E2C',
         }}
       >
@@ -162,13 +159,13 @@ export default function TrustSection() {
               <SectionLabel>Beyond Expectations</SectionLabel>
               <h2
                 className="text-[1.7rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-5 sm:mb-6"
-                style={{ fontFamily: "'Poppins', sans-serif", color: '#0E0E2C' }}
+                style={{ color: '#0E0E2C' }}
               >
                 Empowering brands with{' '}
-                <span className="text-gradient-purple">innovative strategies</span>{' '}
+                <span className="text-gradient-purple font-display italic">innovative strategies</span>{' '}
                 to drive growth and success.
               </h2>
-              <p className="text-sm sm:text-base text-ink-secondary leading-relaxed mb-6 sm:mb-8 max-w-lg">
+              <p className="text-base text-ink-secondary leading-relaxed mb-6 sm:mb-8 max-w-lg">
                 Unlock your brand&apos;s potential with tailored digital solutions that connect, engage, and drive measurable results. We don&apos;t just build websites — we craft experiences.
               </p>
               <Link
@@ -249,7 +246,7 @@ export default function TrustSection() {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-ink" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      <p className="text-xs font-semibold text-ink">
                         100% Satisfaction
                       </p>
                       <p className="text-[10px] text-ink-muted">Client approval rate</p>
@@ -293,7 +290,6 @@ export default function TrustSection() {
           <span
             className="text-[clamp(100px,15vw,240px)] font-black tracking-[-0.04em] leading-none whitespace-nowrap"
             style={{
-              fontFamily: "'Poppins', sans-serif",
               color: 'rgba(123,47,242,0.025)',
             }}
           >
@@ -307,12 +303,12 @@ export default function TrustSection() {
             <SectionLabel>Impact Numbers</SectionLabel>
             <h2
               className="text-[1.6rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-3 sm:mb-4"
-              style={{ fontFamily: "'Poppins', sans-serif", color: '#0E0E2C' }}
+              style={{ color: '#0E0E2C' }}
             >
               Numbers That{' '}
-              <span className="text-gradient-purple">Speak Volumes</span>
+              <span className="text-gradient-purple font-display italic">Speak Volumes</span>
             </h2>
-            <p className="text-sm sm:text-base text-ink-secondary max-w-lg mx-auto">
+            <p className="text-base text-ink-secondary max-w-lg mx-auto">
               Real results from real projects — not vanity metrics, but genuine impact on businesses we&apos;ve partnered with.
             </p>
           </AnimatedSection>

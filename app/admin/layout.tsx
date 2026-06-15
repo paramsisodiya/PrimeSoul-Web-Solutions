@@ -23,7 +23,7 @@ import {
   Menu,
   X,
   Flame,
-  Palette,
+
   Activity,
   Search,
   Receipt,
@@ -49,7 +49,7 @@ const navItems = [
   { href: '/admin/webhooks', label: 'Webhooks', icon: Webhook },
   { href: '/admin/sections', label: 'Sections', icon: LayoutList },
   { href: '/admin/activity', label: 'Activity Log', icon: Activity },
-  { href: '/admin/theme', label: 'Theme', icon: Palette },
+
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
 
@@ -87,7 +87,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A1E] flex" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="min-h-screen bg-[#0A0A1E] flex">
       {sidebarOpen && (
         <div className="fixed inset-0 bg-black/60 z-20 lg:hidden" onClick={() => setSidebarOpen(false)} />
       )}

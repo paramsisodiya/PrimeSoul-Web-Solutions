@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 import { collection, getDocs, query, where } from 'firebase/firestore'
@@ -24,6 +24,11 @@ export default function TestimonialsSection() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [isPaused, setIsPaused] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Touch/swipe support
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
 
   useEffect(() => {
     const fetchTestimonials = async () => {
@@ -51,31 +56,60 @@ export default function TestimonialsSection() {
     return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
   }, [testimonials.length, isPaused])
 
-  const goTo = (i: number) => {
+  const goTo = useCallback((i: number) => {
     setActive(i)
     setIsPaused(true)
     setTimeout(() => setIsPaused(false), 8000)
-  }
+  }, [])
 
-  const goNext = () => goTo((active + 1) % testimonials.length)
-  const goPrev = () => goTo((active - 1 + testimonials.length) % testimonials.length)
+  const goNext = useCallback(() => {
+    if (testimonials.length === 0) return
+    goTo((active + 1) % testimonials.length)
+  }, [active, testimonials.length, goTo])
+
+  const goPrev = useCallback(() => {
+    if (testimonials.length === 0) return
+    goTo((active - 1 + testimonials.length) % testimonials.length)
+  }, [active, testimonials.length, goTo])
+
+  // Pause on focus for accessibility
+  const handleFocus = useCallback(() => setIsPaused(true), [])
+  const handleBlur = useCallback(() => setIsPaused(false), [])
+
+  // Touch handlers for mobile swipe
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }, [])
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = e.changedTouches[0].clientX
+    const diff = touchStartX.current - touchEndX.current
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) goNext()
+      else goPrev()
+    }
+  }, [goNext, goPrev])
 
   return (
-    <section className="py-14 sm:py-18 relative overflow-hidden" style={{ background: '#0E0E2C' }}>
+    <section
+      className="py-14 sm:py-20 relative overflow-hidden noise-overlay"
+      style={{ background: 'linear-gradient(135deg, #0E0E2C 0%, #1a1a4e 50%, #0E0E2C 100%)' }}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+    >
       {/* Mesh gradient */}
-      <div className="absolute inset-0 opacity-20" style={{
+      <div className="absolute inset-0 opacity-20 z-0" style={{
         backgroundImage: 'radial-gradient(circle at 30% 70%, rgba(123,47,242,0.4) 0%, transparent 50%), radial-gradient(circle at 70% 30%, rgba(232,121,249,0.2) 0%, transparent 40%)'
       }} />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 z-10">
         <AnimatedSection className="mb-8 sm:mb-10 text-center">
           <SectionLabel dark>Client Stories</SectionLabel>
           <h2
             className="text-[1.4rem] sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-[-0.03em] mb-3 text-white"
-            style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             See What Our{' '}
-            <span style={{
+            <span className="font-display italic" style={{
               background: 'linear-gradient(135deg, #A855F7 0%, #E879F9 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -86,9 +120,14 @@ export default function TestimonialsSection() {
           </h2>
         </AnimatedSection>
 
-        {/* Main testimonial */}
+        {/* Main testimonial with swipe support */}
         <AnimatedSection>
-          <div className="max-w-3xl mx-auto text-center relative">
+          <div
+            ref={containerRef}
+            className="max-w-3xl mx-auto text-center relative"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             {/* Quote icon */}
             <svg width="28" height="22" viewBox="0 0 48 36" fill="none" className="mx-auto mb-3 sm:mb-4">
               <path d="M0 36V20.727C0 7.527 8 0 24 0v6.545C16 6.545 12 10.455 12 18.327V21.6h12V36H0zm24 0V20.727C24 7.527 32 0 48 0v6.545c-8 0-12 3.91-12 11.782V21.6h12V36H24z" fill="rgba(123,47,242,0.2)" />
@@ -105,7 +144,7 @@ export default function TestimonialsSection() {
                   position: i === 0 ? 'relative' : 'absolute',
                 }}
               >
-                <p className="text-sm sm:text-lg md:text-xl text-white/70 leading-relaxed font-light mb-4 sm:mb-6">
+                <p className="text-base sm:text-lg md:text-xl text-white/70 leading-relaxed font-light mb-4 sm:mb-6">
                   &ldquo;{t.message || t.content}&rdquo;
                 </p>
 
@@ -132,8 +171,8 @@ export default function TestimonialsSection() {
                     </div>
                   )}
                   <div className="text-left">
-                    <p className="text-sm font-semibold text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>{t.name}</p>
-                    <p className="text-xs text-white/40">{[t.role, t.company].filter(Boolean).join(', ')}</p>
+                    <p className="text-sm font-semibold text-white">{t.name}</p>
+                    <p className="text-xs text-white/50">{[t.role, t.company].filter(Boolean).join(', ')}</p>
                   </div>
                 </div>
               </div>
@@ -144,7 +183,7 @@ export default function TestimonialsSection() {
               <div className="flex items-center justify-center gap-4 mt-6">
                 <button
                   onClick={goPrev}
-                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-[#7B2FF2] hover:bg-[#7B2FF2]/10 transition-all"
+                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-[#7B2FF2] hover:bg-[#7B2FF2]/10 transition-all btn-tap"
                   aria-label="Previous testimonial"
                 >
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4l-4 4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -172,7 +211,7 @@ export default function TestimonialsSection() {
 
                 <button
                   onClick={goNext}
-                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-[#7B2FF2] hover:bg-[#7B2FF2]/10 transition-all"
+                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-[#7B2FF2] hover:bg-[#7B2FF2]/10 transition-all btn-tap"
                   aria-label="Next testimonial"
                 >
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>

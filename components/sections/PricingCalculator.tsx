@@ -41,7 +41,7 @@ export default function PricingCalculator() {
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7B2FF2] to-[#E879F9] flex items-center justify-center">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M4.5 4h7M5 12h6" stroke="white" strokeWidth="1.5" strokeLinecap="round"/></svg>
           </div>
-          <h3 className="text-xl font-bold text-[#0E0E2C]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <h3 className="text-xl font-bold text-[#0E0E2C]">
             Project Estimator
           </h3>
         </div>

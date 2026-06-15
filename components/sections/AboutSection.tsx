@@ -33,7 +33,7 @@ export default function AboutSection() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
 
   return (
-    <section id="about" className="py-24 sm:py-32 relative overflow-hidden bg-white">
+    <section id="about" className="py-24 sm:py-32 relative overflow-hidden bg-white mesh-gradient-bg">
       {/* Background accents */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-primary/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-accent/5 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3" />
@@ -47,11 +47,11 @@ export default function AboutSection() {
               <SectionLabel>Who We Are</SectionLabel>
               <h2
                 className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-tight tracking-[-0.03em] mb-6 sm:mb-8"
-                style={{ fontFamily: "'Poppins', sans-serif", color: '#0E0E2C' }}
+                style={{ color: '#0E0E2C' }}
               >
-                We are architects of the <span className="text-gradient-purple">digital realm</span>.
+                We are architects of the <span className="text-gradient-purple font-display italic">digital realm</span>.
               </h2>
-              <div className="space-y-6 text-base sm:text-lg text-ink-secondary leading-relaxed">
+              <div className="space-y-6 text-base text-ink-secondary leading-relaxed">
                 <p>
                   PrimeSoul isn&apos;t just another agency. We are a collective of passionate creators, strategic thinkers, and technical experts dedicated to transforming bold visions into extraordinary digital realities.
                 </p>
@@ -74,7 +74,7 @@ export default function AboutSection() {
                   </div>
                 </div>
                 <div>
-                  <p className="font-bold text-ink" style={{ fontFamily: "'Poppins', sans-serif" }}>In-House Talent</p>
+                  <p className="font-bold text-ink">In-House Talent</p>
                   <p className="text-sm text-ink-muted">No outsourcing, guaranteed.</p>
                 </div>
               </div>
@@ -87,7 +87,7 @@ export default function AboutSection() {
               <SectionLabel>What We Do</SectionLabel>
               <h3
                 className="text-2xl sm:text-3xl font-extrabold mb-8"
-                style={{ fontFamily: "'Poppins', sans-serif", color: '#0E0E2C' }}
+                style={{ color: '#0E0E2C' }}
               >
                 Comprehensive digital excellence.
               </h3>
@@ -125,7 +125,6 @@ export default function AboutSection() {
                       <div>
                         <h4 
                           className="text-lg sm:text-xl font-bold text-ink mb-2 sm:mb-3 transition-colors"
-                          style={{ fontFamily: "'Poppins', sans-serif" }}
                         >
                           {item.title}
                         </h4>

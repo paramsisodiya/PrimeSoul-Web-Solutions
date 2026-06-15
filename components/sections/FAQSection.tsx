@@ -39,12 +39,12 @@ export default function FAQSection() {
           <SectionLabel>Common Questions</SectionLabel>
           <h2
             className="text-[1.6rem] sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-4"
-            style={{ fontFamily: "'Poppins', sans-serif", color: '#0E0E2C' }}
+            style={{ color: '#0E0E2C' }}
           >
             Frequently Asked{' '}
-            <span className="text-gradient-purple">Questions</span>
+            <span className="text-gradient-purple font-display italic">Questions</span>
           </h2>
-          <p className="text-sm sm:text-base text-ink-secondary max-w-lg mx-auto">
+          <p className="text-base text-ink-secondary max-w-lg mx-auto">
             Everything you need to know before starting your project with PrimeSoul.
           </p>
         </AnimatedSection>
@@ -69,7 +69,6 @@ export default function FAQSection() {
                     <span
                       className="text-sm sm:text-base font-semibold pr-4 transition-colors"
                       style={{
-                        fontFamily: "'Poppins', sans-serif",
                         color: isOpen ? '#7B2FF2' : '#0E0E2C',
                       }}
                     >

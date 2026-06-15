@@ -19,6 +19,12 @@ const config: Config = {
           light: '#F0EEFF',
           mist: '#F5F3FF',
         },
+        accent: {
+          gold: '#F59E0B',
+          'gold-light': '#FCD34D',
+          teal: '#14B8A6',
+          'teal-light': '#5EEAD4',
+        },
         surface: {
           base: '#FAFAFE',
           card: '#FFFFFF',
@@ -26,6 +32,7 @@ const config: Config = {
           border: '#E8E5F5',
           dark: '#0E0E2C',
           'dark-card': '#161640',
+          'dark-elevated': '#1a1a4e',
         },
         ink: {
           DEFAULT: '#0E0E2C',
@@ -36,7 +43,7 @@ const config: Config = {
       },
       fontFamily: {
         heading: ['Poppins', 'sans-serif'],
-        display: ['var(--font-display)', 'serif'],
+        display: ['var(--font-playfair)', 'serif'],
         body: ['var(--font-body)', 'sans-serif'],
         mono: ['var(--font-mono)', 'monospace'],
       },
@@ -46,6 +53,7 @@ const config: Config = {
         'hero-mesh': 'radial-gradient(ellipse at 20% 50%, rgba(123,47,242,0.10) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.08) 0%, transparent 50%), radial-gradient(ellipse at 60% 80%, rgba(232,121,249,0.06) 0%, transparent 50%)',
         'card-glow': 'linear-gradient(135deg, rgba(123,47,242,0.04) 0%, rgba(139,92,246,0.04) 100%)',
         'dark-gradient': 'linear-gradient(180deg, #0E0E2C 0%, #161640 100%)',
+        'dark-gradient-rich': 'linear-gradient(135deg, #0E0E2C 0%, #1a1a4e 50%, #0E0E2C 100%)',
       },
       boxShadow: {
         'card': '0 2px 24px -4px rgba(123,47,242,0.08), 0 1px 4px rgba(123,47,242,0.04)',
@@ -54,6 +62,7 @@ const config: Config = {
         'brand-lg': '0 20px 56px -12px rgba(123,47,242,0.35)',
         'glow-purple': '0 0 40px rgba(123,47,242,0.25)',
         'glow-accent': '0 0 40px rgba(232,121,249,0.20)',
+        'glow-gold': '0 0 40px rgba(245,158,11,0.20)',
         'dark-card': '0 4px 32px rgba(0,0,0,0.3)',
       },
       borderRadius: {
@@ -70,6 +79,7 @@ const config: Config = {
         'scale-in': 'scale-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards',
         'gradient-shift': 'gradient-shift 3s ease infinite',
         'marquee': 'marquee-scroll 25s linear infinite',
+        'float-orb': 'float-orb 20s ease-in-out infinite',
       },
       keyframes: {
         float: {
@@ -100,6 +110,12 @@ const config: Config = {
         'marquee-scroll': {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
+        },
+        'float-orb': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '25%': { transform: 'translate(30px, -40px) scale(1.05)' },
+          '50%': { transform: 'translate(-20px, 20px) scale(0.95)' },
+          '75%': { transform: 'translate(40px, 30px) scale(1.08)' },
         },
       },
     },

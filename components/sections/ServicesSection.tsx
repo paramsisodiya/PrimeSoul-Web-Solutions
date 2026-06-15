@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
@@ -53,12 +53,88 @@ const SERVICE_CATEGORIES = [
   },
 ]
 
+// 3D card tilt handler
+function use3DTilt() {
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const ref = useRef<HTMLDivElement>(null)
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return
+    const rect = ref.current.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    setTilt({ x: y * -10, y: x * 10 })
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    setTilt({ x: 0, y: 0 })
+  }, [])
+
+  return { ref, tilt, handleMouseMove, handleMouseLeave }
+}
+
+// Individual 3D service card
+function ServiceCard3D({ service, index }: { service: typeof SERVICES[number]; index: number }) {
+  const { ref, tilt, handleMouseMove, handleMouseLeave } = use3DTilt()
+
+  return (
+    <AnimatedSection delay={index * 60}>
+      <div className="card-3d" ref={ref} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+        <div
+          className="card-3d-inner card-glow-hover group relative rounded-3xl p-8 bg-white cursor-default transition-all duration-300"
+          style={{
+            border: '1px solid #E8E5F5',
+            boxShadow: '0 2px 24px -4px rgba(123,47,242,0.06)',
+            transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          }}
+        >
+          {/* Icon — floats in 3D */}
+          <div
+            className="card-3d-icon inline-flex items-center justify-center w-12 h-12 rounded-2xl mb-6 transition-all duration-300 group-hover:shadow-lg"
+            style={{
+              background: 'rgba(123,47,242,0.08)',
+              color: '#7B2FF2',
+            }}
+          >
+            <ServiceIcon name={service.icon} />
+          </div>
+
+          {/* Content — slightly elevated */}
+          <div className="card-3d-content">
+            <h3 className="text-lg font-semibold text-ink mb-3">{service.title}</h3>
+            <p className="text-sm text-ink-muted leading-relaxed mb-6">{service.description}</p>
+
+            {/* Features */}
+            <ul className="flex flex-col gap-2">
+              {service.features.map((feature) => (
+                <li key={feature} className="flex items-center gap-2 text-xs text-ink-secondary">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <circle cx="6" cy="6" r="6" fill="rgba(123,47,242,0.08)" />
+                    <path d="M3 6l2 2 4-4" stroke="#7B2FF2" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Bottom accent line on hover */}
+          <div
+            className="absolute bottom-0 left-8 right-8 h-px rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(123,47,242,0.4), transparent)' }}
+          />
+        </div>
+      </div>
+    </AnimatedSection>
+  )
+}
+
 export default function ServicesSection() {
   const [activeTab, setActiveTab] = useState(0)
   const active = SERVICE_CATEGORIES[activeTab]
 
   return (
-    <section className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#FAFAFE' }}>
+    <section className="py-20 sm:py-28 relative overflow-hidden mesh-gradient-bg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <AnimatedSection className="mb-16">
@@ -66,14 +142,14 @@ export default function ServicesSection() {
             <SectionLabel>What We Do</SectionLabel>
             <h2
               className="text-[1.6rem] sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-4 sm:mb-5"
-              style={{ fontFamily: "'Poppins', sans-serif", color: '#0E0E2C' }}
+              style={{ color: '#0E0E2C' }}
             >
               Services Built for{' '}
-              <span className="text-gradient-purple">
+              <span className="text-gradient-purple font-display italic">
                 Real Business Growth
               </span>
             </h2>
-            <p className="text-ink-secondary text-sm sm:text-lg leading-relaxed">
+            <p className="text-ink-secondary text-base leading-relaxed">
               Every service we offer is designed to solve a real problem — not to add complexity.
             </p>
           </div>
@@ -93,9 +169,8 @@ export default function ServicesSection() {
                 <button
                   key={cat.id}
                   onClick={() => setActiveTab(i)}
-                  className="relative px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0"
+                  className="relative px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 btn-tap"
                   style={{
-                    fontFamily: "'Poppins', sans-serif",
                     background: activeTab === i ? 'linear-gradient(135deg, #7B2FF2, #8B5CF6)' : 'white',
                     color: activeTab === i ? 'white' : '#4A4A6A',
                     border: `1px solid ${activeTab === i ? 'transparent' : '#E8E5F5'}`,
@@ -107,13 +182,16 @@ export default function ServicesSection() {
               ))}
             </div>
 
-            {/* Service list */}
+            {/* Service list with stagger */}
             <div className="relative grid md:grid-cols-2 gap-x-12 gap-y-4 max-w-3xl">
               {active.services.map((service, i) => (
                 <div
-                  key={service}
-                  className="flex items-center gap-3 py-3 border-b border-surface-border group cursor-default transition-colors hover:border-brand-primary/20"
-                  style={{ animationDelay: `${i * 50}ms` }}
+                  key={`${active.id}-${service}`}
+                  className="flex items-center gap-3 py-3 border-b border-surface-border group cursor-default transition-all hover:border-brand-primary/20 hover:pl-2"
+                  style={{
+                    opacity: 1,
+                    animation: `reveal-up 0.4s cubic-bezier(0.22,1,0.36,1) ${i * 50}ms both`,
+                  }}
                 >
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
                     <circle cx="8" cy="8" r="8" fill="rgba(123,47,242,0.08)" />
@@ -128,57 +206,10 @@ export default function ServicesSection() {
           </div>
         </AnimatedSection>
 
-        {/* Original service cards below */}
+        {/* 3D Service cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
           {SERVICES.map((service, i) => (
-            <AnimatedSection key={service.id} delay={i * 40}>
-              <div
-                className="group relative rounded-3xl p-8 bg-white cursor-default transition-all duration-300 hover:-translate-y-1"
-                style={{
-                  border: '1px solid #E8E5F5',
-                  boxShadow: '0 2px 24px -4px rgba(123,47,242,0.06)',
-                }}
-                onMouseEnter={(e) => {
-                  ;(e.currentTarget as HTMLElement).style.boxShadow = '0 12px 48px -8px rgba(123,47,242,0.15)'
-                  ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(123,47,242,0.15)'
-                }}
-                onMouseLeave={(e) => {
-                  ;(e.currentTarget as HTMLElement).style.boxShadow = '0 2px 24px -4px rgba(123,47,242,0.06)'
-                  ;(e.currentTarget as HTMLElement).style.borderColor = '#E8E5F5'
-                }}
-              >
-                {/* Icon */}
-                <div
-                  className="inline-flex items-center justify-center w-12 h-12 rounded-2xl mb-6 transition-colors duration-300"
-                  style={{ background: 'rgba(123,47,242,0.08)', color: '#7B2FF2' }}
-                >
-                  <ServiceIcon name={service.icon} />
-                </div>
-
-                {/* Content */}
-                <h3 className="text-lg font-semibold text-ink mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>{service.title}</h3>
-                <p className="text-sm text-ink-muted leading-relaxed mb-6">{service.description}</p>
-
-                {/* Features */}
-                <ul className="flex flex-col gap-2">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2 text-xs text-ink-secondary">
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <circle cx="6" cy="6" r="6" fill="rgba(123,47,242,0.08)" />
-                        <path d="M3 6l2 2 4-4" stroke="#7B2FF2" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Bottom accent line on hover */}
-                <div
-                  className="absolute bottom-0 left-8 right-8 h-px rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: 'linear-gradient(90deg, transparent, rgba(123,47,242,0.4), transparent)' }}
-                />
-              </div>
-            </AnimatedSection>
+            <ServiceCard3D key={service.id} service={service} index={i} />
           ))}
         </div>
 

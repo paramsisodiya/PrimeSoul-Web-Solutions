@@ -18,12 +18,20 @@ export default function ScrollProgress() {
   return (
     <div className="fixed top-0 left-0 right-0 z-[60] h-[3px]">
       <div
-        className="h-full transition-[width] duration-100 ease-out"
-        style={{
-          width: `${progress}%`,
-          background: 'linear-gradient(90deg, #7B2FF2, #E879F9, #A855F7)',
-        }}
+        className="h-full scroll-progress-bar transition-[width] duration-100 ease-out"
+        style={{ width: `${progress}%` }}
       />
+      {/* Glow tip at the end */}
+      {progress > 0 && (
+        <div
+          className="absolute top-0 h-full w-4 transition-[left] duration-100 ease-out"
+          style={{
+            left: `calc(${progress}% - 8px)`,
+            background: 'radial-gradient(circle, rgba(123,47,242,0.6), transparent)',
+            filter: 'blur(2px)',
+          }}
+        />
+      )}
     </div>
   )
 }

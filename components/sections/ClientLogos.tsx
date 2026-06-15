@@ -11,7 +11,7 @@ const CLIENTS = [
 
 // Premium SVG icons for each client category
 function ClientIcon({ type, size = 22 }: { type: string; size?: number }) {
-  const strokeColor = 'rgba(255,255,255,0.55)'
+  const strokeColor = 'currentColor'
   const strokeWidth = 1.4
 
   switch (type) {
@@ -73,22 +73,21 @@ export default function ClientLogos() {
             <p
               className="text-center text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em] mb-4 sm:mb-5"
               style={{
-                color: 'rgba(255,255,255,0.25)',
-                fontFamily: "'Poppins', sans-serif",
+                color: 'rgba(255,255,255,0.35)',
               }}
             >
               Trusted by growing businesses
             </p>
 
             <div className="flex items-center justify-center gap-6 sm:gap-10 md:gap-14">
-              {CLIENTS.map((client, i) => (
+              {CLIENTS.map((client) => (
                 <div
                   key={client.name}
                   className="group relative flex flex-col items-center"
                 >
-                  {/* Outlined circle with icon */}
+                  {/* Outlined circle with icon — grayscale to color on hover */}
                   <div
-                    className="w-[52px] h-[52px] sm:w-[60px] sm:h-[60px] rounded-full flex items-center justify-center transition-all duration-500 group-hover:border-purple-500/40 group-hover:shadow-[0_0_20px_rgba(123,47,242,0.15)]"
+                    className="w-[52px] h-[52px] sm:w-[60px] sm:h-[60px] rounded-full flex items-center justify-center transition-all duration-500 grayscale-hover text-white/55 group-hover:text-brand-accent"
                     style={{
                       border: '1.5px solid rgba(255,255,255,0.1)',
                       background: 'rgba(255,255,255,0.02)',
@@ -104,8 +103,7 @@ export default function ClientLogos() {
                       fontSize: '9px',
                       fontWeight: 600,
                       letterSpacing: '0.08em',
-                      color: 'rgba(255,255,255,0.35)',
-                      fontFamily: "'Poppins', sans-serif",
+                      color: 'rgba(255,255,255,0.5)',
                     }}
                   >
                     {client.name}

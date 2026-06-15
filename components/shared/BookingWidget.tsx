@@ -23,7 +23,7 @@ export default function BookingWidget({ calLink }: BookingWidgetProps) {
             <line x1="3" y1="10" x2="21" y2="10" />
           </svg>
         </div>
-        <h3 className="text-xl font-bold text-[#0E0E2C] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+        <h3 className="text-xl font-bold text-[#0E0E2C] mb-2">
           Book a Free Strategy Call
         </h3>
         <p className="text-sm text-[#7A7A9E] mb-6">

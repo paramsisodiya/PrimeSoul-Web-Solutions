@@ -22,7 +22,7 @@ export default function StatsSection() {
             <AnimatedSection key={stat.label} delay={i * 80}>
               <div className="bg-white rounded-2xl border border-[#E8E5F5] p-6 text-center tilt-card transition-all hover:shadow-lg hover:-translate-y-1" style={{ boxShadow: '0 4px 24px -8px rgba(123,47,242,0.08)' }}>
                 <span className="text-3xl mb-3 block">{stat.icon}</span>
-                <div className="text-3xl sm:text-4xl font-bold text-[#0E0E2C] mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <div className="text-3xl sm:text-4xl font-bold text-[#0E0E2C] mb-1">
                   <AnimatedCounter target={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
                 </div>
                 <p className="text-sm text-[#7A7A9E] font-medium">{stat.label}</p>

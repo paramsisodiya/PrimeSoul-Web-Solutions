@@ -1,16 +1,23 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import MagneticButton from '@/components/ui/MagneticButton'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
+
+const ParticleBackground = dynamic(() => import('@/components/ui/ParticleBackground'), { ssr: false })
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null)
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     const hero = heroRef.current
     if (!hero) return
+
+    // Trigger text reveal animation after mount
+    setLoaded(true)
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = hero.getBoundingClientRect()
@@ -34,6 +41,9 @@ export default function HeroSection() {
         '--my': '50%',
       } as React.CSSProperties}
     >
+      {/* Particle background */}
+      <ParticleBackground />
+
       {/* Animated mesh gradient — purple theme */}
       <div
         className="absolute inset-0 opacity-70 transition-opacity duration-300"
@@ -86,53 +96,118 @@ export default function HeroSection() {
         style={{ background: 'radial-gradient(circle, #A855F7 0%, transparent 70%)', animationDelay: '4s' }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-16 sm:pb-20 w-full">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-16 sm:pb-20 w-full z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left — content */}
           <div>
             {/* Subtitle badge */}
-            <div className="pill-badge pill-badge--purple mb-8">
+            <div
+              className="pill-badge pill-badge--purple mb-8"
+              style={{
+                opacity: loaded ? 1 : 0,
+                transform: loaded ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'all 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s',
+              }}
+            >
               <span className="dot" />
               Beyond Expectations
             </div>
 
-            {/* Headline */}
+            {/* Headline with text reveal animation */}
             <h1
               className="text-[2.5rem] sm:text-5xl md:text-6xl xl:text-[72px] font-extrabold leading-[1.05] tracking-[-0.03em] mb-5 sm:mb-6"
-              style={{ fontFamily: "'Poppins', sans-serif", color: '#0E0E2C' }}
+              style={{ color: '#0E0E2C' }}
             >
-              Crafting{' '}
+              {/* Word-by-word reveal */}
               <span
-                className="relative inline-block"
+                className="inline-block"
+                style={{
+                  opacity: loaded ? 1 : 0,
+                  transform: loaded ? 'translateY(0) rotateX(0deg)' : 'translateY(40px) rotateX(10deg)',
+                  filter: loaded ? 'blur(0px)' : 'blur(4px)',
+                  transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s',
+                }}
+              >
+                Crafting{' '}
+              </span>
+              <span
+                className="relative inline-block font-display italic"
                 style={{
                   background: 'linear-gradient(135deg, #7B2FF2 0%, #E879F9 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
+                  opacity: loaded ? 1 : 0,
+                  transform: loaded ? 'translateY(0) rotateX(0deg)' : 'translateY(40px) rotateX(10deg)',
+                  filter: loaded ? 'blur(0px)' : 'blur(4px)',
+                  transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1) 0.35s',
                 }}
               >
                 Success
               </span>
               <br />
-              Through{' '}
-              <span className="relative">
+              <span
+                className="inline-block"
+                style={{
+                  opacity: loaded ? 1 : 0,
+                  transform: loaded ? 'translateY(0) rotateX(0deg)' : 'translateY(40px) rotateX(10deg)',
+                  filter: loaded ? 'blur(0px)' : 'blur(4px)',
+                  transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1) 0.5s',
+                }}
+              >
+                Through{' '}
+              </span>
+              <span
+                className="relative inline-block"
+                style={{
+                  opacity: loaded ? 1 : 0,
+                  transform: loaded ? 'translateY(0) rotateX(0deg)' : 'translateY(40px) rotateX(10deg)',
+                  filter: loaded ? 'blur(0px)' : 'blur(4px)',
+                  transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1) 0.65s',
+                }}
+              >
                 Design
                 <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 200 8" fill="none" preserveAspectRatio="none">
-                  <path d="M1 5.5C40 2 60 2 100 5S160 2 199 5.5" stroke="#7B2FF2" strokeWidth="2.5" strokeLinecap="round" opacity="0.3"/>
+                  <path
+                    d="M1 5.5C40 2 60 2 100 5S160 2 199 5.5"
+                    stroke="#7B2FF2"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    opacity="0.3"
+                    style={{
+                      strokeDasharray: 200,
+                      strokeDashoffset: loaded ? 0 : 200,
+                      transition: 'stroke-dashoffset 1s cubic-bezier(0.22,1,0.36,1) 0.9s',
+                    }}
+                  />
                 </svg>
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-ink-secondary leading-relaxed mb-8 sm:mb-10 max-w-md">
+            <p
+              className="text-base sm:text-lg text-ink-secondary leading-relaxed mb-8 sm:mb-10 max-w-md"
+              style={{
+                opacity: loaded ? 1 : 0,
+                transform: loaded ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'all 0.6s cubic-bezier(0.22,1,0.36,1) 0.8s',
+              }}
+            >
               Empowering brands with innovative digital strategies to drive growth, engagement, and measurable success.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <div
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
+              style={{
+                opacity: loaded ? 1 : 0,
+                transform: loaded ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'all 0.6s cubic-bezier(0.22,1,0.36,1) 0.95s',
+              }}
+            >
               <MagneticButton strength={0.25} radius={150}>
                 <Link
                   href="/portfolio"
-                  className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-semibold text-white text-sm transition-all duration-300 hover:-translate-y-px hover:shadow-brand-lg"
+                  className="btn-tap group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-semibold text-white text-sm transition-all duration-300 hover:-translate-y-px hover:shadow-brand-lg"
                   style={{
                     background: 'linear-gradient(135deg, #7B2FF2 0%, #8B5CF6 100%)',
                     boxShadow: '0 8px 32px -8px rgba(123,47,242,0.45)',
@@ -147,7 +222,7 @@ export default function HeroSection() {
               <MagneticButton strength={0.2} radius={120}>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-ink text-sm border border-surface-border bg-white hover:border-brand-primary/20 hover:bg-brand-light transition-all duration-300"
+                  className="btn-tap inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-ink text-sm border border-surface-border bg-white hover:border-brand-primary/20 hover:bg-brand-light transition-all duration-300"
                 >
                   Start a Project
                 </Link>
@@ -155,7 +230,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right — visual card stack */}
+          {/* Right — visual card stack (desktop) */}
           <div className="hidden lg:block relative h-[560px]">
             {/* Main card */}
             <div
@@ -163,6 +238,9 @@ export default function HeroSection() {
               style={{
                 boxShadow: '0 24px 80px -16px rgba(123,47,242,0.20), 0 4px 16px rgba(123,47,242,0.08)',
                 border: '1px solid rgba(255,255,255,0.8)',
+                opacity: loaded ? 1 : 0,
+                transform: loaded ? undefined : 'translateY(40px) scale(0.95)',
+                transition: 'opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s',
               }}
             >
               <div className="relative h-56">
@@ -172,6 +250,8 @@ export default function HeroSection() {
                   fill
                   className="object-cover"
                   priority
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsM"
                 />
                 {/* Purple overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/10 via-transparent to-transparent" />
@@ -191,13 +271,14 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Stats card */}
+            {/* Stats card — glass morphism */}
             <div
-              className="absolute bottom-16 left-4 w-52 rounded-2xl bg-white p-5 animate-float"
+              className="absolute bottom-16 left-4 w-52 rounded-2xl p-5 animate-float glass-card"
               style={{
-                boxShadow: '0 8px 40px -8px rgba(123,47,242,0.18)',
-                border: '1px solid rgba(232,229,245,0.8)',
                 animationDelay: '1s',
+                opacity: loaded ? 1 : 0,
+                transform: loaded ? undefined : 'translateY(30px)',
+                transition: 'opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s',
               }}
             >
               <div className="flex items-center gap-2 mb-4">
@@ -223,6 +304,8 @@ export default function HeroSection() {
                 background: '#0E0E2C',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
                 animationDelay: '3s',
+                opacity: loaded ? 1 : 0,
+                transition: 'opacity 0.8s ease 0.7s',
               }}
             >
               <div className="w-2 h-2 rounded-full animate-pulse-slow" style={{ background: '#A855F7' }} />
@@ -231,20 +314,51 @@ export default function HeroSection() {
 
             {/* Floating badge */}
             <div
-              className="absolute top-0 left-8 rounded-full px-4 py-2 animate-float"
+              className="absolute top-0 left-8 rounded-full px-4 py-2 animate-float glass-card"
               style={{
-                background: 'linear-gradient(135deg, rgba(123,47,242,0.12), rgba(232,121,249,0.12))',
-                border: '1px solid rgba(123,47,242,0.15)',
                 animationDelay: '2s',
+                opacity: loaded ? 1 : 0,
+                transition: 'opacity 0.8s ease 0.6s',
               }}
             >
               <span className="text-xs font-semibold text-brand-primary">⚡ Premium Quality</span>
             </div>
           </div>
+
+          {/* Mobile hero visual */}
+          <div className="lg:hidden relative w-full">
+            <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide -mx-4 px-4">
+              {[
+                { img: '/images/project-school.png', title: 'SVNS School', cat: 'Institutional' },
+                { img: '/images/project-solar.png', title: 'A&S Solar', cat: 'Business' },
+                { img: '/images/project-portfolio.png', title: 'Portfolio', cat: 'Personal' },
+              ].map((project, i) => (
+                <div
+                  key={project.title}
+                  className="flex-shrink-0 w-[260px] rounded-2xl overflow-hidden bg-white"
+                  style={{
+                    border: '1px solid #E8E5F5',
+                    boxShadow: '0 4px 20px -4px rgba(123,47,242,0.1)',
+                    opacity: loaded ? 1 : 0,
+                    transform: loaded ? 'translateY(0)' : 'translateY(20px)',
+                    transition: `all 0.6s cubic-bezier(0.22,1,0.36,1) ${0.4 + i * 0.15}s`,
+                  }}
+                >
+                  <div className="relative h-36">
+                    <Image src={project.img} alt={project.title} fill className="object-cover" />
+                  </div>
+                  <div className="p-3">
+                    <p className="text-xs font-semibold text-ink-muted uppercase tracking-wider">{project.cat}</p>
+                    <p className="text-sm font-semibold text-ink mt-0.5">{project.title}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Scroll cue */}
-        <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 hidden sm:flex">
+        <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 opacity-40 hidden sm:flex">
           <span className="text-xs tracking-widest uppercase font-medium text-ink-muted">Scroll</span>
           <div className="w-px h-8 bg-gradient-to-b from-brand-primary/40 to-transparent" />
         </div>

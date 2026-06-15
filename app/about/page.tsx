@@ -282,21 +282,21 @@ export default function AboutPage() {
 function EmailIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0">
-      <rect x="1" y="3" width="14" height="10" rx="2"/><path d="M1 5l7 4 7-4"/>
+      <rect x="1" y="3" width="14" height="10" rx="2" /><path d="M1 5l7 4 7-4" />
     </svg>
   )
 }
 function PhoneIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0">
-      <path d="M3 1h3l1.5 4L5.5 6.5a10 10 0 004 4L11 8.5l4 1.5V13a2 2 0 01-2 2C5.4 15 1 10.6 1 5a2 2 0 012-4z"/>
+      <path d="M3 1h3l1.5 4L5.5 6.5a10 10 0 004 4L11 8.5l4 1.5V13a2 2 0 01-2 2C5.4 15 1 10.6 1 5a2 2 0 012-4z" />
     </svg>
   )
 }
 function LocationIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0">
-      <path d="M8 1.5A4.5 4.5 0 013.5 6C3.5 9.5 8 14.5 8 14.5S12.5 9.5 12.5 6A4.5 4.5 0 018 1.5z"/><circle cx="8" cy="6" r="1.5"/>
+      <path d="M8 1.5A4.5 4.5 0 013.5 6C3.5 9.5 8 14.5 8 14.5S12.5 9.5 12.5 6A4.5 4.5 0 018 1.5z" /><circle cx="8" cy="6" r="1.5" />
     </svg>
   )
 }

@@ -8,7 +8,7 @@ import ScrollProgress from '@/components/shared/ScrollProgress'
 import BackToTop from '@/components/shared/BackToTop'
 import WhatsAppFloat from '@/components/shared/WhatsAppFloat'
 import AnnouncementBar from '@/components/shared/AnnouncementBar'
-import ThemeProvider from '@/components/shared/ThemeProvider'
+
 import SocialProofToast from '@/components/shared/SocialProofToast'
 import ExitIntentPopup from '@/components/shared/ExitIntentPopup'
 import PageTransition from '@/components/shared/PageTransition'
@@ -26,7 +26,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <>
-      <ThemeProvider />
+
       <DynamicSEO />
       <CustomCursor />
       <ScrollProgress />
