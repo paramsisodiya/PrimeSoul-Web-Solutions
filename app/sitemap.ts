@@ -1,7 +1,15 @@
 import { MetadataRoute } from 'next'
+import { getAllServiceSlugs } from '@/lib/service-pages'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://primesoul.tech'
+
+  const servicePages = getAllServiceSlugs().map((slug) => ({
+    url: `${baseUrl}/services/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
 
   return [
     {
@@ -22,6 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.9,
     },
+    ...servicePages,
     {
       url: `${baseUrl}/portfolio`,
       lastModified: new Date(),

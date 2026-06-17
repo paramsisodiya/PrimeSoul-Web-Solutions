@@ -19,6 +19,7 @@ import PricingSection from '@/components/sections/PricingSection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import FAQSection from '@/components/sections/FAQSection'
 import CTASection from '@/components/sections/CTASection'
+import BlogPreviewSection from '@/components/sections/BlogPreviewSection'
 
 interface SectionConfig {
   id: string
@@ -40,6 +41,7 @@ const SECTION_COMPONENTS: Record<string, React.ComponentType> = {
   pricing: PricingSection,
   testimonials: TestimonialsSection,
   faq: FAQSection,
+  blog: BlogPreviewSection,
   cta: CTASection,
 }
 
@@ -57,6 +59,7 @@ const DEFAULT_ORDER: SectionConfig[] = [
   { id: 'pricing', label: 'Pricing', enabled: true },
   { id: 'testimonials', label: 'Testimonials', enabled: true },
   { id: 'faq', label: 'FAQ Section', enabled: true },
+  { id: 'blog', label: 'Blog Preview', enabled: true },
   { id: 'cta', label: 'CTA Section', enabled: true },
 ]
 

@@ -4,6 +4,7 @@ import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 import PricingCalculator from '@/components/sections/PricingCalculator'
 import { SERVICES, PROCESS_STEPS, PRICING_PLANS } from '@/lib/data'
+import { SERVICE_PAGES } from '@/lib/service-pages'
 
 export const metadata: Metadata = {
   title: 'Services',
@@ -105,16 +106,24 @@ export default function ServicesPage() {
                       className="h-px md:hidden mb-6"
                       style={{ background: '#E2E8F8' }}
                     />
-                    <Link
-                      href="/contact"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:gap-3"
-                      style={{ background: `${service.accent}10`, color: service.accent }}
-                    >
-                      Get a Quote
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </Link>
+                    <div className="flex flex-col gap-2">
+                      <Link
+                        href={`/services/${SERVICE_PAGES.find(sp => sp.id === service.id)?.slug || service.id}`}
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:gap-3"
+                        style={{ background: `${service.accent}10`, color: service.accent }}
+                      >
+                        Learn More
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                          <path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </Link>
+                      <Link
+                        href="/contact"
+                        className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-xs font-semibold text-ink-muted hover:text-ink transition-colors"
+                      >
+                        Get a Quote →
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </AnimatedSection>

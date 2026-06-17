@@ -15,6 +15,9 @@ import PageTransition from '@/components/shared/PageTransition'
 import ScrollToTop from '@/components/shared/ScrollToTop'
 import ChatbotWidget from '@/components/shared/ChatbotWidget'
 import DynamicSEO from '@/components/shared/DynamicSEO'
+import LeadMagnetPopup from '@/components/shared/LeadMagnetPopup'
+import ThemeToggle from '@/components/shared/ThemeToggle'
+import ErrorBoundary from '@/components/shared/ErrorBoundary'
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -34,13 +37,17 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <AnnouncementBar />
       <Navbar />
       <PageTransition>
-        <main>{children}</main>
+        <ErrorBoundary>
+          <main>{children}</main>
+        </ErrorBoundary>
       </PageTransition>
       <Footer />
       <BackToTop />
       <WhatsAppFloat />
       <SocialProofToast />
       <ExitIntentPopup />
+      <LeadMagnetPopup />
+      <ThemeToggle />
       <ChatbotWidget />
     </>
   )

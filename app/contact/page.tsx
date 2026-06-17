@@ -20,8 +20,11 @@ const services = [
   'Other',
 ]
 
+const BUDGET_LABELS = ['Under ₹5K', '₹5K - ₹10K', '₹10K - ₹25K', '₹25K - ₹50K', '₹50K - ₹1L', '₹1L+']
+const TIMELINES = ['ASAP', 'Within 2 weeks', 'Within 1 month', '1-3 months', 'Not sure yet']
+
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', service: services[0], message: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', service: services[0], budget: 2, timeline: TIMELINES[3], message: '' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -32,6 +35,7 @@ export default function ContactPage() {
       // Save lead to Firebase Firestore
       await addDoc(collection(db, 'leads'), {
         ...form,
+        budget: BUDGET_LABELS[form.budget],
         status: 'new',
         notes: '',
         createdAt: serverTimestamp(),
@@ -47,6 +51,8 @@ export default function ContactPage() {
           email: form.email,
           phone: form.phone || 'Not provided',
           service: form.service,
+          budget: BUDGET_LABELS[form.budget],
+          timeline: form.timeline,
           message: form.message,
         },
       }
@@ -86,7 +92,7 @@ export default function ContactPage() {
       sendWebhookNotification(form).catch(() => {})
 
       setStatus('success')
-      setForm({ name: '', email: '', phone: '', service: services[0], message: '' })
+      setForm({ name: '', email: '', phone: '', service: services[0], budget: 2, timeline: TIMELINES[3], message: '' })
     } catch (err) {
       console.error(err)
       setStatus('error')
@@ -196,6 +202,35 @@ export default function ContactPage() {
                           {services.map(s => <option key={s} value={s}>{s}</option>)}
                         </select>
                       </div>
+                    </div>
+                    {/* Budget Slider */}
+                    <div>
+                      <label className="block text-[#7A7A9E] text-xs font-semibold uppercase tracking-wider mb-2">Budget Range</label>
+                      <div className="p-4 border border-[#E8E5F5] rounded-xl">
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-sm font-semibold text-[#7B2FF2]">{BUDGET_LABELS[form.budget]}</span>
+                        </div>
+                        <input
+                          type="range"
+                          min={0}
+                          max={BUDGET_LABELS.length - 1}
+                          value={form.budget}
+                          onChange={e => setForm(p => ({ ...p, budget: Number(e.target.value) }))}
+                          className="w-full accent-[#7B2FF2] cursor-pointer"
+                          style={{ height: '6px' }}
+                        />
+                        <div className="flex justify-between mt-1">
+                          <span className="text-[10px] text-[#C0BBDC]">₹5K</span>
+                          <span className="text-[10px] text-[#C0BBDC]">₹1L+</span>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Timeline */}
+                    <div>
+                      <label className="block text-[#7A7A9E] text-xs font-semibold uppercase tracking-wider mb-2">Timeline</label>
+                      <select value={form.timeline} onChange={e => setForm(p => ({ ...p, timeline: e.target.value }))} className="w-full border border-[#E8E5F5] rounded-xl px-4 py-3 text-[#0E0E2C] text-sm focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all">
+                        {TIMELINES.map(t => <option key={t} value={t}>{t}</option>)}
+                      </select>
                     </div>
                     <div>
                       <label className="block text-[#7A7A9E] text-xs font-semibold uppercase tracking-wider mb-2">Project Details *</label>
