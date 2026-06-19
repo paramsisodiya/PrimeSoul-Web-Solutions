@@ -29,13 +29,12 @@ export default function BlogPreviewSection() {
         const snap = await getDocs(
           query(
             collection(db, 'blogs'),
-            where('published', '==', true),
-            orderBy('publishedAt', 'desc'),
-            limit(3)
+            orderBy('createdAt', 'desc')
           )
         )
         const items = snap.docs.map(d => ({ id: d.id, ...d.data() } as BlogPost))
-        setPosts(items)
+        const publishedPosts = items.filter(post => post.published === true || (post as any).status === 'published')
+        setPosts(publishedPosts.slice(0, 3))
       } catch (err) {
         console.error('Error fetching blog posts:', err)
         setPosts([])

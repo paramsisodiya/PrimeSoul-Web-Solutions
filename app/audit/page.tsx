@@ -8,20 +8,23 @@ import SectionLabel from '@/components/ui/SectionLabel'
 
 export default function AuditPage() {
   const [email, setEmail] = useState('')
+  const [website, setWebsite] = useState('')
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email) return
+    if (!email || !website) return
     setStatus('submitting')
     try {
       await addDoc(collection(db, 'audit-leads'), {
         email,
+        website,
         source: 'audit-landing-page',
         createdAt: serverTimestamp()
       })
       setStatus('success')
       setEmail('')
+      setWebsite('')
     } catch (err) {
       console.error(err)
       setStatus('error')
@@ -78,6 +81,18 @@ export default function AuditPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="website" className="block text-sm font-semibold text-[#0E0E2C] mb-2">Website URL</label>
+                  <input
+                    type="url"
+                    id="website"
+                    required
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                    className="w-full bg-[#F8F8FC] border border-[#E5E5F0] rounded-xl px-4 py-3.5 text-[#0E0E2C] placeholder-[#A0A0B8] focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all"
+                    placeholder="https://yourwebsite.com"
+                  />
+                </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-semibold text-[#0E0E2C] mb-2">Email Address</label>
                   <input

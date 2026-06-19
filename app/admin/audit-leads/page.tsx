@@ -8,6 +8,7 @@ import { Mail, Trash2, ExternalLink } from 'lucide-react'
 interface AuditLead {
   id: string
   email: string
+  website?: string
   source: string
   createdAt: Timestamp
 }
@@ -74,7 +75,13 @@ export default function AuditLeadsPage() {
                   <Mail size={16} className="text-[#7B2FF2]" />
                   {lead.email}
                 </p>
-                <p className="text-[#4A4A6A] text-xs mt-1">{formatDate(lead.createdAt)}</p>
+                {lead.website && (
+                  <a href={lead.website.startsWith('http') ? lead.website : `https://${lead.website}`} target="_blank" rel="noopener noreferrer" className="text-[#A855F7] text-sm mt-2 flex items-center gap-1 hover:underline">
+                    <ExternalLink size={12} />
+                    {lead.website}
+                  </a>
+                )}
+                <p className="text-[#4A4A6A] text-xs mt-2">{formatDate(lead.createdAt)}</p>
               </div>
             </div>
             <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
