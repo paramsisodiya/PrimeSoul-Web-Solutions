@@ -18,6 +18,7 @@ interface BlogPost {
   readingTime?: string
   publishedAt?: { toDate?: () => Date }
   author?: string
+  published?: boolean
 }
 
 export default function BlogPreviewSection() {
