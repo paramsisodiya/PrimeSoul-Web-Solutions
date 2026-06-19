@@ -5,6 +5,33 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { SERVICE_PAGES } from '@/lib/service-pages'
+import { 
+  Monitor, Smartphone, Globe, PenTool, LayoutTemplate, Palette, LineChart, 
+  Search, Share2, ImageIcon, Wrench, Megaphone, MapPin, Code, Zap, Edit, BarChart
+} from 'lucide-react'
+
+const getServiceIcon = (iconName: string) => {
+  switch (iconName) {
+    case 'monitor': return <Monitor size={20} strokeWidth={1.5} />;
+    case 'smartphone': return <Smartphone size={20} strokeWidth={1.5} />;
+    case 'globe': return <Globe size={20} strokeWidth={1.5} />;
+    case 'pen-tool': return <PenTool size={20} strokeWidth={1.5} />;
+    case 'layout': return <LayoutTemplate size={20} strokeWidth={1.5} />;
+    case 'palette': return <Palette size={20} strokeWidth={1.5} />;
+    case 'trending-up': return <LineChart size={20} strokeWidth={1.5} />;
+    case 'search': return <Search size={20} strokeWidth={1.5} />;
+    case 'share-2': return <Share2 size={20} strokeWidth={1.5} />;
+    case 'image': return <ImageIcon size={20} strokeWidth={1.5} />;
+    case 'wrench': return <Wrench size={20} strokeWidth={1.5} />;
+    case 'megaphone': return <Megaphone size={20} strokeWidth={1.5} />;
+    case 'map-pin': return <MapPin size={20} strokeWidth={1.5} />;
+    case 'code': return <Code size={20} strokeWidth={1.5} />;
+    case 'zap': return <Zap size={20} strokeWidth={1.5} />;
+    case 'edit': return <Edit size={20} strokeWidth={1.5} />;
+    case 'bar-chart': return <BarChart size={20} strokeWidth={1.5} />;
+    default: return <Monitor size={20} strokeWidth={1.5} />;
+  }
+}
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -103,39 +130,56 @@ export default function Navbar() {
                     </svg>
                   </button>
 
-                  {/* Desktop Dropdown */}
+                  {/* Desktop Dropdown - Mega Menu */}
                   <div
                     className={cn(
-                      'absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[320px] rounded-2xl bg-white border border-surface-border shadow-card-hover transition-all duration-300',
+                      'absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[680px] rounded-[1.5rem] bg-white border border-surface-border shadow-card-hover transition-all duration-300 overflow-hidden',
                       servicesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
                     )}
                   >
-                    <div className="p-3">
-                      {SERVICE_PAGES.map((service) => (
-                        <Link
-                          key={service.id}
-                          href={`/services/${service.slug}`}
-                          className="flex items-start gap-3 p-3 rounded-xl hover:bg-surface-subtle transition-colors group"
-                        >
-                          <div
-                            className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors"
-                            style={{ background: `${service.accent}10`, color: service.accent }}
+                    <div className="flex">
+                      {/* Left side: Links Grid */}
+                      <div className="w-[65%] p-4 grid grid-cols-2 gap-x-2 gap-y-1 bg-white">
+                        {SERVICE_PAGES.map((service) => (
+                          <Link
+                            key={service.id}
+                            href={`/services/${service.slug}`}
+                            className="flex items-start gap-3 p-3 rounded-xl hover:bg-surface-subtle transition-colors group"
+                            onClick={() => setServicesOpen(false)}
                           >
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                              <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/>
-                            </svg>
-                          </div>
-                          <div>
-                            <p className="text-sm font-semibold text-ink group-hover:text-brand-primary transition-colors">{service.title}</p>
-                            <p className="text-xs text-ink-muted mt-0.5 line-clamp-1">{service.heroTagline}</p>
-                          </div>
-                        </Link>
-                      ))}
-                      <div className="border-t border-surface-border mt-2 pt-2">
-                        <Link href="/services" className="flex items-center gap-2 p-3 rounded-xl hover:bg-surface-subtle transition-colors text-sm font-semibold text-brand-primary">
-                          View All Services
-                          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        </Link>
+                            <div
+                              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors bg-white shadow-sm border border-surface-border group-hover:border-brand-primary/30"
+                              style={{ color: service.accent }}
+                            >
+                              {getServiceIcon(service.icon)}
+                            </div>
+                            <div className="pt-0.5">
+                              <p className="text-sm font-bold text-ink group-hover:text-brand-primary transition-colors leading-tight mb-1">{service.shortTitle}</p>
+                              <p className="text-[11px] text-ink-muted line-clamp-2 leading-snug">{service.heroTagline}</p>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                      
+                      {/* Right side: Highlight Panel */}
+                      <div className="w-[35%] bg-surface-subtle border-l border-surface-border p-6 flex flex-col justify-between">
+                        <div>
+                          <h4 className="text-[10px] font-bold uppercase tracking-widest text-brand-primary mb-4">Why PrimeSoul?</h4>
+                          <p className="text-sm text-ink-secondary leading-relaxed mb-6">
+                            We don&apos;t just build websites. We craft digital experiences that drive growth, engagement, and actual revenue for your business.
+                          </p>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <Link href="/services" onClick={() => setServicesOpen(false)} className="flex items-center justify-between p-3 bg-white rounded-xl border border-surface-border hover:border-brand-primary hover:shadow-sm transition-all group">
+                            <span className="text-sm font-semibold text-ink group-hover:text-brand-primary transition-colors">All Services</span>
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-brand-primary group-hover:translate-x-1 transition-transform"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          </Link>
+                          <Link href="/contact" onClick={() => setServicesOpen(false)} className="flex items-center justify-between p-3 rounded-xl transition-all group shadow-brand-sm hover:shadow-brand transition-shadow" style={{ background: 'linear-gradient(135deg, #7B2FF2 0%, #A855F7 100%)' }}>
+                            <span className="text-sm font-semibold text-white">Start a Project</span>
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-white group-hover:translate-x-1 transition-transform"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
