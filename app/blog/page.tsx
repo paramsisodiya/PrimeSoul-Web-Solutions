@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Calendar, Clock, ArrowRight, FileText } from 'lucide-react'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
@@ -75,7 +76,7 @@ export default function BlogPage() {
               </div>
               <h2 className="text-2xl font-bold text-[#0E0E2C] mb-3">Blog Coming Soon</h2>
               <p className="text-[#7A7A9E] text-base max-w-md mx-auto mb-8">
-                We're working on insightful articles. Check back soon!
+                We&apos;re working on insightful articles. Check back soon!
               </p>
               <Link href="/contact" className="inline-flex items-center gap-2 bg-gradient-to-r from-[#7B2FF2] to-[#A855F7] text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-all text-sm">
                 Work With Us <ArrowRight size={16} />
@@ -88,7 +89,7 @@ export default function BlogPage() {
                   <div className="grid lg:grid-cols-2 gap-0 bg-white border border-[#E8E5F5] rounded-3xl overflow-hidden shadow-lg hover:shadow-xl hover:border-[#7B2FF2]/20 transition-all duration-300">
                     <div className="relative overflow-hidden h-64 lg:h-auto">
                       {blogs[0].thumbnail ? (
-                        <img src={blogs[0].thumbnail} alt={blogs[0].title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <Image src={blogs[0].thumbnail} alt={blogs[0].title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-[#7B2FF2]/20 to-[#E879F9]/20 flex items-center justify-center">
                           <FileText size={48} className="text-[#7B2FF2]" />
@@ -118,7 +119,7 @@ export default function BlogPage() {
                         <article className="h-full bg-white border border-[#E8E5F5] rounded-2xl overflow-hidden hover:shadow-lg hover:border-[#7B2FF2]/20 transition-all duration-300 flex flex-col">
                           <div className="relative overflow-hidden h-48">
                             {blog.thumbnail ? (
-                              <img src={blog.thumbnail} alt={blog.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                              <Image src={blog.thumbnail} alt={blog.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                             ) : (
                               <div className="w-full h-full bg-gradient-to-br from-[#7B2FF2]/10 to-[#E879F9]/10 flex items-center justify-center">
                                 <FileText size={36} className="text-[#7B2FF2]" />
@@ -151,7 +152,7 @@ export default function BlogPage() {
             Want a Website That Actually{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7B2FF2] to-[#E879F9]">Converts?</span>
           </h2>
-          <p className="text-[#7A7A9E] text-base mb-8">Let's build something extraordinary together.</p>
+          <p className="text-[#7A7A9E] text-base mb-8">Let&apos;s build something extraordinary together.</p>
           <Link href="/contact" className="inline-flex items-center gap-2 bg-gradient-to-r from-[#7B2FF2] to-[#A855F7] text-white font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition-all shadow-lg shadow-purple-500/30">
             Start a Project <ArrowRight size={16} />
           </Link>

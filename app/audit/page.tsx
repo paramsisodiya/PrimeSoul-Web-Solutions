@@ -38,7 +38,7 @@ export default function AuditPage() {
               Is your website <span className="text-gradient-purple">costing you</span> clients?
             </h1>
             <p className="text-lg text-[#4A4A6A] leading-relaxed mb-8">
-              Get a comprehensive analysis of your website's performance, SEO, mobile-friendliness, and security. We'll show you exactly what's working and what needs fixing to boost your conversions.
+              Get a comprehensive analysis of your website&apos;s performance, SEO, mobile-friendliness, and security. We&apos;ll show you exactly what&apos;s working and what needs fixing to boost your conversions.
             </p>
             
             <ul className="space-y-4 mb-8">
@@ -64,7 +64,7 @@ export default function AuditPage() {
             <div className="absolute -top-20 -right-20 w-64 h-64 bg-gradient-to-br from-[#7B2FF2]/10 to-[#E879F9]/10 rounded-full blur-3xl -z-10" />
             
             <h3 className="text-2xl font-bold text-[#0E0E2C] mb-2">Claim Your Free Audit</h3>
-            <p className="text-[#4A4A6A] mb-8">Enter your email below. We'll analyze your site and send you a detailed report within 24 hours.</p>
+            <p className="text-[#4A4A6A] mb-8">Enter your email below. We&apos;ll analyze your site and send you a detailed report within 24 hours.</p>
 
             {status === 'success' ? (
               <div className="text-center py-8">
@@ -73,8 +73,8 @@ export default function AuditPage() {
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </div>
-                <h4 className="text-xl font-bold text-[#0E0E2C] mb-2">You're on the list!</h4>
-                <p className="text-[#4A4A6A]">Keep an eye on your inbox. We'll be in touch shortly.</p>
+                <h4 className="text-xl font-bold text-[#0E0E2C] mb-2">You&apos;re on the list!</h4>
+                <p className="text-[#4A4A6A]">Keep an eye on your inbox. We&apos;ll be in touch shortly.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">

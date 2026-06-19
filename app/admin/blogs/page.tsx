@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react'
 import { collection, getDocs, deleteDoc, doc, orderBy, query, Timestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import Image from 'next/image'
 import { Plus, Pencil, Trash2, Eye, EyeOff, FileText } from 'lucide-react'
 
 interface Blog {
@@ -76,7 +77,7 @@ export default function BlogsPage() {
           {blogs.map(blog => (
             <div key={blog.id} className="bg-[#161640] border border-white/5 rounded-2xl p-5 flex items-center gap-5 hover:border-white/10 transition-all">
               {blog.thumbnail ? (
-                <img src={blog.thumbnail} alt={blog.title} className="w-16 h-16 object-cover rounded-xl flex-shrink-0" />
+                <Image src={blog.thumbnail} alt={blog.title} width={64} height={64} className="object-cover rounded-xl flex-shrink-0" />
               ) : (
                 <div className="w-16 h-16 bg-[#7B2FF2]/10 rounded-xl flex items-center justify-center flex-shrink-0">
                   <FileText size={24} className="text-[#7B2FF2]" />

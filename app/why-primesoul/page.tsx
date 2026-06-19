@@ -68,7 +68,7 @@ export default function WhyChooseUsPage() {
             <AnimatedSection delay={200} className="bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-white/20">
               <h2 className="text-2xl md:text-3xl font-bold text-[#0E0E2C] mb-4">Real Services with Tangible Results</h2>
               <p className="text-[#4A4A6A] leading-relaxed text-lg">
-                We don't sell vanity metrics. From building lightning-fast web applications using Next.js to optimizing your Google Business Profile, every service we offer is designed to increase your visibility, capture more leads, and generate revenue.
+                We don&apos;t sell vanity metrics. From building lightning-fast web applications using Next.js to optimizing your Google Business Profile, every service we offer is designed to increase your visibility, capture more leads, and generate revenue.
               </p>
             </AnimatedSection>
 
@@ -87,7 +87,7 @@ export default function WhyChooseUsPage() {
             <AnimatedSection delay={400} className="bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-white/20">
               <h2 className="text-2xl md:text-3xl font-bold text-[#0E0E2C] mb-4">Pricing Transparency</h2>
               <p className="text-[#4A4A6A] leading-relaxed text-lg">
-                No hidden costs. No surprise invoices. We provide complete pricing transparency upfront. Whether it's our website development packages or our ongoing maintenance plans (starting at ₹999/month), you know exactly what you're paying for and what you get in return.
+                No hidden costs. No surprise invoices. We provide complete pricing transparency upfront. Whether it&apos;s our website development packages or our ongoing maintenance plans (starting at ₹999/month), you know exactly what you&apos;re paying for and what you get in return.
               </p>
             </AnimatedSection>
           </div>

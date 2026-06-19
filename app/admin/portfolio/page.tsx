@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react'
 import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, serverTimestamp, orderBy, query, Timestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import Image from 'next/image'
 import { Plus, Pencil, Trash2, X, Save, Briefcase, ExternalLink } from 'lucide-react'
 
 interface Project {
@@ -345,7 +346,9 @@ export default function PortfolioPage() {
           {projects.map(p => (
             <div key={p.id} className="bg-[#161640] border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-all group">
               {p.image ? (
-                <img src={p.image} alt={p.imageAlt || p.title} className="w-full h-40 object-cover" />
+                <div className="relative w-full h-40">
+                  <Image src={p.image} alt={p.imageAlt || p.title} fill className="object-cover" />
+                </div>
               ) : (
                 <div className="w-full h-40 bg-[#7B2FF2]/10 flex items-center justify-center">
                   <Briefcase size={32} className="text-[#7B2FF2]" />

@@ -6,6 +6,7 @@ import { useRouter, useParams } from 'next/navigation'
 import { collection, addDoc, doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { Save, ArrowLeft, Eye } from 'lucide-react'
+import Image from 'next/image'
 
 const categories = ['Web Design', 'Development', 'SEO', 'Digital Marketing', 'Business Tips', 'Case Study']
 
@@ -200,7 +201,9 @@ export default function BlogEditor() {
                 className="w-full bg-[#0E0E2C] border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder-[#4A4A6A] focus:outline-none focus:border-[#7B2FF2] transition-all"
               />
               {form.thumbnail && (
-                <img src={form.thumbnail} alt="Thumbnail" className="mt-3 w-full h-32 object-cover rounded-xl" />
+                <div className="relative mt-3 w-full h-32">
+                  <Image src={form.thumbnail} alt="Thumbnail" fill className="object-cover rounded-xl" />
+                </div>
               )}
               <p className="text-[#4A4A6A] text-xs mt-1">Upload to imgur.com or imgbb.com (free) and paste URL</p>
             </div>

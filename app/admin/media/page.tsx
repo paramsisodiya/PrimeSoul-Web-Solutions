@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react'
 import { collection, getDocs, addDoc, deleteDoc, doc, serverTimestamp, orderBy, query, Timestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import Image from 'next/image'
 import { Plus, Trash2, Copy, Image as ImageIcon, ExternalLink, X, Check } from 'lucide-react'
 
 interface MediaItem {
@@ -128,8 +129,8 @@ export default function MediaPage() {
                 />
               </div>
               {newUrl && newUrl.startsWith('http') && (
-                <div className="rounded-xl overflow-hidden border border-white/10">
-                  <img src={newUrl} alt="Preview" className="w-full h-32 object-cover" onError={e => (e.currentTarget.style.display = 'none')} />
+                <div className="relative rounded-xl overflow-hidden border border-white/10 w-full h-32">
+                  <Image src={newUrl} alt="Preview" fill className="object-cover" onError={e => (e.currentTarget.style.display = 'none')} />
                 </div>
               )}
             </div>
@@ -152,7 +153,9 @@ export default function MediaPage() {
               <p className="text-white font-medium">{preview.name}</p>
               <button onClick={() => setPreview(null)} className="text-[#7A7A9E] hover:text-white"><X size={24} /></button>
             </div>
-            <img src={preview.url} alt={preview.name ?? 'Preview image'} className="w-full rounded-2xl max-h-[70vh] object-contain" />
+            <div className="relative w-full h-[60vh] max-h-[70vh]">
+              <Image src={preview.url} alt={preview.name ?? 'Preview image'} fill className="rounded-2xl object-contain" />
+            </div>
             <div className="flex gap-3 mt-4">
               <button onClick={() => copyUrl(preview.url)} className="flex-1 py-3 bg-[#161640] border border-white/10 text-white text-sm rounded-xl hover:border-[#7B2FF2]/30 transition-all flex items-center justify-center gap-2">
                 {copied === preview.url ? <Check size={16} className="text-green-400" /> : <Copy size={16} />}
@@ -178,8 +181,8 @@ export default function MediaPage() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {items.map(item => (
             <div key={item.id} className="group relative bg-[#161640] border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-all">
-              <div className="aspect-square cursor-pointer" onClick={() => setPreview(item)}>
-                <img src={item.url} alt={item.name ?? 'Library image'} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onError={e => { e.currentTarget.src = ''; e.currentTarget.className = 'hidden' }} />
+              <div className="relative aspect-square cursor-pointer" onClick={() => setPreview(item)}>
+                <Image src={item.url} alt={item.name ?? 'Library image'} fill className="object-cover group-hover:scale-105 transition-transform duration-300" onError={e => (e.currentTarget.style.display = 'none')} />
               </div>
               <div className="p-3">
                 <p className="text-white text-xs font-medium truncate">{item.name}</p>

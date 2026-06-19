@@ -118,7 +118,7 @@ export default function ClientsPage() {
             <div className="relative z-10">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to join our growing list of clients?</h2>
               <p className="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
-                Let's discuss how we can help your business grow with a custom-built digital solution.
+                Let&apos;s discuss how we can help your business grow with a custom-built digital solution.
               </p>
               <Link
                 href="/contact"

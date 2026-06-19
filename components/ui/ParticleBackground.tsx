@@ -34,7 +34,10 @@ export default function ParticleBackground() {
     }
 
     const createParticles = () => {
-      const count = Math.min(Math.floor((canvas.width * canvas.height) / 18000), 80)
+      const isMobile = window.innerWidth < 768
+      const density = isMobile ? 35000 : 18000
+      const maxParticles = isMobile ? 30 : 80
+      const count = Math.min(Math.floor((canvas.width * canvas.height) / density), maxParticles)
       particles = []
       for (let i = 0; i < count; i++) {
         particles.push({

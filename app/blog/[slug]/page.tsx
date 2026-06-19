@@ -5,6 +5,7 @@ import { collection, getDocs, query, where, limit } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import Image from 'next/image'
 import { Calendar, Clock, ArrowLeft, ArrowRight, Tag } from 'lucide-react'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 
@@ -101,8 +102,8 @@ export default function BlogPostPage() {
       </section>
 
       {blog.thumbnail && (
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10 mb-12">
-          <img src={blog.thumbnail} alt={blog.title} className="w-full h-64 sm:h-80 md:h-96 object-cover rounded-2xl shadow-2xl" />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10 mb-12 h-64 sm:h-80 md:h-96">
+          <Image src={blog.thumbnail} alt={blog.title} fill className="object-cover rounded-2xl shadow-2xl" />
         </div>
       )}
 
@@ -127,7 +128,7 @@ export default function BlogPostPage() {
             Ready to Build Your{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7B2FF2] to-[#E879F9]">Dream Website?</span>
           </h2>
-          <p className="text-[#7A7A9E] text-base mb-8">Let's turn your vision into a premium digital experience.</p>
+          <p className="text-[#7A7A9E] text-base mb-8">Let&apos;s turn your vision into a premium digital experience.</p>
           <Link href="/contact" className="inline-flex items-center gap-2 bg-gradient-to-r from-[#7B2FF2] to-[#A855F7] text-white font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition-all shadow-lg shadow-purple-500/30">
             Start a Project <ArrowRight size={16} />
           </Link>

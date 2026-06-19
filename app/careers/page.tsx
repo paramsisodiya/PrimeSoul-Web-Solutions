@@ -57,7 +57,7 @@ export default function CareersPage() {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold text-[#0E0E2C] mb-4">Application Received!</h3>
-                <p className="text-[#4A4A6A]">Thank you for your interest. We'll review your application and get back to you soon.</p>
+                <p className="text-[#4A4A6A]">Thank you for your interest. We&apos;ll review your application and get back to you soon.</p>
                 <button
                   onClick={() => setStatus('idle')}
                   className="mt-8 text-[#7B2FF2] font-semibold hover:underline"

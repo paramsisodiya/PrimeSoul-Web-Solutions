@@ -91,7 +91,7 @@ export default function PricingCalculator() {
                 <span className="text-sm font-medium text-[#0E0E2C]">{feature.label}</span>
               </div>
               <span className="text-xs font-medium text-[#7A7A9E]">
-                {feature.price === 0 ? 'Included' : `+₹${feature.price.toLocaleString()}`}
+                {feature.price === 0 ? 'Included' : feature.price ? `+₹${feature.price.toLocaleString()}` : ''}
               </span>
             </div>
           ))}

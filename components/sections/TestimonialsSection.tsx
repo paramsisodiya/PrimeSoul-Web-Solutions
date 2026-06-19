@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import Image from 'next/image'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 import { collection, getDocs, query, where } from 'firebase/firestore'
@@ -161,7 +162,7 @@ export default function TestimonialsSection() {
                 {/* Author */}
                 <div className="flex items-center justify-center gap-4">
                   {t.photo ? (
-                    <img src={t.photo} alt={t.name} className="w-10 h-10 rounded-full object-cover ring-2 ring-[#7B2FF2]/30" />
+                    <Image src={t.photo} alt={t.name} width={40} height={40} className="rounded-full object-cover ring-2 ring-[#7B2FF2]/30" />
                   ) : (
                     <div
                       className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold text-white"

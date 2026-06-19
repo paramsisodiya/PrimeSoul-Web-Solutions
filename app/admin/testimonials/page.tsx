@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react'
 import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, serverTimestamp, orderBy, query, Timestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import Image from 'next/image'
 import { Plus, Pencil, Trash2, X, Save, Star } from 'lucide-react'
 
 interface Testimonial {
@@ -141,7 +142,7 @@ export default function TestimonialsPage() {
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                   {t.photo ? (
-                    <img src={t.photo} alt={t.name} className="w-10 h-10 rounded-full object-cover" />
+                    <Image src={t.photo} alt={t.name} width={40} height={40} className="rounded-full object-cover" />
                   ) : (
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#7B2FF2] to-[#E879F9] flex items-center justify-center text-white font-bold text-sm">
                       {t.name.charAt(0)}
