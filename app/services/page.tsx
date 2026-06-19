@@ -3,7 +3,7 @@ import Link from 'next/link'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 import PricingCalculator from '@/components/sections/PricingCalculator'
-import { SERVICES, PROCESS_STEPS, PRICING_PLANS } from '@/lib/data'
+import { PROCESS_STEPS, PRICING_PLANS } from '@/lib/data'
 import { SERVICE_PAGES } from '@/lib/service-pages'
 
 export const metadata: Metadata = {
@@ -58,7 +58,7 @@ export default function ServicesPage() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col gap-8">
-            {SERVICES.map((service, i) => (
+            {SERVICE_PAGES.map((service, i) => (
               <AnimatedSection key={service.id} delay={i * 60}>
                 <div
                   className="rounded-3xl p-8 md:p-10 grid md:grid-cols-3 gap-8 transition-all duration-300 hover:-translate-y-0.5"
@@ -74,27 +74,27 @@ export default function ServicesPage() {
                       className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-5"
                       style={{ background: `${service.accent}10`, color: service.accent }}
                     >
-                      {ICONS[service.icon]}
+                      {ICONS[service.icon] || ICONS['monitor']}
                     </div>
                     <h2 className="text-xl font-semibold text-ink mb-3">{service.title}</h2>
-                    <p className="text-sm text-ink-muted leading-relaxed">{service.description}</p>
+                    <p className="text-sm text-ink-muted leading-relaxed line-clamp-3">{service.heroDescription}</p>
                   </div>
 
                   {/* Features */}
                   <div className="md:col-span-1">
                     <p className="text-xs font-semibold uppercase tracking-widest text-ink-faint mb-4">Includes</p>
                     <ul className="flex flex-col gap-3">
-                      {service.features.map((feature) => (
-                        <li key={feature} className="flex items-center gap-2.5 text-sm text-ink-secondary">
+                      {service.features.slice(0, 4).map((feature) => (
+                        <li key={feature.title} className="flex items-start gap-2.5 text-sm text-ink-secondary">
                           <div
-                            className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                            className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
                             style={{ background: `${service.accent}12` }}
                           >
                             <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                               <path d="M2 5l2 2 4-4" stroke={service.accent} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                           </div>
-                          {feature}
+                          <span>{feature.title}</span>
                         </li>
                       ))}
                     </ul>
@@ -108,7 +108,7 @@ export default function ServicesPage() {
                     />
                     <div className="flex flex-col gap-2">
                       <Link
-                        href={`/services/${SERVICE_PAGES.find(sp => sp.id === service.id)?.slug || service.id}`}
+                        href={`/services/${service.slug}`}
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:gap-3"
                         style={{ background: `${service.accent}10`, color: service.accent }}
                       >
