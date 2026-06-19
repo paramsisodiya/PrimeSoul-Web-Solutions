@@ -52,7 +52,19 @@ export default function CaseStudyPage() {
         const snap = await getDocs(query(collection(db, 'portfolio'), orderBy('createdAt', 'desc')))
         const projects = snap.docs.map((doc) => normalizeProject(doc))
         setAllProjects(projects)
-        const found = projects.find((item) => item.slug === slug)
+        
+        // Smart matching: exact match first, then fallback to normalized partial match
+        const normalizeForCompare = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '')
+        let found = projects.find((item) => item.slug.toLowerCase() === slug.toLowerCase())
+        
+        if (!found) {
+          found = projects.find(item => {
+            const itemNorm = normalizeForCompare(item.slug)
+            const slugNorm = normalizeForCompare(slug)
+            return itemNorm.includes(slugNorm) || slugNorm.includes(itemNorm)
+          })
+        }
+
         if (found) { setProject(found); setStatus('found') }
         else { setProject(null); setStatus('not-found') }
       } catch (error) {
