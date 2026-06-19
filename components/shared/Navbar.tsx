@@ -9,9 +9,11 @@ import { SERVICE_PAGES } from '@/lib/service-pages'
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
+  { href: '/why-primesoul', label: 'Why Us' },
   { href: '/services', label: 'Services', hasDropdown: true },
   { href: '/portfolio', label: 'Portfolio' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/clients', label: 'Clients' },
+  { href: '/careers', label: 'Careers' },
 ]
 
 export default function Navbar() {
@@ -325,6 +327,38 @@ export default function Navbar() {
               <span className="inline-flex items-center gap-4">
                 <span className="text-sm font-mono text-ink-faint">03</span>
                 Contact
+              </span>
+            </Link>
+
+            {/* Careers */}
+            <Link
+              href="/careers"
+              className={cn(
+                'text-3xl font-semibold transition-colors py-2',
+                pathname === '/careers' ? 'text-brand-primary' : 'text-ink-secondary hover:text-ink',
+                menuOpen && 'menu-link-animated'
+              )}
+              style={{ animationDelay: menuOpen ? '300ms' : '0ms' }}
+            >
+              <span className="inline-flex items-center gap-4">
+                <span className="text-sm font-mono text-ink-faint">04</span>
+                Careers
+              </span>
+            </Link>
+
+            {/* Free Audit */}
+            <Link
+              href="/audit"
+              className={cn(
+                'text-3xl font-semibold transition-colors py-2',
+                pathname === '/audit' ? 'text-brand-primary' : 'text-ink-secondary hover:text-ink',
+                menuOpen && 'menu-link-animated'
+              )}
+              style={{ animationDelay: menuOpen ? '340ms' : '0ms' }}
+            >
+              <span className="inline-flex items-center gap-4">
+                <span className="text-sm font-mono text-ink-faint">05</span>
+                Free Audit
               </span>
             </Link>
           </nav>

@@ -5,8 +5,12 @@ const LINKS = {
   pages: [
     { href: '/', label: 'Home' },
     { href: '/about', label: 'About' },
+    { href: '/why-primesoul', label: 'Why Us' },
     { href: '/services', label: 'Services' },
     { href: '/portfolio', label: 'Portfolio' },
+    { href: '/clients', label: 'Clients' },
+    { href: '/careers', label: 'Careers' },
+    { href: '/audit', label: 'Free Audit' },
     { href: '/blog', label: 'Blog' },
     { href: '/contact', label: 'Contact' },
   ],
