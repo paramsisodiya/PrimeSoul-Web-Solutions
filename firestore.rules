@@ -8,6 +8,18 @@ service cloud.firestore {
       allow read, update, delete: if request.auth != null;
     }
 
+    // Audit Leads — anyone can write (popup), only admin can read
+    match /audit-leads/{leadId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+
+    // Job Applications — anyone can write, only admin can read
+    match /job_applications/{applicationId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+
     // Blogs — anyone can read published, only admin can write
     match /blogs/{blogId} {
       allow read: if resource.data.status == 'published' || request.auth != null;

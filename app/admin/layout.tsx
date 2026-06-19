@@ -30,11 +30,15 @@ import {
   LayoutList,
   Shuffle,
   Webhook,
+  Target,
+  Users,
 } from 'lucide-react'
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/leads', label: 'Leads', icon: Mail },
+  { href: '/admin/audit-leads', label: 'Audit Leads', icon: Target },
+  { href: '/admin/job-applications', label: 'Careers', icon: Users },
   { href: '/admin/blogs', label: 'Blog', icon: FileText },
   { href: '/admin/portfolio', label: 'Portfolio', icon: Briefcase },
   { href: '/admin/testimonials', label: 'Testimonials', icon: Star },

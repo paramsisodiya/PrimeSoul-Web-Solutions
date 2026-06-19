@@ -28,7 +28,7 @@ export default function BlogPreviewSection() {
       try {
         const snap = await getDocs(
           query(
-            collection(db, 'blog'),
+            collection(db, 'blogs'),
             where('published', '==', true),
             orderBy('publishedAt', 'desc'),
             limit(3)
@@ -67,7 +67,7 @@ export default function BlogPreviewSection() {
           >
             View all posts
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </Link>
         </AnimatedSection>
@@ -124,7 +124,7 @@ export default function BlogPreviewSection() {
                     <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-brand-primary group-hover:gap-3 transition-all">
                       Read more
                       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </div>
                   </div>
