@@ -299,9 +299,6 @@ export default function PricingSection() {
                         }}
                       />
                     )}
-                    {plan.highlighted && (
-                      <span className="relative z-10 sr-only">{plan.ctaText || plan.cta || 'Get Started'}</span>
-                    )}
                   </Link>
                 </div>
               </div>
