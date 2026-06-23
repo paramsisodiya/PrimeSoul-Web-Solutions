@@ -1,11 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import TurnstileWidget from '@/components/shared/TurnstileWidget'
 
 export default function LeadMagnetPopup() {
   const [visible, setVisible] = useState(false)
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle')
+  const [turnstileToken, setTurnstileToken] = useState('')
 
   useEffect(() => {
     // Show after 30 seconds if not dismissed before
@@ -19,22 +21,29 @@ export default function LeadMagnetPopup() {
     return () => clearTimeout(timer)
   }, [])
 
+  const handleTurnstileToken = useCallback((token: string) => {
+    setTurnstileToken(token)
+  }, [])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) return
+    if (!turnstileToken) {
+      alert('Please complete the captcha verification')
+      return
+    }
     setStatus('sending')
 
     try {
-      // Store the lead in Firebase (fire-and-forget approach)
-      const { addDoc, collection, serverTimestamp } = await import('firebase/firestore')
-      const { db } = await import('@/lib/firebase')
-      await addDoc(collection(db, 'audit-leads'), {
-        email,
-        source: 'lead-magnet-popup',
-        createdAt: serverTimestamp(),
+      const res = await fetch('/api/lead-magnet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, turnstileToken }),
       })
+
+      if (!res.ok) throw new Error('Failed')
     } catch {
-      // Continue even if Firebase fails
+      // Continue even if API fails
     }
 
     setStatus('success')
@@ -113,6 +122,7 @@ export default function LeadMagnetPopup() {
                 placeholder="Enter your email address"
                 className="w-full border border-surface-border rounded-xl px-4 py-3 text-sm text-ink placeholder-ink-faint focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
               />
+              <TurnstileWidget onToken={handleTurnstileToken} onExpire={() => setTurnstileToken('')} />
               <button
                 type="submit"
                 disabled={status === 'sending'}

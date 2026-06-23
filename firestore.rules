@@ -2,74 +2,112 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // Helper: only the site owner
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'paramsisodiya061@gmail.com';
+    }
+
     // Leads — anyone can write (contact form), only admin can read
     match /leads/{leadId} {
       allow create: if true;
-      allow read, update, delete: if request.auth != null;
+      allow read, update, delete: if isAdmin();
     }
 
     // Audit Leads — anyone can write (popup), only admin can read
     match /audit-leads/{leadId} {
       allow create: if true;
-      allow read, update, delete: if request.auth != null;
+      allow read, update, delete: if isAdmin();
     }
 
     // Job Applications — anyone can write, only admin can read
     match /job_applications/{applicationId} {
       allow create: if true;
-      allow read, update, delete: if request.auth != null;
+      allow read, update, delete: if isAdmin();
     }
 
     // Blogs — anyone can read published, only admin can write
     match /blogs/{blogId} {
-      allow read: if resource.data.status == 'published' || request.auth != null;
-      allow create, update, delete: if request.auth != null;
+      allow read: if resource.data.status == 'published' || isAdmin();
+      allow create, update, delete: if isAdmin();
     }
 
     // Portfolio — anyone can read, only admin can write
     match /portfolio/{projectId} {
       allow read: if true;
-      allow create, update, delete: if request.auth != null;
+      allow create, update, delete: if isAdmin();
     }
 
     // Testimonials — anyone can read visible, only admin can write
     match /testimonials/{testimonialId} {
-      allow read: if resource.data.visible == true || request.auth != null;
-      allow create, update, delete: if request.auth != null;
+      allow read: if resource.data.visible == true || isAdmin();
+      allow create, update, delete: if isAdmin();
     }
 
     // FAQs — anyone can read visible, only admin can write
     match /faqs/{faqId} {
-      allow read: if resource.data.visible == true || request.auth != null;
-      allow create, update, delete: if request.auth != null;
+      allow read: if resource.data.visible == true || isAdmin();
+      allow create, update, delete: if isAdmin();
     }
 
     // Pricing — anyone can read visible, only admin can write
     match /pricing/{planId} {
-      allow read: if resource.data.visible == true || request.auth != null;
-      allow create, update, delete: if request.auth != null;
+      allow read: if resource.data.visible == true || isAdmin();
+      allow create, update, delete: if isAdmin();
     }
 
     // Announcements — anyone can read active, only admin can write
     match /announcements/{announcementId} {
-      allow read: if resource.data.active == true || request.auth != null;
-      allow create, update, delete: if request.auth != null;
+      allow read: if resource.data.active == true || isAdmin();
+      allow create, update, delete: if isAdmin();
     }
 
     // Media — only admin can read/write
     match /media/{mediaId} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAdmin();
     }
 
     // Settings — anyone can read, only admin can write
     match /settings/{settingId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
     }
 
     // Activity Log — only admin can read/write
     match /activity_log/{logId} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAdmin();
+    }
+
+    // Private Config — webhook URLs etc, admin only
+    match /private_config/{configId} {
+      allow read, write: if isAdmin();
+    }
+
+    // A/B Test Events — public create (impressions/conversions), admin read
+    match /ab_test_events/{eventId} {
+      allow create: if true;
+      allow read: if isAdmin();
+    }
+
+    // Invoices — admin only
+    match /invoices/{invoiceId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Page Views — public create (tracking), admin read
+    match /page_views/{viewId} {
+      allow create: if true;
+      allow read: if isAdmin();
+    }
+
+    // Referrals — admin only
+    match /referrals/{referralId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Testimonial Requests — public create, admin read
+    match /testimonial_requests/{requestId} {
+      allow create: if true;
+      allow read: if isAdmin();
     }
   }
 }

@@ -1,13 +1,11 @@
 'use client'
 
-import { useState } from 'react'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
-import { sendWebhookNotification } from '@/lib/webhooks'
+import { useState, useCallback } from 'react'
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 import BookingWidget from '@/components/shared/BookingWidget'
+import TurnstileWidget from '@/components/shared/TurnstileWidget'
 
 const services = [
   'Website Design & Development',
@@ -24,78 +22,86 @@ const BUDGET_LABELS = ['Under ₹5K', '₹5K - ₹10K', '₹10K - ₹25K', '₹2
 const TIMELINES = ['ASAP', 'Within 2 weeks', 'Within 1 month', '1-3 months', 'Not sure yet']
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', service: services[0], budget: 2, timeline: TIMELINES[3], message: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', service: services[0], budget: 2, timeline: TIMELINES[3], message: '', referralCode: '' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [turnstileToken, setTurnstileToken] = useState('')
+
+  // Callback request state
+  const [callbackForm, setCallbackForm] = useState({ name: '', phone: '' })
+  const [callbackStatus, setCallbackStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [callbackTurnstileToken, setCallbackTurnstileToken] = useState('')
+
+  const handleTurnstileToken = useCallback((token: string) => {
+    setTurnstileToken(token)
+  }, [])
+
+  const handleCallbackTurnstileToken = useCallback((token: string) => {
+    setCallbackTurnstileToken(token)
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!turnstileToken) {
+      alert('Please complete the captcha verification')
+      return
+    }
     setStatus('sending')
 
     try {
-      // Save lead to Firebase Firestore
-      await addDoc(collection(db, 'leads'), {
-        ...form,
-        budget: BUDGET_LABELS[form.budget],
-        status: 'new',
-        notes: '',
-        createdAt: serverTimestamp(),
-      })
-
-      // Send email via EmailJS
-      const emailjsPayload = {
-        service_id: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        template_id: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-        user_id: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
-        template_params: {
-          name: form.name,
-          email: form.email,
-          phone: form.phone || 'Not provided',
-          service: form.service,
-          budget: BUDGET_LABELS[form.budget],
-          timeline: form.timeline,
-          message: form.message,
-        },
-      }
-
-      const emailRes = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(emailjsPayload),
+        body: JSON.stringify({
+          ...form,
+          budget: BUDGET_LABELS[form.budget],
+          turnstileToken,
+        }),
       })
 
-      if (!emailRes.ok) throw new Error('Email failed')
-
-      // Send auto-reply confirmation to client (fire-and-forget)
-      try {
-        const autoReplyTemplateId = process.env.NEXT_PUBLIC_EMAILJS_AUTOREPLY_TEMPLATE_ID
-        if (autoReplyTemplateId) {
-          await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              service_id: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-              template_id: autoReplyTemplateId,
-              user_id: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
-              template_params: {
-                to_name: form.name,
-                to_email: form.email,
-                service: form.service,
-              },
-            }),
-          })
-        }
-      } catch {
-        // Auto-reply failure should not block main submission
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || 'Submission failed')
       }
 
-      // Send webhook notifications (Slack/Discord) — fire-and-forget
-      sendWebhookNotification(form).catch(() => {})
-
       setStatus('success')
-      setForm({ name: '', email: '', phone: '', service: services[0], budget: 2, timeline: TIMELINES[3], message: '' })
+      setForm({ name: '', email: '', phone: '', service: services[0], budget: 2, timeline: TIMELINES[3], message: '', referralCode: '' })
+      setTurnstileToken('')
     } catch (err) {
       console.error(err)
       setStatus('error')
+    }
+  }
+
+  const handleCallbackSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!callbackTurnstileToken) {
+      alert('Please complete the captcha verification')
+      return
+    }
+    if (!callbackForm.name.trim() || !callbackForm.phone.trim()) return
+    setCallbackStatus('sending')
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: callbackForm.name,
+          email: 'callback@request.local',
+          phone: callbackForm.phone,
+          service: 'Callback Request',
+          message: 'Callback request',
+          tag: 'callback_request',
+          turnstileToken: callbackTurnstileToken,
+        }),
+      })
+
+      if (!res.ok) throw new Error('Failed')
+      setCallbackStatus('success')
+      setCallbackForm({ name: '', phone: '' })
+      setCallbackTurnstileToken('')
+    } catch {
+      setCallbackStatus('error')
     }
   }
 
@@ -132,8 +138,8 @@ export default function ContactPage() {
             {/* Info */}
             <AnimatedSection direction="left" className="lg:col-span-2 space-y-6">
               <div>
-                <h2 className="text-2xl font-bold text-[#0E0E2C] mb-2">Contact Information</h2>
-                <p className="text-[#7A7A9E] text-sm">Based in Rajgarh, MP — working with clients across India and globally.</p>
+                <h2 className="text-2xl font-bold text-ink mb-2">Contact Information</h2>
+                <p className="text-ink-muted text-sm">Based in Rajgarh, MP — working with clients across India and globally.</p>
               </div>
               <div className="space-y-4">
                 {[
@@ -143,13 +149,13 @@ export default function ContactPage() {
                 ].map(item => {
                   const Icon = item.icon
                   const content = (
-                    <div className="flex items-start gap-4 p-4 bg-white border border-[#E8E5F5] rounded-2xl hover:border-[#7B2FF2]/30 hover:shadow-md transition-all group">
+                    <div className="flex items-start gap-4 p-4 bg-white border border-surface-border rounded-2xl hover:border-[#7B2FF2]/30 hover:shadow-md transition-all group">
                       <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7B2FF2]/10 to-[#E879F9]/10 flex items-center justify-center flex-shrink-0">
                         <Icon size={18} className="text-[#7B2FF2]" />
                       </div>
                       <div>
-                        <p className="text-[#7A7A9E] text-xs font-semibold uppercase tracking-wider">{item.label}</p>
-                        <p className="text-[#0E0E2C] text-sm font-medium mt-0.5 group-hover:text-[#7B2FF2] transition-colors">{item.value}</p>
+                        <p className="text-ink-muted text-xs font-semibold uppercase tracking-wider">{item.label}</p>
+                        <p className="text-ink text-sm font-medium mt-0.5 group-hover:text-[#7B2FF2] transition-colors">{item.value}</p>
                       </div>
                     </div>
                   )
@@ -160,53 +166,94 @@ export default function ContactPage() {
               </div>
               <div className="p-5 bg-gradient-to-br from-[#7B2FF2]/5 to-[#E879F9]/5 border border-[#7B2FF2]/20 rounded-2xl">
                 <p className="text-[#7B2FF2] font-semibold text-sm mb-1">⚡ Fast Response</p>
-                <p className="text-[#7A7A9E] text-sm">We typically respond within 2-4 hours during business hours.</p>
+                <p className="text-ink-muted text-sm">We typically respond within 2-4 hours during business hours.</p>
+              </div>
+
+              {/* Call Me Back */}
+              <div className="p-5 bg-white border border-surface-border rounded-2xl">
+                <h3 className="text-ink font-bold text-sm mb-1 flex items-center gap-2">
+                  <Phone size={16} className="text-[#7B2FF2]" />
+                  Request a Callback
+                </h3>
+                <p className="text-ink-muted text-xs mb-4">Just your name and number — we&apos;ll call you back.</p>
+                {callbackStatus === 'success' ? (
+                  <div className="flex items-center gap-2 text-green-600 text-sm">
+                    <CheckCircle size={16} /> We&apos;ll call you back soon!
+                  </div>
+                ) : (
+                  <form onSubmit={handleCallbackSubmit} className="space-y-3">
+                    <input
+                      required
+                      value={callbackForm.name}
+                      onChange={e => setCallbackForm(p => ({ ...p, name: e.target.value }))}
+                      placeholder="Your Name"
+                      className="w-full border border-surface-border rounded-xl px-4 py-2.5 text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all"
+                    />
+                    <input
+                      required
+                      type="tel"
+                      value={callbackForm.phone}
+                      onChange={e => setCallbackForm(p => ({ ...p, phone: e.target.value }))}
+                      placeholder="+91 XXXXX XXXXX"
+                      className="w-full border border-surface-border rounded-xl px-4 py-2.5 text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all"
+                    />
+                    <TurnstileWidget onToken={handleCallbackTurnstileToken} onExpire={() => setCallbackTurnstileToken('')} />
+                    {callbackStatus === 'error' && <p className="text-red-500 text-xs">Something went wrong. Try again.</p>}
+                    <button
+                      type="submit"
+                      disabled={callbackStatus === 'sending'}
+                      className="w-full py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#7B2FF2] to-[#A855F7] hover:opacity-90 transition-all disabled:opacity-60"
+                    >
+                      {callbackStatus === 'sending' ? 'Sending...' : 'Call Me Back'}
+                    </button>
+                  </form>
+                )}
               </div>
             </AnimatedSection>
 
             {/* Form */}
             <AnimatedSection direction="right" className="lg:col-span-3">
-              <div className="bg-white border border-[#E8E5F5] rounded-3xl p-8 shadow-xl shadow-[#7B2FF2]/5">
+              <div className="bg-white border border-surface-border rounded-3xl p-8 shadow-xl shadow-[#7B2FF2]/5">
                 {status === 'success' ? (
                   <div className="text-center py-12">
                     <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <CheckCircle size={32} className="text-green-500" />
                     </div>
-                    <h3 className="text-[#0E0E2C] text-xl font-bold mb-2">Message Sent!</h3>
-                    <p className="text-[#7A7A9E] text-sm mb-6">Thank you for reaching out! We&apos;ll get back to you within 24 hours.</p>
+                    <h3 className="text-ink text-xl font-bold mb-2">Message Sent!</h3>
+                    <p className="text-ink-muted text-sm mb-6">Thank you for reaching out! We&apos;ll get back to you within 24 hours.</p>
                     <button onClick={() => setStatus('idle')} className="bg-gradient-to-r from-[#7B2FF2] to-[#A855F7] text-white px-6 py-2.5 rounded-xl text-sm font-medium hover:opacity-90 transition-all">
                       Send Another Message
                     </button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
-                    <h3 className="text-[#0E0E2C] text-xl font-bold mb-6">Tell Us About Your Project</h3>
+                    <h3 className="text-ink text-xl font-bold mb-6">Tell Us About Your Project</h3>
                     <div className="grid sm:grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-[#7A7A9E] text-xs font-semibold uppercase tracking-wider mb-2">Your Name *</label>
-                        <input required value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} placeholder="Param Sisodiya" className="w-full border border-[#E8E5F5] rounded-xl px-4 py-3 text-[#0E0E2C] text-sm placeholder-[#C0BBDC] focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all" />
+                        <label className="block text-ink-muted text-xs font-semibold uppercase tracking-wider mb-2">Your Name *</label>
+                        <input required value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} placeholder="Param Sisodiya" className="w-full border border-surface-border rounded-xl px-4 py-3 text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all" />
                       </div>
                       <div>
-                        <label className="block text-[#7A7A9E] text-xs font-semibold uppercase tracking-wider mb-2">Email Address *</label>
-                        <input required type="email" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} placeholder="your@email.com" className="w-full border border-[#E8E5F5] rounded-xl px-4 py-3 text-[#0E0E2C] text-sm placeholder-[#C0BBDC] focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all" />
+                        <label className="block text-ink-muted text-xs font-semibold uppercase tracking-wider mb-2">Email Address *</label>
+                        <input required type="email" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} placeholder="your@email.com" className="w-full border border-surface-border rounded-xl px-4 py-3 text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all" />
                       </div>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-[#7A7A9E] text-xs font-semibold uppercase tracking-wider mb-2">Phone Number</label>
-                        <input type="tel" value={form.phone} onChange={e => setForm(p => ({ ...p, phone: e.target.value }))} placeholder="+91 XXXXX XXXXX" className="w-full border border-[#E8E5F5] rounded-xl px-4 py-3 text-[#0E0E2C] text-sm placeholder-[#C0BBDC] focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all" />
+                        <label className="block text-ink-muted text-xs font-semibold uppercase tracking-wider mb-2">Phone Number</label>
+                        <input type="tel" value={form.phone} onChange={e => setForm(p => ({ ...p, phone: e.target.value }))} placeholder="+91 XXXXX XXXXX" className="w-full border border-surface-border rounded-xl px-4 py-3 text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all" />
                       </div>
                       <div>
-                        <label className="block text-[#7A7A9E] text-xs font-semibold uppercase tracking-wider mb-2">Service Required *</label>
-                        <select required value={form.service} onChange={e => setForm(p => ({ ...p, service: e.target.value }))} className="w-full border border-[#E8E5F5] rounded-xl px-4 py-3 text-[#0E0E2C] text-sm focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all">
+                        <label className="block text-ink-muted text-xs font-semibold uppercase tracking-wider mb-2">Service Required *</label>
+                        <select required value={form.service} onChange={e => setForm(p => ({ ...p, service: e.target.value }))} className="w-full border border-surface-border rounded-xl px-4 py-3 text-ink text-sm focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all">
                           {services.map(s => <option key={s} value={s}>{s}</option>)}
                         </select>
                       </div>
                     </div>
                     {/* Budget Slider */}
                     <div>
-                      <label className="block text-[#7A7A9E] text-xs font-semibold uppercase tracking-wider mb-2">Budget Range</label>
-                      <div className="p-4 border border-[#E8E5F5] rounded-xl">
+                      <label className="block text-ink-muted text-xs font-semibold uppercase tracking-wider mb-2">Budget Range</label>
+                      <div className="p-4 border border-surface-border rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <span className="text-sm font-semibold text-[#7B2FF2]">{BUDGET_LABELS[form.budget]}</span>
                         </div>
@@ -220,22 +267,28 @@ export default function ContactPage() {
                           style={{ height: '6px' }}
                         />
                         <div className="flex justify-between mt-1">
-                          <span className="text-[10px] text-[#C0BBDC]">₹5K</span>
-                          <span className="text-[10px] text-[#C0BBDC]">₹1L+</span>
+                          <span className="text-[10px] text-ink-faint">₹5K</span>
+                          <span className="text-[10px] text-ink-faint">₹1L+</span>
                         </div>
                       </div>
                     </div>
                     {/* Timeline */}
                     <div>
-                      <label className="block text-[#7A7A9E] text-xs font-semibold uppercase tracking-wider mb-2">Timeline</label>
-                      <select value={form.timeline} onChange={e => setForm(p => ({ ...p, timeline: e.target.value }))} className="w-full border border-[#E8E5F5] rounded-xl px-4 py-3 text-[#0E0E2C] text-sm focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all">
+                      <label className="block text-ink-muted text-xs font-semibold uppercase tracking-wider mb-2">Timeline</label>
+                      <select value={form.timeline} onChange={e => setForm(p => ({ ...p, timeline: e.target.value }))} className="w-full border border-surface-border rounded-xl px-4 py-3 text-ink text-sm focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all">
                         {TIMELINES.map(t => <option key={t} value={t}>{t}</option>)}
                       </select>
                     </div>
+                    {/* Referral Code */}
                     <div>
-                      <label className="block text-[#7A7A9E] text-xs font-semibold uppercase tracking-wider mb-2">Project Details *</label>
-                      <textarea required value={form.message} onChange={e => setForm(p => ({ ...p, message: e.target.value }))} placeholder="Tell us about your project, goals, timeline, and budget..." rows={5} className="w-full border border-[#E8E5F5] rounded-xl px-4 py-3 text-[#0E0E2C] text-sm placeholder-[#C0BBDC] focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all resize-none" />
+                      <label className="block text-ink-muted text-xs font-semibold uppercase tracking-wider mb-2">Referral Code <span className="text-ink-faint">(optional)</span></label>
+                      <input value={form.referralCode} onChange={e => setForm(p => ({ ...p, referralCode: e.target.value }))} placeholder="Enter referral code if you have one" className="w-full border border-surface-border rounded-xl px-4 py-3 text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all" />
                     </div>
+                    <div>
+                      <label className="block text-ink-muted text-xs font-semibold uppercase tracking-wider mb-2">Project Details *</label>
+                      <textarea required value={form.message} onChange={e => setForm(p => ({ ...p, message: e.target.value }))} placeholder="Tell us about your project, goals, timeline, and budget..." rows={5} className="w-full border border-surface-border rounded-xl px-4 py-3 text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-[#7B2FF2] focus:ring-1 focus:ring-[#7B2FF2] transition-all resize-none" />
+                    </div>
+                    <TurnstileWidget onToken={handleTurnstileToken} onExpire={() => setTurnstileToken('')} />
                     {status === 'error' && (
                       <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-xl">
                         <AlertCircle size={18} className="text-red-500 flex-shrink-0" />
@@ -249,7 +302,7 @@ export default function ContactPage() {
                         <><Send size={16} />Send Message<ArrowRight size={16} /></>
                       )}
                     </button>
-                    <p className="text-center text-[#7A7A9E] text-xs">By submitting, you agree to our privacy policy. We never spam.</p>
+                    <p className="text-center text-ink-muted text-xs">By submitting, you agree to our privacy policy. We never spam.</p>
                   </form>
                 )}
               </div>
@@ -264,10 +317,10 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <AnimatedSection>
               <SectionLabel>Book a Call</SectionLabel>
-              <h2 className="text-3xl font-bold text-[#0E0E2C] mb-4">
+              <h2 className="text-3xl font-bold text-ink mb-4">
                 Prefer a Live Conversation?
               </h2>
-              <p className="text-[#7A7A9E] mb-6">
+              <p className="text-ink-muted mb-6">
                 Skip the form and jump straight to a free strategy session. We&apos;ll discuss your goals, timeline, and budget — and give you actionable advice, even if you don&apos;t hire us.
               </p>
               <div className="space-y-3">
@@ -278,13 +331,13 @@ export default function ContactPage() {
                         <path d="M2 5l2 2 4-4" stroke="#7B2FF2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
-                    <span className="text-sm text-[#4A4A6A]">{item}</span>
+                    <span className="text-sm text-ink-secondary">{item}</span>
                   </div>
                 ))}
               </div>
             </AnimatedSection>
             <AnimatedSection delay={100}>
-              <BookingWidget />
+              <BookingWidget calLink="https://calendly.com/paramsisodiya061/30min" />
             </AnimatedSection>
           </div>
         </div>
