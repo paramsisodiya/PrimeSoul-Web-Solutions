@@ -306,6 +306,53 @@ export default function PricingSection() {
           ))}
         </div>
 
+        {/* Maintenance Care Plan Tier */}
+        <AnimatedSection delay={300} className="mt-16 max-w-5xl mx-auto">
+          <div className="relative overflow-hidden rounded-3xl border border-[#7B2FF2]/30 p-8 sm:p-10" style={{ background: 'linear-gradient(135deg, rgba(123,47,242,0.1) 0%, rgba(232,121,249,0.05) 100%)', boxShadow: '0 24px 60px -15px rgba(123,47,242,0.15)' }}>
+            {/* Background elements */}
+            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-gradient-to-br from-[#7B2FF2]/20 to-[#E879F9]/20 blur-3xl rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+
+            <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center justify-between">
+              <div className="flex-1">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#7B2FF2]/30 bg-[#7B2FF2]/10 mb-4">
+                  <span className="w-2 h-2 rounded-full bg-[#E879F9] animate-pulse" />
+                  <span className="text-[10px] uppercase tracking-widest font-semibold text-[#E879F9]">Ongoing Support</span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">Website Care & Maintenance</h3>
+                <p className="text-white/60 text-sm leading-relaxed mb-6 max-w-md">Protect your investment with our comprehensive maintenance plans. We handle updates, security, backups, and content changes so you can focus on your business.</p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {[
+                    'Weekly Software Updates', 'Daily Cloud Backups', '24/7 Security Monitoring', 'Performance Optimization', 'Priority Technical Support', 'Monthly Analytics Report'
+                  ].map((feature, i) => (
+                    <div key={i} className="flex items-center gap-2 text-sm text-white/70">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-[#E879F9] flex-shrink-0">
+                        <path d="M11.666 3.5L5.249 9.917 2.333 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex-shrink-0 w-full md:w-auto bg-[#0E0E2C]/80 backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-8 text-center min-w-[280px]">
+                <p className="text-white/50 text-xs uppercase tracking-widest font-semibold mb-2">Starting at</p>
+                <div className="flex items-end justify-center gap-1 mb-2">
+                  <span className="text-4xl font-extrabold text-white">₹999</span>
+                  <span className="text-white/40 text-sm mb-1">/ month</span>
+                </div>
+                <p className="text-white/40 text-xs mb-6">Billed monthly or annually</p>
+                <Link
+                  href="/contact?service=Maintenance"
+                  className="inline-block w-full py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"
+                  style={{ background: 'linear-gradient(135deg, #7B2FF2, #E879F9)', boxShadow: '0 8px 20px -6px rgba(123,47,242,0.5)' }}
+                >
+                  Secure Your Site
+                </Link>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+
         {/* Bottom trust text */}
         <AnimatedSection className="mt-10 text-center">
           <div className="flex items-center justify-center gap-6 flex-wrap">

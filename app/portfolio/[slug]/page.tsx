@@ -9,6 +9,7 @@ import { db } from '@/lib/firebase'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import AnimatedCounter from '@/components/ui/AnimatedCounter'
 import MagneticButton from '@/components/ui/MagneticButton'
+import BeforeAfterSlider from '@/components/ui/BeforeAfterSlider'
 
 interface Metric { label: string; value: string }
 interface Project {
@@ -16,6 +17,7 @@ interface Project {
   description?: string; problem?: string; solution?: string; result?: string
   image?: string; imageAlt?: string; liveUrl?: string; tech?: string[]; tags?: string[]
   metrics?: Metric[]; color?: string
+  beforeImage?: string; afterImage?: string
 }
 
 function slugify(text: string): string {
@@ -34,6 +36,7 @@ function normalizeProject(d: any): Project {
     liveUrl: raw.liveUrl || '#', tech: raw.tech || raw.tags || [],
     tags: raw.tags || raw.tech || [], metrics: raw.metrics || [],
     color: raw.color || '#7B2FF2',
+    beforeImage: raw.beforeImage || '', afterImage: raw.afterImage || '',
   }
 }
 
@@ -214,6 +217,24 @@ export default function CaseStudyPage() {
           </AnimatedSection>
         </section>
       )}
+
+      {/* Before/After Slider */}
+      {project.beforeImage && (
+        <section className="bg-[#FAFAFE] py-12">
+          <AnimatedSection className="mx-auto max-w-5xl px-6">
+            <p className="text-[10px] uppercase tracking-[0.3em] font-semibold mb-4 text-center" style={{ color: projectColor }}>Before & After</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-ink text-center mb-8" style={{ fontFamily: "'Poppins', sans-serif" }}>See the Transformation</h2>
+            <BeforeAfterSlider
+              beforeImage={project.beforeImage}
+              afterImage={project.afterImage || project.image || ''}
+              beforeLabel="Before"
+              afterLabel="After — PrimeSoul"
+              height={460}
+            />
+          </AnimatedSection>
+        </section>
+      )}
+
 
       {/* Problem → Solution → Result */}
       <section className="py-16">

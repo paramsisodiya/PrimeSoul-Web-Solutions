@@ -15,6 +15,7 @@ interface Lead {
   status: 'new' | 'contacted' | 'proposal' | 'negotiation' | 'won' | 'lost'
   notes: string
   createdAt: Timestamp
+  referralCode?: string
 }
 
 const PIPELINE_STAGES = [
@@ -286,6 +287,12 @@ export default function LeadsPage() {
             <p className="text-[#4A4A6A] text-xs mb-1">Service Required</p>
             <p className="text-[#7B2FF2] text-sm font-medium">{selected.service}</p>
           </div>
+          {selected.referralCode && (
+            <div className="p-3 bg-[#161640] rounded-xl border border-white/5">
+              <p className="text-[#4A4A6A] text-xs mb-1">Referral Code</p>
+              <p className="text-white text-sm font-medium">{selected.referralCode}</p>
+            </div>
+          )}
           <div className="p-3 bg-[#161640] rounded-xl border border-white/5">
             <p className="text-[#4A4A6A] text-xs mb-1 flex items-center gap-1"><MessageSquare size={12} /> Message</p>
             <p className="text-white text-sm">{selected.message}</p>
