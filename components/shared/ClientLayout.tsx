@@ -18,6 +18,7 @@ import DynamicSEO from '@/components/shared/DynamicSEO'
 import LeadMagnetPopup from '@/components/shared/LeadMagnetPopup'
 import ThemeToggle from '@/components/shared/ThemeToggle'
 import ErrorBoundary from '@/components/shared/ErrorBoundary'
+import PageViewTracker from '@/components/shared/PageViewTracker'
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -49,6 +50,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <LeadMagnetPopup />
       <ThemeToggle />
       <ChatbotWidget />
+      <PageViewTracker />
     </>
   )
 }

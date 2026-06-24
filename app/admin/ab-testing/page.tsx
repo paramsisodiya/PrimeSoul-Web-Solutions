@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc, collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { Shuffle, Check, BarChart2, Trash2, Plus } from 'lucide-react'
 
@@ -11,9 +11,14 @@ interface ABTest {
   elementId: string
   variants: string[]
   traffic: number[] // percentage distribution
-  impressions: number[]
-  conversions: number[]
   active: boolean
+}
+
+interface ABEvent {
+  testId: string
+  variant: number
+  type: 'impression' | 'conversion'
+  timestamp: unknown
 }
 
 const EMPTY_TEST: ABTest = {
@@ -22,8 +27,6 @@ const EMPTY_TEST: ABTest = {
   elementId: '',
   variants: ['', ''],
   traffic: [50, 50],
-  impressions: [0, 0],
-  conversions: [0, 0],
   active: false,
 }
 
@@ -32,6 +35,7 @@ export default function ABTestingPage() {
   const [editing, setEditing] = useState<ABTest | null>(null)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [eventData, setEventData] = useState<Record<string, { impressions: number[]; conversions: number[] }>>({})
 
   useEffect(() => {
     const fetchTests = async () => {
@@ -47,6 +51,36 @@ export default function ABTestingPage() {
     }
     fetchTests()
   }, [])
+
+  // Fetch real event data from ab_test_events collection
+  useEffect(() => {
+    if (tests.length === 0) return
+
+    const fetchEvents = async () => {
+      try {
+        const snap = await getDocs(collection(db, 'ab_test_events'))
+        const events = snap.docs.map(d => d.data() as ABEvent)
+
+        const data: Record<string, { impressions: number[]; conversions: number[] }> = {}
+
+        for (const test of tests) {
+          const testEvents = events.filter(e => e.testId === test.id)
+          const impressions = test.variants.map((_, i) =>
+            testEvents.filter(e => e.variant === i && e.type === 'impression').length
+          )
+          const conversions = test.variants.map((_, i) =>
+            testEvents.filter(e => e.variant === i && e.type === 'conversion').length
+          )
+          data[test.id] = { impressions, conversions }
+        }
+
+        setEventData(data)
+      } catch (err) {
+        console.error('Error fetching A/B test events:', err)
+      }
+    }
+    fetchEvents()
+  }, [tests])
 
   const handleSave = async () => {
     setSaving(true)
@@ -80,9 +114,23 @@ export default function ABTestingPage() {
     await setDoc(doc(db, 'settings', 'ab_tests'), { tests: updated })
   }
 
-  const getWinRate = (test: ABTest, idx: number) => {
-    const total = test.impressions[idx] || 1
-    return ((test.conversions[idx] / total) * 100).toFixed(1)
+  const getWinRate = (testId: string, idx: number) => {
+    const data = eventData[testId]
+    if (!data) return '0.0'
+    const total = data.impressions[idx] || 1
+    return ((data.conversions[idx] / total) * 100).toFixed(1)
+  }
+
+  const getLeadingVariant = (testId: string) => {
+    const data = eventData[testId]
+    if (!data) return -1
+    let best = -1
+    let bestRate = -1
+    data.impressions.forEach((imp, i) => {
+      const rate = imp > 0 ? data.conversions[i] / imp : 0
+      if (rate > bestRate) { bestRate = rate; best = i }
+    })
+    return best
   }
 
   return (
@@ -109,40 +157,49 @@ export default function ABTestingPage() {
         </div>
       )}
 
-      {tests.map(test => (
-        <div key={test.id} className="bg-[#161640] border border-white/5 rounded-2xl p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className={`w-2 h-2 rounded-full ${test.active ? 'bg-green-400' : 'bg-[#4A4A6A]'}`} />
-              <h3 className="text-white font-semibold">{test.name}</h3>
-              <span className="text-[#4A4A6A] text-xs px-2 py-0.5 rounded bg-white/5">{test.elementId}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <button onClick={() => toggleActive(test.id)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${test.active ? 'bg-green-500/20 text-green-400' : 'bg-white/5 text-[#4A4A6A]'}`}>
-                {test.active ? 'Active' : 'Paused'}
-              </button>
-              <button onClick={() => setEditing(test)} className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/5 text-[#7A7A9E] hover:text-white transition-all">Edit</button>
-              <button onClick={() => deleteTest(test.id)} className="p-1.5 rounded-lg text-[#4A4A6A] hover:text-red-400 transition-colors"><Trash2 size={14} /></button>
-            </div>
-          </div>
+      {tests.map(test => {
+        const leading = getLeadingVariant(test.id)
+        const data = eventData[test.id]
 
-          <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${test.variants.length}, 1fr)` }}>
-            {test.variants.map((variant, i) => (
-              <div key={i} className="bg-[#0E0E2C] rounded-xl p-4 border border-white/5">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-[#7B2FF2]">Variant {String.fromCharCode(65 + i)}</span>
-                  <span className="text-xs text-[#4A4A6A]">{test.traffic[i]}% traffic</span>
-                </div>
-                <p className="text-white text-sm mb-3 line-clamp-2">&quot;{variant}&quot;</p>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div><span className="text-[#4A4A6A]">Impressions</span><p className="text-white font-semibold">{test.impressions[i]}</p></div>
-                  <div><span className="text-[#4A4A6A]">Conv. Rate</span><p className="text-white font-semibold">{getWinRate(test, i)}%</p></div>
-                </div>
+        return (
+          <div key={test.id} className="bg-[#161640] border border-white/5 rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className={`w-2 h-2 rounded-full ${test.active ? 'bg-green-400' : 'bg-[#4A4A6A]'}`} />
+                <h3 className="text-white font-semibold">{test.name}</h3>
+                <span className="text-[#4A4A6A] text-xs px-2 py-0.5 rounded bg-white/5">{test.elementId}</span>
               </div>
-            ))}
+              <div className="flex items-center gap-2">
+                <button onClick={() => toggleActive(test.id)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${test.active ? 'bg-green-500/20 text-green-400' : 'bg-white/5 text-[#4A4A6A]'}`}>
+                  {test.active ? 'Active' : 'Paused'}
+                </button>
+                <button onClick={() => setEditing(test)} className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/5 text-[#7A7A9E] hover:text-white transition-all">Edit</button>
+                <button onClick={() => deleteTest(test.id)} className="p-1.5 rounded-lg text-[#4A4A6A] hover:text-red-400 transition-colors"><Trash2 size={14} /></button>
+              </div>
+            </div>
+
+            <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${test.variants.length}, 1fr)` }}>
+              {test.variants.map((variant, i) => (
+                <div key={i} className={`bg-[#0E0E2C] rounded-xl p-4 border ${leading === i && data ? 'border-green-500/30' : 'border-white/5'}`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-[#7B2FF2]">
+                      Variant {String.fromCharCode(65 + i)}
+                      {leading === i && data && <span className="ml-1 text-green-400">★ Leading</span>}
+                    </span>
+                    <span className="text-xs text-[#4A4A6A]">{test.traffic[i]}% traffic</span>
+                  </div>
+                  <p className="text-white text-sm mb-3 line-clamp-2">&quot;{variant}&quot;</p>
+                  <div className="grid grid-cols-3 gap-2 text-xs">
+                    <div><span className="text-[#4A4A6A]">Impressions</span><p className="text-white font-semibold">{data?.impressions[i] ?? 0}</p></div>
+                    <div><span className="text-[#4A4A6A]">Conversions</span><p className="text-white font-semibold">{data?.conversions[i] ?? 0}</p></div>
+                    <div><span className="text-[#4A4A6A]">Conv. Rate</span><p className="text-white font-semibold">{getWinRate(test.id, i)}%</p></div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      })}
 
       {/* Edit modal */}
       {editing && (
@@ -157,7 +214,7 @@ export default function ABTestingPage() {
               <input value={v} onChange={e => { const vars = [...editing.variants]; vars[i] = e.target.value; setEditing({ ...editing, variants: vars }) }} placeholder={`Variant ${String.fromCharCode(65 + i)} text`} className="flex-1 bg-[#0E0E2C] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder-[#4A4A6A] focus:outline-none focus:border-[#7B2FF2]" />
             </div>
           ))}
-          <button onClick={() => setEditing({ ...editing, variants: [...editing.variants, ''], traffic: [...editing.traffic, 0], impressions: [...editing.impressions, 0], conversions: [...editing.conversions, 0] })} className="text-[#7B2FF2] text-sm font-medium hover:underline flex items-center gap-1"><Plus size={14} /> Add variant</button>
+          <button onClick={() => setEditing({ ...editing, variants: [...editing.variants, ''], traffic: [...editing.traffic, 0] })} className="text-[#7B2FF2] text-sm font-medium hover:underline flex items-center gap-1"><Plus size={14} /> Add variant</button>
           <div className="flex gap-2">
             <button onClick={handleSave} disabled={saving} className="flex-1 bg-gradient-to-r from-[#7B2FF2] to-[#A855F7] text-white text-sm font-semibold py-3 rounded-xl hover:opacity-90 transition-all disabled:opacity-50">
               {saving ? 'Saving...' : saved ? 'Saved!' : 'Save Test'}

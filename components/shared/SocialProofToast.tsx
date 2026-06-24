@@ -1,22 +1,67 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 
-const PROOF_ITEMS = [
+const FALLBACK_ITEMS = [
   { emoji: '🔥', text: 'Param just completed a project for A&S Solar Solutions', time: '2 hours ago' },
   { emoji: '⚡', text: 'New client onboarded this week — Website Design', time: '5 hours ago' },
   { emoji: '🎉', text: 'SVNS School website reached 300+ students served', time: '1 day ago' },
   { emoji: '🚀', text: '3 new projects launched this quarter', time: '3 days ago' },
   { emoji: '💼', text: 'PrimeSoul reached 4+ businesses served', time: '1 week ago' },
-  { emoji: '✨', text: 'New testimonial: "Professional, reliable, and helpful"', time: 'Recently' },
-  { emoji: '📈', text: 'Client revenue generated crossed ₹5L+', time: '2 weeks ago' },
 ]
+
+function timeAgo(date: Date): string {
+  const seconds = Math.floor((Date.now() - date.getTime()) / 1000)
+  if (seconds < 60) return 'just now'
+  const minutes = Math.floor(seconds / 60)
+  if (minutes < 60) return `${minutes} min ago`
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`
+  const days = Math.floor(hours / 24)
+  if (days < 7) return `${days} day${days > 1 ? 's' : ''} ago`
+  const weeks = Math.floor(days / 7)
+  return `${weeks} week${weeks > 1 ? 's' : ''} ago`
+}
+
+interface ProofItem {
+  emoji: string
+  text: string
+  time: string
+}
 
 export default function SocialProofToast() {
   const [visible, setVisible] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [dismissed, setDismissed] = useState(false)
   const [isExiting, setIsExiting] = useState(false)
+  const [proofItems, setProofItems] = useState<ProofItem[]>(FALLBACK_ITEMS)
+
+  // Fetch real activity log entries
+  useEffect(() => {
+    const fetchActivity = async () => {
+      try {
+        const snap = await getDocs(
+          query(collection(db, 'activity_log'), orderBy('timestamp', 'desc'), limit(5))
+        )
+        if (snap.empty) return // Keep fallback
+
+        const items: ProofItem[] = snap.docs.map(d => {
+          const data = d.data()
+          const timestamp = data.timestamp?.toDate?.() || new Date()
+          const emoji = data.emoji || '🔔'
+          const text = data.message || data.text || 'New activity on PrimeSoul'
+          return { emoji, text, time: timeAgo(timestamp) }
+        })
+
+        if (items.length > 0) setProofItems(items)
+      } catch {
+        // Keep fallback items on error
+      }
+    }
+    fetchActivity()
+  }, [])
 
   const hideToast = useCallback(() => {
     setIsExiting(true)
@@ -53,7 +98,7 @@ export default function SocialProofToast() {
     const interval = setInterval(() => {
       if (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')) return
 
-      setCurrentIndex(prev => (prev + 1) % PROOF_ITEMS.length)
+      setCurrentIndex(prev => (prev + 1) % proofItems.length)
       setVisible(true)
       setIsExiting(false)
 
@@ -64,11 +109,11 @@ export default function SocialProofToast() {
     }, 25000)
 
     return () => clearInterval(interval)
-  }, [dismissed, hideToast])
+  }, [dismissed, hideToast, proofItems.length])
 
   if (!visible || dismissed) return null
 
-  const item = PROOF_ITEMS[currentIndex]
+  const item = proofItems[currentIndex]
 
   return (
     <div

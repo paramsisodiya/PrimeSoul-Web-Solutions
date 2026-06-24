@@ -1,21 +1,70 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, collection, getDocs, query, where, orderBy } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
-import { BarChart2, ExternalLink, TrendingUp, Users, Eye, Clock } from 'lucide-react'
+import { BarChart2, ExternalLink, TrendingUp, Users, Eye, Clock, FileText } from 'lucide-react'
+
+interface PageViewData {
+  path: string
+  count: number
+}
 
 export default function AnalyticsPage() {
   const [gaId, setGaId] = useState('')
   const [loading, setLoading] = useState(true)
+  const [totalViews7d, setTotalViews7d] = useState(0)
+  const [totalViews30d, setTotalViews30d] = useState(0)
+  const [topPages, setTopPages] = useState<PageViewData[]>([])
+  const [totalLeads, setTotalLeads] = useState(0)
 
   useEffect(() => {
-    const fetchSettings = async () => {
-      const snap = await getDoc(doc(db, 'settings', 'site'))
-      if (snap.exists()) setGaId(snap.data().googleAnalyticsId || '')
-      setLoading(false)
+    const fetchData = async () => {
+      try {
+        // Fetch GA ID
+        const settingsSnap = await getDoc(doc(db, 'settings', 'site'))
+        if (settingsSnap.exists()) setGaId(settingsSnap.data().googleAnalyticsId || '')
+
+        // Fetch page views
+        const viewsSnap = await getDocs(collection(db, 'page_views'))
+        const allViews = viewsSnap.docs.map(d => d.data())
+
+        const now = Date.now()
+        const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000
+        const thirtyDaysAgo = now - 30 * 24 * 60 * 60 * 1000
+
+        let count7d = 0
+        let count30d = 0
+        const pageCounts: Record<string, number> = {}
+
+        for (const view of allViews) {
+          const ts = view.timestamp?.toDate?.()?.getTime() || 0
+          if (ts > sevenDaysAgo) count7d++
+          if (ts > thirtyDaysAgo) count30d++
+
+          const path = view.path || '/'
+          pageCounts[path] = (pageCounts[path] || 0) + 1
+        }
+
+        setTotalViews7d(count7d)
+        setTotalViews30d(count30d)
+
+        const sorted = Object.entries(pageCounts)
+          .map(([path, count]) => ({ path, count }))
+          .sort((a, b) => b.count - a.count)
+          .slice(0, 5)
+        setTopPages(sorted)
+
+        // Fetch leads count
+        const leadsSnap = await getDocs(collection(db, 'leads'))
+        setTotalLeads(leadsSnap.size)
+      } catch (err) {
+        console.error('Error fetching analytics:', err)
+      } finally {
+        setLoading(false)
+      }
     }
-    fetchSettings()
+    fetchData()
   }, [])
 
   if (loading) return (
@@ -41,90 +90,72 @@ export default function AnalyticsPage() {
         </a>
       </div>
 
-      {!gaId ? (
-        <div className="bg-[#161640] border border-white/5 rounded-2xl p-8">
-          <div className="max-w-lg mx-auto text-center">
-            <BarChart2 size={48} className="text-[#7B2FF2] mx-auto mb-4" />
-            <h3 className="text-white font-bold text-lg mb-2">Connect Google Analytics</h3>
-            <p className="text-[#7A7A9E] text-sm mb-6">Add your Google Analytics ID in Settings to see detailed traffic reports, user behavior, and more.</p>
-
-            <div className="bg-[#0E0E2C] border border-white/10 rounded-2xl p-5 text-left mb-6">
-              <p className="text-white text-sm font-semibold mb-3">How to get your Analytics ID:</p>
-              <ol className="space-y-2 text-[#7A7A9E] text-sm">
-                <li className="flex gap-2"><span className="text-[#7B2FF2] font-bold">1.</span> Go to <a href="https://analytics.google.com" target="_blank" className="text-[#7B2FF2] underline">analytics.google.com</a></li>
-                <li className="flex gap-2"><span className="text-[#7B2FF2] font-bold">2.</span> Create account → Add Property → primesoul.tech</li>
-                <li className="flex gap-2"><span className="text-[#7B2FF2] font-bold">3.</span> Go to Admin → Data Streams → Your site</li>
-                <li className="flex gap-2"><span className="text-[#7B2FF2] font-bold">4.</span> Copy the Measurement ID (starts with G-)</li>
-                <li className="flex gap-2"><span className="text-[#7B2FF2] font-bold">5.</span> Paste it in Settings → Google Analytics ID</li>
-              </ol>
-            </div>
-
-            <a href="/admin/settings" className="inline-flex items-center gap-2 bg-gradient-to-r from-[#7B2FF2] to-[#A855F7] text-white text-sm font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-all">
-              Go to Settings →
-            </a>
-          </div>
+      {/* Real stats cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-[#161640] border border-white/5 rounded-2xl p-5">
+          <Eye size={20} className="text-[#7B2FF2] mb-3" />
+          <p className="text-3xl font-bold text-white">{totalViews7d}</p>
+          <p className="text-[#4A4A6A] text-xs mt-1">Page Views (7 days)</p>
         </div>
-      ) : (
-        <div className="space-y-6">
-          {/* Quick stats cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { label: 'Total Users', icon: Users, desc: 'View in GA →', color: '#7B2FF2' },
-              { label: 'Page Views', icon: Eye, desc: 'View in GA →', color: '#E879F9' },
-              { label: 'Avg Session', icon: Clock, desc: 'View in GA →', color: '#2EC4C4' },
-              { label: 'Top Pages', icon: TrendingUp, desc: 'View in GA →', color: '#F59E0B' },
-            ].map(stat => {
-              const Icon = stat.icon
-              return (
-                <div key={stat.label} className="bg-[#161640] border border-white/5 rounded-2xl p-5">
-                  <Icon size={20} style={{ color: stat.color }} className="mb-3" />
-                  <p className="text-white font-semibold text-sm">{stat.label}</p>
-                  <a href="https://analytics.google.com" target="_blank" className="text-[#4A4A6A] text-xs hover:text-[#7B2FF2] transition-colors">{stat.desc}</a>
+        <div className="bg-[#161640] border border-white/5 rounded-2xl p-5">
+          <BarChart2 size={20} className="text-[#E879F9] mb-3" />
+          <p className="text-3xl font-bold text-white">{totalViews30d}</p>
+          <p className="text-[#4A4A6A] text-xs mt-1">Page Views (30 days)</p>
+        </div>
+        <div className="bg-[#161640] border border-white/5 rounded-2xl p-5">
+          <Users size={20} className="text-[#2EC4C4] mb-3" />
+          <p className="text-3xl font-bold text-white">{totalLeads}</p>
+          <p className="text-[#4A4A6A] text-xs mt-1">Total Leads</p>
+        </div>
+        <div className="bg-[#161640] border border-white/5 rounded-2xl p-5">
+          <TrendingUp size={20} className="text-[#F59E0B] mb-3" />
+          <p className="text-3xl font-bold text-white">{topPages.length}</p>
+          <p className="text-[#4A4A6A] text-xs mt-1">Active Pages</p>
+        </div>
+      </div>
+
+      {/* Top pages */}
+      <div className="bg-[#161640] border border-white/5 rounded-2xl p-6">
+        <h3 className="text-white font-semibold mb-4">Top Pages</h3>
+        {topPages.length === 0 ? (
+          <p className="text-[#4A4A6A] text-sm">No page views recorded yet. Views will appear here once visitors start browsing your site.</p>
+        ) : (
+          <div className="space-y-3">
+            {topPages.map((page, i) => (
+              <div key={page.path} className="flex items-center justify-between p-3 bg-[#0E0E2C] rounded-xl border border-white/5">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-mono text-[#7B2FF2] w-6">#{i + 1}</span>
+                  <span className="text-white text-sm font-medium">{page.path}</span>
                 </div>
-              )
-            })}
+                <span className="text-[#7A7A9E] text-sm font-semibold">{page.count} views</span>
+              </div>
+            ))}
           </div>
+        )}
+      </div>
 
-          {/* GA Embed */}
-          <div className="bg-[#161640] border border-white/5 rounded-2xl p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-white font-semibold">Analytics Dashboard</h3>
-              <span className="text-xs bg-green-500/20 text-green-400 px-3 py-1 rounded-full">GA ID: {gaId}</span>
-            </div>
-            <div className="bg-[#0E0E2C] rounded-2xl p-6 text-center border border-white/5">
-              <BarChart2 size={32} className="text-[#7B2FF2] mx-auto mb-3" />
-              <p className="text-white text-sm font-medium mb-2">Full Analytics Available</p>
-              <p className="text-[#7A7A9E] text-sm mb-4">Your GA ID <span className="text-[#7B2FF2]">{gaId}</span> is configured. View complete data in Google Analytics.</p>
-              <a
-                href={`https://analytics.google.com/analytics/web/#/report-home/`}
-                target="_blank"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#7B2FF2] to-[#A855F7] text-white text-sm font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-all"
-              >
-                <ExternalLink size={16} />
-                Open Full Dashboard
+      {/* GA Quick links */}
+      {gaId && (
+        <div className="bg-[#161640] border border-white/5 rounded-2xl p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-white font-semibold">Google Analytics</h3>
+            <span className="text-xs bg-green-500/20 text-green-400 px-3 py-1 rounded-full">GA ID: {gaId}</span>
+          </div>
+          <div className="grid md:grid-cols-2 gap-3">
+            {[
+              { label: 'Realtime Report', desc: 'See live visitors right now', url: 'https://analytics.google.com/analytics/web/#/realtime/' },
+              { label: 'Traffic Sources', desc: 'Where visitors are coming from', url: 'https://analytics.google.com/analytics/web/#/report/trafficsources-overview/' },
+              { label: 'Top Pages', desc: 'Most visited pages on your site', url: 'https://analytics.google.com/analytics/web/#/report/content-pages/' },
+              { label: 'User Demographics', desc: 'Age, location, device info', url: 'https://analytics.google.com/analytics/web/#/report/visitors-demographics-overview/' },
+            ].map(link => (
+              <a key={link.label} href={link.url} target="_blank" className="flex items-center justify-between p-4 bg-[#0E0E2C] rounded-xl border border-white/5 hover:border-[#7B2FF2]/30 transition-all group">
+                <div>
+                  <p className="text-white text-sm font-medium group-hover:text-[#7B2FF2] transition-colors">{link.label}</p>
+                  <p className="text-[#4A4A6A] text-xs">{link.desc}</p>
+                </div>
+                <ExternalLink size={14} className="text-[#4A4A6A] group-hover:text-[#7B2FF2] transition-colors" />
               </a>
-            </div>
-          </div>
-
-          {/* Quick links */}
-          <div className="bg-[#161640] border border-white/5 rounded-2xl p-6">
-            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
-            <div className="grid md:grid-cols-2 gap-3">
-              {[
-                { label: 'Realtime Report', desc: 'See live visitors right now', url: 'https://analytics.google.com/analytics/web/#/realtime/' },
-                { label: 'Traffic Sources', desc: 'Where visitors are coming from', url: 'https://analytics.google.com/analytics/web/#/report/trafficsources-overview/' },
-                { label: 'Top Pages', desc: 'Most visited pages on your site', url: 'https://analytics.google.com/analytics/web/#/report/content-pages/' },
-                { label: 'User Demographics', desc: 'Age, location, device info', url: 'https://analytics.google.com/analytics/web/#/report/visitors-demographics-overview/' },
-              ].map(link => (
-                <a key={link.label} href={link.url} target="_blank" className="flex items-center justify-between p-4 bg-[#0E0E2C] rounded-xl border border-white/5 hover:border-[#7B2FF2]/30 transition-all group">
-                  <div>
-                    <p className="text-white text-sm font-medium group-hover:text-[#7B2FF2] transition-colors">{link.label}</p>
-                    <p className="text-[#4A4A6A] text-xs">{link.desc}</p>
-                  </div>
-                  <ExternalLink size={14} className="text-[#4A4A6A] group-hover:text-[#7B2FF2] transition-colors" />
-                </a>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
       )}

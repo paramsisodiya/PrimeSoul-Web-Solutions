@@ -1,13 +1,32 @@
 'use client'
 
-import { useState } from 'react'
-import { FileText, Download, Plus, Trash2, Eye } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { collection, addDoc, getDocs, updateDoc, doc, serverTimestamp, query, orderBy } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
+import { FileText, Download, Plus, Trash2, Eye, Save, ChevronLeft, IndianRupee } from 'lucide-react'
 
 interface LineItem {
   id: number
   description: string
   quantity: number
   rate: number
+}
+
+interface SavedInvoice {
+  id: string
+  clientName: string
+  clientEmail: string
+  projectName: string
+  invoiceNumber: string
+  date: string
+  dueDate: string
+  items: LineItem[]
+  subtotal: number
+  gst: number
+  total: number
+  notes: string
+  status: 'unpaid' | 'paid'
+  createdAt: unknown
 }
 
 export default function InvoiceGeneratorPage() {
@@ -22,6 +41,25 @@ export default function InvoiceGeneratorPage() {
     { id: 1, description: 'Website Design & Development', quantity: 1, rate: 7999 },
   ])
   const [showPreview, setShowPreview] = useState(false)
+
+  // Past invoices
+  const [savedInvoices, setSavedInvoices] = useState<SavedInvoice[]>([])
+  const [viewMode, setViewMode] = useState<'create' | 'list'>('create')
+  const [savingInvoice, setSavingInvoice] = useState(false)
+
+  useEffect(() => {
+    fetchInvoices()
+  }, [])
+
+  const fetchInvoices = async () => {
+    try {
+      const snap = await getDocs(query(collection(db, 'invoices'), orderBy('createdAt', 'desc')))
+      const data = snap.docs.map(d => ({ id: d.id, ...d.data() } as SavedInvoice))
+      setSavedInvoices(data)
+    } catch (err) {
+      console.error('Error fetching invoices:', err)
+    }
+  }
 
   const addItem = () => {
     setItems(prev => [...prev, { id: Date.now(), description: '', quantity: 1, rate: 0 }])
@@ -40,6 +78,44 @@ export default function InvoiceGeneratorPage() {
   const gst = Math.round(subtotal * 0.18)
   const total = subtotal + gst
 
+  const saveInvoice = async () => {
+    if (!clientName.trim()) return
+    setSavingInvoice(true)
+    try {
+      await addDoc(collection(db, 'invoices'), {
+        clientName: clientName.trim(),
+        clientEmail: clientEmail.trim(),
+        projectName: projectName.trim(),
+        invoiceNumber,
+        date,
+        dueDate,
+        items: items.map(({ description, quantity, rate }) => ({ description, quantity, rate })),
+        subtotal,
+        gst,
+        total,
+        notes,
+        status: 'unpaid',
+        createdAt: serverTimestamp(),
+      })
+      await fetchInvoices()
+      alert('Invoice saved successfully!')
+    } catch (err) {
+      console.error('Error saving invoice:', err)
+    } finally {
+      setSavingInvoice(false)
+    }
+  }
+
+  const toggleInvoiceStatus = async (invoiceId: string, current: string) => {
+    const newStatus = current === 'paid' ? 'unpaid' : 'paid'
+    try {
+      await updateDoc(doc(db, 'invoices', invoiceId), { status: newStatus })
+      setSavedInvoices(prev => prev.map(inv => inv.id === invoiceId ? { ...inv, status: newStatus as 'paid' | 'unpaid' } : inv))
+    } catch (err) {
+      console.error('Error updating invoice status:', err)
+    }
+  }
+
   const generatePDF = () => {
     const html = `
 <!DOCTYPE html>
@@ -48,7 +124,7 @@ export default function InvoiceGeneratorPage() {
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',sans-serif;color:#0E0E2C;background:#fff;padding:40px}
 .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid #E8E5F5}
-.logo{font-size:28px;font-weight:800;background:linear-gradient(135deg,#7B2FF2,#A855F7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo{font-size:28px;font-weight:800;color:#2AA7A7}
 .logo-sub{font-size:11px;color:#7A7A9E;margin-top:2px}
 .invoice-title{text-align:right}
 .invoice-title h2{font-size:32px;color:#7B2FF2;font-weight:700}
@@ -96,6 +172,56 @@ ${notes ? `<div class="notes"><strong>Notes:</strong> ${notes}</div>` : ''}
     window.open(url, '_blank')
   }
 
+  // List view
+  if (viewMode === 'list') {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h1 className="text-white text-2xl font-bold">Past Invoices</h1>
+            <p className="text-[#4A4A6A] text-sm mt-1">{savedInvoices.length} invoices saved</p>
+          </div>
+          <button onClick={() => setViewMode('create')} className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-[#7B2FF2] to-[#A855F7] text-white hover:opacity-90 transition-all">
+            <Plus size={16} /> New Invoice
+          </button>
+        </div>
+
+        {savedInvoices.length === 0 ? (
+          <div className="bg-[#161640] border border-white/5 rounded-2xl p-12 text-center">
+            <FileText size={40} className="text-[#4A4A6A] mx-auto mb-4" />
+            <p className="text-[#7A7A9E] mb-2">No invoices saved yet</p>
+            <p className="text-[#4A4A6A] text-sm">Create and save your first invoice</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {savedInvoices.map(inv => (
+              <div key={inv.id} className="bg-[#161640] border border-white/5 rounded-2xl p-5 flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#7B2FF2]/10 flex items-center justify-center">
+                    <IndianRupee size={18} className="text-[#7B2FF2]" />
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold text-sm">{inv.clientName}</p>
+                    <p className="text-[#4A4A6A] text-xs">{inv.invoiceNumber} · {inv.projectName}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <p className="text-white font-bold">₹{inv.total?.toLocaleString()}</p>
+                  <button
+                    onClick={() => toggleInvoiceStatus(inv.id, inv.status)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${inv.status === 'paid' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}
+                  >
+                    {inv.status === 'paid' ? '✓ Paid' : 'Unpaid'}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-4">
@@ -104,8 +230,14 @@ ${notes ? `<div class="notes"><strong>Notes:</strong> ${notes}</div>` : ''}
           <p className="text-[#4A4A6A] text-sm mt-1">Create professional invoices and proposals</p>
         </div>
         <div className="flex gap-2">
+          <button onClick={() => setViewMode('list')} className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-[#161640] text-[#7A7A9E] hover:text-white border border-white/5 transition-all">
+            <FileText size={16} /> Past Invoices ({savedInvoices.length})
+          </button>
           <button onClick={() => setShowPreview(!showPreview)} className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-[#161640] text-[#7A7A9E] hover:text-white border border-white/5 transition-all">
             <Eye size={16} /> {showPreview ? 'Edit' : 'Preview'}
+          </button>
+          <button onClick={saveInvoice} disabled={savingInvoice} className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-green-600 text-white hover:bg-green-700 transition-all disabled:opacity-50">
+            <Save size={16} /> {savingInvoice ? 'Saving...' : 'Save'}
           </button>
           <button onClick={generatePDF} className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-[#7B2FF2] to-[#A855F7] text-white hover:opacity-90 transition-all">
             <Download size={16} /> Download PDF
@@ -155,7 +287,7 @@ ${notes ? `<div class="notes"><strong>Notes:</strong> ${notes}</div>` : ''}
         <div className="bg-white rounded-2xl p-8 space-y-6 h-fit sticky top-24 border border-[#E8E5F5]">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-xl font-bold" style={{ background: 'linear-gradient(135deg,#7B2FF2,#A855F7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>PrimeSoul</p>
+              <p className="text-xl font-bold" style={{ color: '#2AA7A7' }}>PrimeSoul</p>
               <p className="text-[10px] text-[#7A7A9E]">Web Solutions</p>
             </div>
             <div className="text-right">
