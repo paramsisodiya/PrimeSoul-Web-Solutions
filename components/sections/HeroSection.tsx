@@ -115,8 +115,7 @@ export default function HeroSection() {
 
             {/* Headline with text reveal animation */}
             <h1
-              className="text-[2.5rem] sm:text-5xl md:text-6xl xl:text-[72px] font-extrabold leading-[1.05] tracking-[-0.03em] mb-5 sm:mb-6"
-              style={{ color: '#0E0E2C' }}
+              className="text-[2.5rem] sm:text-5xl md:text-6xl xl:text-[72px] font-extrabold leading-[1.05] tracking-[-0.03em] mb-5 sm:mb-6 text-ink"
             >
               {/* Word-by-word reveal */}
               <span

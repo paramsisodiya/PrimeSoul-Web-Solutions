@@ -45,10 +45,14 @@ export default function Footer() {
               <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-white/5">
                 <Image src="/images/logo-dark.png" alt="PrimeSoul" fill className="object-contain" />
               </div>
-              <span className="text-2xl font-extrabold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                <span className="text-white">Prime</span>
-                <span style={{ background: 'linear-gradient(135deg, #A855F7, #E879F9)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Soul</span>
-              </span>
+              <div className="flex flex-col">
+                <span className="text-2xl font-extrabold tracking-[-0.02em] leading-none" style={{ color: '#2AA7A7', fontFamily: "'Poppins', sans-serif" }}>
+                  PrimeSoul
+                </span>
+                <span className="text-[9px] font-medium uppercase tracking-[0.25em] text-white/30 mt-1" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  Web Solutions
+                </span>
+              </div>
             </Link>
             <p className="text-white/40 text-xs sm:text-sm leading-relaxed max-w-xs mb-6 sm:mb-8">
               A digital agency crafting premium web experiences for businesses that understand the value of quality.

@@ -46,8 +46,7 @@ export default function AboutSection() {
             <div className="sticky top-32">
               <SectionLabel>Who We Are</SectionLabel>
               <h2
-                className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-tight tracking-[-0.03em] mb-6 sm:mb-8"
-                style={{ color: '#0E0E2C' }}
+                className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-tight tracking-[-0.03em] mb-6 sm:mb-8 text-ink"
               >
                 We are architects of the <span className="text-gradient-purple font-display italic">digital realm</span>.
               </h2>
@@ -86,8 +85,7 @@ export default function AboutSection() {
             <div>
               <SectionLabel>What We Do</SectionLabel>
               <h3
-                className="text-2xl sm:text-3xl font-extrabold mb-8"
-                style={{ color: '#0E0E2C' }}
+                className="text-2xl sm:text-3xl font-extrabold mb-8 text-ink"
               >
                 Comprehensive digital excellence.
               </h3>

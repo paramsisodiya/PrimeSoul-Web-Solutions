@@ -94,10 +94,7 @@ function StatCounter({
 
       {/* Label */}
       <h3
-        className="text-lg md:text-xl font-bold mb-3 tracking-tight"
-        style={{
-          color: '#0E0E2C',
-        }}
+        className="text-lg md:text-xl font-bold mb-3 tracking-tight text-ink"
       >
         {stat.label}
       </h3>
@@ -158,8 +155,7 @@ export default function TrustSection() {
             <AnimatedSection direction="left">
               <SectionLabel>Beyond Expectations</SectionLabel>
               <h2
-                className="text-[1.7rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-5 sm:mb-6"
-                style={{ color: '#0E0E2C' }}
+                className="text-[1.7rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-5 sm:mb-6 text-ink"
               >
                 Empowering brands with{' '}
                 <span className="text-gradient-purple font-display italic">innovative strategies</span>{' '}
@@ -302,8 +298,7 @@ export default function TrustSection() {
           <AnimatedSection className="text-center mb-12 sm:mb-20">
             <SectionLabel>Impact Numbers</SectionLabel>
             <h2
-              className="text-[1.6rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-3 sm:mb-4"
-              style={{ color: '#0E0E2C' }}
+              className="text-[1.6rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-3 sm:mb-4 text-ink"
             >
               Numbers That{' '}
               <span className="text-gradient-purple font-display italic">Speak Volumes</span>

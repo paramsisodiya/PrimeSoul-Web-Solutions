@@ -54,8 +54,7 @@ export default function BlogPreviewSection() {
           <div>
             <SectionLabel>From the Blog</SectionLabel>
             <h2
-              className="text-[1.6rem] sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em]"
-              style={{ color: '#0E0E2C' }}
+              className="text-[1.6rem] sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em] text-ink"
             >
               Latest{' '}
               <span className="text-gradient-purple font-display italic">Insights</span>

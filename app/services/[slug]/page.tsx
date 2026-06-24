@@ -88,7 +88,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               <span className="dot" style={{ background: service.accent }} />
               {service.shortTitle}
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-[-0.03em] mb-5" style={{ color: '#0E0E2C' }}>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-[-0.03em] mb-5 text-ink">
               {service.heroTagline.split(' ').map((word, i) => (
                 <span key={i}>
                   {i === service.heroTagline.split(' ').length - 1 ? (
@@ -132,7 +132,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <AnimatedSection>
               <SectionLabel>The Problem</SectionLabel>
-              <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight tracking-[-0.03em] mb-4" style={{ color: '#0E0E2C' }}>
+              <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight tracking-[-0.03em] mb-4 text-ink">
                 {service.problem.title}
               </h2>
               <p className="text-base text-ink-secondary leading-relaxed">
@@ -167,7 +167,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <AnimatedSection>
               <SectionLabel>Our Solution</SectionLabel>
-              <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight tracking-[-0.03em] mb-4" style={{ color: '#0E0E2C' }}>
+              <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight tracking-[-0.03em] mb-4 text-ink">
                 {service.solution.title}
               </h2>
               <p className="text-base text-ink-secondary leading-relaxed">
@@ -201,7 +201,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <AnimatedSection className="text-center mb-14">
             <SectionLabel>What&apos;s Included</SectionLabel>
-            <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight tracking-[-0.03em]" style={{ color: '#0E0E2C' }}>
+            <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight tracking-[-0.03em] text-ink">
               Everything You{' '}
               <span className="font-display italic text-gradient-purple">Need</span>
             </h2>
@@ -259,7 +259,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <AnimatedSection className="text-center mb-14">
             <SectionLabel>Our Process</SectionLabel>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-[-0.03em]" style={{ color: '#0E0E2C' }}>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] text-ink">
               How It <span className="font-display italic text-gradient-purple">Works</span>
             </h2>
           </AnimatedSection>
@@ -308,7 +308,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <AnimatedSection className="text-center mb-12">
             <SectionLabel>FAQ</SectionLabel>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-[-0.03em]" style={{ color: '#0E0E2C' }}>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] text-ink">
               Common <span className="font-display italic text-gradient-purple">Questions</span>
             </h2>
           </AnimatedSection>

@@ -34,8 +34,7 @@ export default function FounderSection() {
           <AnimatedSection direction="left" className="order-2 lg:order-1">
             <SectionLabel>About the Founder</SectionLabel>
             <h2
-              className="text-[2rem] sm:text-4xl md:text-5xl font-extrabold leading-[1.1] tracking-[-0.03em] mb-6 sm:mb-8"
-              style={{ color: '#0E0E2C' }}
+              className="text-[1.6rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-5 sm:mb-6 text-ink"
             >
               Not an Agency.
               <br />

@@ -38,8 +38,7 @@ export default function FAQSection() {
         <AnimatedSection className="text-center mb-12 sm:mb-16">
           <SectionLabel>Common Questions</SectionLabel>
           <h2
-            className="text-[1.6rem] sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-4"
-            style={{ color: '#0E0E2C' }}
+            className="text-[1.6rem] sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-4 text-ink"
           >
             Frequently Asked{' '}
             <span className="text-gradient-purple font-display italic">Questions</span>

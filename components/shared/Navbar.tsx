@@ -96,15 +96,9 @@ export default function Navbar() {
             <div className="relative w-9 h-9 overflow-hidden rounded-xl">
               <Image src="/images/logo.png" alt="PrimeSoul" fill className="object-contain" priority />
             </div>
-            <div className="flex flex-col">
-              <span className="text-[22px] font-extrabold tracking-[-0.02em] leading-none">
-                <span style={{ color: '#0E0E2C' }}>Prime</span>
-                <span style={{ background: 'linear-gradient(135deg, #7B2FF2 0%, #E879F9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Soul</span>
-              </span>
-              <span className="text-[8.5px] font-medium uppercase tracking-[0.3em] leading-none" style={{ color: '#AEAEC8', marginTop: '3px' }}>
-                Web Solutions
-              </span>
-            </div>
+            <span className="text-[22px] font-extrabold tracking-[-0.02em] leading-none" style={{ color: '#2AA7A7', fontFamily: "'Poppins', sans-serif" }}>
+              PrimeSoul
+            </span>
           </Link>
 
           {/* Desktop Nav */}
@@ -276,15 +270,9 @@ export default function Navbar() {
               <div className="relative w-10 h-10 overflow-hidden rounded-xl">
                 <Image src="/images/logo.png" alt="PrimeSoul" fill className="object-contain" />
               </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-extrabold tracking-[-0.02em] leading-none">
-                  <span style={{ color: '#0E0E2C' }}>Prime</span>
-                  <span style={{ background: 'linear-gradient(135deg, #7B2FF2 0%, #E879F9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Soul</span>
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.3em] leading-none" style={{ color: '#AEAEC8', marginTop: '4px' }}>
-                  Web Solutions
-                </span>
-              </div>
+              <span className="text-2xl font-extrabold tracking-[-0.02em] leading-none" style={{ color: '#2AA7A7', fontFamily: "'Poppins', sans-serif" }}>
+                PrimeSoul
+              </span>
             </div>
           </div>
 

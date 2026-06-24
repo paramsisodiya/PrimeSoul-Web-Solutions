@@ -141,8 +141,7 @@ export default function ServicesSection() {
           <div className="max-w-2xl">
             <SectionLabel>What We Do</SectionLabel>
             <h2
-              className="text-[1.6rem] sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-4 sm:mb-5"
-              style={{ color: '#0E0E2C' }}
+              className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-tight tracking-[-0.03em] mb-5 sm:mb-6 text-ink"
             >
               Services Built for{' '}
               <span className="text-gradient-purple font-display italic">
