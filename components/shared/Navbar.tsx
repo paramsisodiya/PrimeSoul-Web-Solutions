@@ -96,7 +96,7 @@ export default function Navbar() {
             <div className="relative w-9 h-9 overflow-hidden rounded-xl">
               <Image src="/images/logo.png" alt="PrimeSoul" fill className="object-contain" priority />
             </div>
-            <span className="text-[22px] font-extrabold tracking-[-0.02em] leading-none" style={{ color: '#2AA7A7', fontFamily: "'Playfair Display, serif" }}>
+            <span className="text-[22px] font-extrabold tracking-[-0.02em] leading-none" style={{ color: '#000000ff', fontFamily: "'Playfair Display, serif" }}>
               PrimeSoul
             </span>
           </Link>
