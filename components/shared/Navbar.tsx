@@ -5,8 +5,8 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { SERVICE_PAGES } from '@/lib/service-pages'
-import { 
-  Monitor, Smartphone, Globe, PenTool, LayoutTemplate, Palette, LineChart, 
+import {
+  Monitor, Smartphone, Globe, PenTool, LayoutTemplate, Palette, LineChart,
   Search, Share2, ImageIcon, Wrench, Megaphone, MapPin, Code, Zap, Edit, BarChart
 } from 'lucide-react'
 
@@ -96,7 +96,7 @@ export default function Navbar() {
             <div className="relative w-9 h-9 overflow-hidden rounded-xl">
               <Image src="/images/logo.png" alt="PrimeSoul" fill className="object-contain" priority />
             </div>
-            <span className="text-[22px] font-extrabold tracking-[-0.02em] leading-none" style={{ color: '#2AA7A7', fontFamily: "'Poppins', sans-serif" }}>
+            <span className="text-[22px] font-extrabold tracking-[-0.02em] leading-none" style={{ color: '#2AA7A7', fontFamily: "'Playfair Display, serif" }}>
               PrimeSoul
             </span>
           </Link>
@@ -120,7 +120,7 @@ export default function Navbar() {
                       width="12" height="12" viewBox="0 0 12 12" fill="none"
                       className={cn('transition-transform duration-200', servicesOpen && 'rotate-180')}
                     >
-                      <path d="M3 4.5l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M3 4.5l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
 
@@ -154,7 +154,7 @@ export default function Navbar() {
                           </Link>
                         ))}
                       </div>
-                      
+
                       {/* Right side: Highlight Panel */}
                       <div className="w-[35%] bg-surface-subtle border-l border-surface-border p-6 flex flex-col justify-between">
                         <div>
@@ -163,15 +163,15 @@ export default function Navbar() {
                             We don&apos;t just build websites. We craft digital experiences that drive growth, engagement, and actual revenue for your business.
                           </p>
                         </div>
-                        
+
                         <div className="space-y-3">
                           <Link href="/services" onClick={() => setServicesOpen(false)} className="flex items-center justify-between p-3 bg-white rounded-xl border border-surface-border hover:border-brand-primary hover:shadow-sm transition-all group">
                             <span className="text-sm font-semibold text-ink group-hover:text-brand-primary transition-colors">All Services</span>
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-brand-primary group-hover:translate-x-1 transition-transform"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-brand-primary group-hover:translate-x-1 transition-transform"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                           </Link>
                           <Link href="/contact" onClick={() => setServicesOpen(false)} className="flex items-center justify-between p-3 rounded-xl transition-all group shadow-brand-sm hover:shadow-brand transition-shadow" style={{ background: 'linear-gradient(135deg, #7B2FF2 0%, #A855F7 100%)' }}>
                             <span className="text-sm font-semibold text-white">Start a Project</span>
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-white group-hover:translate-x-1 transition-transform"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-white group-hover:translate-x-1 transition-transform"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                           </Link>
                         </div>
                       </div>
@@ -213,7 +213,7 @@ export default function Navbar() {
             >
               Let&apos;s Talk!
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-                <path d="M4 10L10 4M10 4H5M10 4V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M4 10L10 4M10 4H5M10 4V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
           </div>
@@ -297,7 +297,7 @@ export default function Navbar() {
                   width="20" height="20" viewBox="0 0 20 20" fill="none"
                   className={cn('transition-transform duration-300', mobileServicesOpen && 'rotate-180')}
                 >
-                  <path d="M5 8l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M5 8l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
 
