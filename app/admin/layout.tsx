@@ -32,6 +32,7 @@ import {
   Webhook,
   Target,
   Users,
+  MessageSquare,
 } from 'lucide-react'
 
 const navItems = [
@@ -42,6 +43,7 @@ const navItems = [
   { href: '/admin/blogs', label: 'Blog', icon: FileText },
   { href: '/admin/portfolio', label: 'Portfolio', icon: Briefcase },
   { href: '/admin/testimonials', label: 'Testimonials', icon: Star },
+  { href: '/admin/testimonial-requests', label: 'Testimonial Requests', icon: MessageSquare },
   { href: '/admin/faqs', label: 'FAQs', icon: HelpCircle },
   { href: '/admin/pricing', label: 'Pricing', icon: DollarSign },
   { href: '/admin/announcements', label: 'Announcements', icon: Megaphone },

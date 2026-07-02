@@ -30,7 +30,7 @@ export default function WebhooksPage() {
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const snap = await getDoc(doc(db, 'settings', 'webhooks'))
+        const snap = await getDoc(doc(db, 'private_config', 'webhooks'))
         if (snap.exists()) setConfig(snap.data() as WebhookConfig)
       } catch (err) {
         console.error('Error fetching webhooks:', err)
@@ -42,7 +42,7 @@ export default function WebhooksPage() {
   const handleSave = async () => {
     setSaving(true)
     try {
-      await setDoc(doc(db, 'settings', 'webhooks'), config)
+      await setDoc(doc(db, 'private_config', 'webhooks'), config)
       setSaved(true)
       setTimeout(() => setSaved(false), 3000)
     } catch (err) {

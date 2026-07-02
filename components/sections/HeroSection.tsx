@@ -1,16 +1,42 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
 import MagneticButton from '@/components/ui/MagneticButton'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
+import { doc, getDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 
 const ParticleBackground = dynamic(() => import('@/components/ui/ParticleBackground'), { ssr: false })
+
+interface ABTest {
+  id: string
+  name: string
+  elementId: string
+  variants: string[]
+  traffic: number[]
+  active: boolean
+}
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null)
   const [loaded, setLoaded] = useState(false)
+  const [abVariantWord, setAbVariantWord] = useState('Success')
+  const abRef = useRef<{ testId: string; variant: number } | null>(null)
+
+  // Log A/B conversion on CTA click
+  const logConversion = useCallback(async () => {
+    if (!abRef.current) return
+    try {
+      await addDoc(collection(db, 'ab_test_events'), {
+        testId: abRef.current.testId,
+        variant: abRef.current.variant,
+        type: 'conversion',
+        timestamp: serverTimestamp(),
+      })
+    } catch {}
+  }, [])
 
   useEffect(() => {
     const hero = heroRef.current
@@ -29,6 +55,47 @@ export default function HeroSection() {
 
     hero.addEventListener('mousemove', handleMouseMove)
     return () => hero.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
+  // A/B test logic
+  useEffect(() => {
+    const runABTest = async () => {
+      try {
+        const snap = await getDoc(doc(db, 'settings', 'ab_tests'))
+        if (!snap.exists()) return
+        const data = snap.data()
+        const tests: ABTest[] = data.tests || []
+        const activeTest = tests.find(t => t.active)
+        if (!activeTest || activeTest.variants.length < 2) return
+
+        // Determine variant
+        const storageKey = `ab_assigned_variant_${activeTest.id}`
+        let assignedVariant: number
+        const stored = localStorage.getItem(storageKey)
+        if (stored !== null) {
+          assignedVariant = parseInt(stored, 10)
+        } else {
+          assignedVariant = Math.random() < 0.5 ? 0 : 1
+          localStorage.setItem(storageKey, String(assignedVariant))
+        }
+
+        // Set the variant text as the gradient word
+        if (activeTest.variants[assignedVariant]) {
+          setAbVariantWord(activeTest.variants[assignedVariant])
+        }
+
+        abRef.current = { testId: activeTest.id, variant: assignedVariant }
+
+        // Log impression
+        await addDoc(collection(db, 'ab_test_events'), {
+          testId: activeTest.id,
+          variant: assignedVariant,
+          type: 'impression',
+          timestamp: serverTimestamp(),
+        })
+      } catch {}
+    }
+    runABTest()
   }, [])
 
   return (
@@ -142,7 +209,7 @@ export default function HeroSection() {
                   transition: 'all 0.8s cubic-bezier(0.22,1,0.36,1) 0.35s',
                 }}
               >
-                Success
+                {abVariantWord}
               </span>
               <br />
               <span
@@ -206,6 +273,7 @@ export default function HeroSection() {
               <MagneticButton strength={0.25} radius={150}>
                 <Link
                   href="/portfolio"
+                  onClick={logConversion}
                   className="btn-tap group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-semibold text-white text-sm transition-all duration-300 hover:-translate-y-px hover:shadow-brand-lg"
                   style={{
                     background: 'linear-gradient(135deg, #7B2FF2 0%, #8B5CF6 100%)',
