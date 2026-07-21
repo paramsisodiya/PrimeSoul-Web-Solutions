@@ -241,6 +241,13 @@ html.lenis { height: auto; }
 }
 
 /* ============================================
+   HEADING FONT — Playfair Display for h1–h3
+   ============================================ */
+h1, h2, h3 {
+  font-family: var(--font-display);
+}
+
+/* ============================================
    NOISE TEXTURE OVERLAY
    ============================================ */
 .noise-overlay {
@@ -438,6 +445,11 @@ html.lenis { height: auto; }
   25% { transform: translate(30px, -40px) scale(1.05); }
   50% { transform: translate(-20px, 20px) scale(0.95); }
   75% { transform: translate(40px, 30px) scale(1.08); }
+}
+
+@keyframes hero-progress-fill {
+  from { width: 0%; }
+  to { width: 100%; }
 }
 
 /* ============================================

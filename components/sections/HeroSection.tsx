@@ -19,11 +19,51 @@ interface ABTest {
   active: boolean
 }
 
+const HERO_SLIDES = [
+  {
+    img: '/images/project-school.png',
+    title: 'SVNS School Khilchipur',
+    category: 'Institutional Website',
+    description: 'Online admissions, fee status, full admin',
+    tech: 'Next.js · TypeScript · MongoDB',
+  },
+  {
+    img: '/images/project-solar.png',
+    title: 'A&S Solar Solutions',
+    category: 'Business Website',
+    description: 'Solar energy company with lead generation',
+    tech: 'Next.js · Firebase · Tailwind',
+  },
+  {
+    img: '/images/project-portfolio.png',
+    title: 'Personal Portfolio',
+    category: 'Portfolio Website',
+    description: 'Developer portfolio with project showcase',
+    tech: 'Next.js · TypeScript · Framer Motion',
+  },
+  {
+    img: '/images/project-ecommerce.avif',
+    title: 'E-Commerce Platform',
+    category: 'E-Commerce',
+    description: 'Full-stack store with payments and admin',
+    tech: 'Next.js · Supabase · Stripe',
+  },
+]
+
 export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null)
   const [loaded, setLoaded] = useState(false)
   const [abVariantWord, setAbVariantWord] = useState('Success')
   const abRef = useRef<{ testId: string; variant: number } | null>(null)
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  // Auto-advance hero slides every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
 
   // Log A/B conversion on CTA click
   const logConversion = useCallback(async () => {
@@ -299,7 +339,7 @@ export default function HeroSection() {
 
           {/* Right — visual card stack (desktop) */}
           <div className="hidden lg:block relative h-[560px]">
-            {/* Main card */}
+            {/* Main card — auto-sliding portfolio carousel */}
             <div
               className="absolute top-8 right-0 w-[400px] rounded-3xl overflow-hidden animate-float-rotate tilt-card"
               style={{
@@ -310,22 +350,52 @@ export default function HeroSection() {
                 transition: 'opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s',
               }}
             >
+              {/* Story-style progress bar */}
+              <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 p-2">
+                {HERO_SLIDES.map((_, i) => (
+                  <div
+                    key={i}
+                    className="flex-1 h-[3px] rounded-full overflow-hidden"
+                    style={{ background: 'rgba(255,255,255,0.3)' }}
+                  >
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        background: '#FFFFFF',
+                        width: i < currentSlide ? '100%' : i === currentSlide ? '100%' : '0%',
+                        animation: i === currentSlide ? 'hero-progress-fill 3s linear forwards' : 'none',
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Image area with cross-fade */}
               <div className="relative h-56">
-                <Image
-                  src="/images/project-school.png"
-                  alt="SVNS School project"
-                  fill
-                  className="object-cover"
-                  priority
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsM"
-                />
+                {HERO_SLIDES.map((slide, i) => (
+                  <Image
+                    key={slide.img}
+                    src={slide.img}
+                    alt={slide.title}
+                    fill
+                    className="object-cover"
+                    priority={i === 0}
+                    style={{
+                      opacity: i === currentSlide ? 1 : 0,
+                      transition: 'opacity 0.4s ease',
+                    }}
+                    placeholder={i === 0 ? 'blur' : undefined}
+                    blurDataURL={i === 0 ? 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsM' : undefined}
+                  />
+                ))}
                 {/* Purple overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/10 via-transparent to-transparent" />
               </div>
               <div className="bg-white p-5">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-ink-muted">Institutional Website</span>
+                  <span className="text-xs font-semibold uppercase tracking-widest text-ink-muted">
+                    {HERO_SLIDES[currentSlide].category}
+                  </span>
                   <span
                     className="text-xs font-semibold px-2.5 py-1 rounded-full"
                     style={{ background: 'rgba(123,47,242,0.08)', color: '#7B2FF2' }}
@@ -333,8 +403,8 @@ export default function HeroSection() {
                     Live
                   </span>
                 </div>
-                <p className="font-semibold text-ink text-sm">SVNS School Khilchipur</p>
-                <p className="text-xs text-ink-muted mt-1">Online admissions, fee status, full admin</p>
+                <p className="font-semibold text-ink text-sm">{HERO_SLIDES[currentSlide].title}</p>
+                <p className="text-xs text-ink-muted mt-1">{HERO_SLIDES[currentSlide].description}</p>
               </div>
             </div>
 
@@ -376,7 +446,7 @@ export default function HeroSection() {
               }}
             >
               <div className="w-2 h-2 rounded-full animate-pulse-slow" style={{ background: '#A855F7' }} />
-              <span className="text-white text-xs font-medium">Next.js · TypeScript · MongoDB</span>
+              <span className="text-white text-xs font-medium">{HERO_SLIDES[currentSlide].tech}</span>
             </div>
 
             {/* Floating badge */}
