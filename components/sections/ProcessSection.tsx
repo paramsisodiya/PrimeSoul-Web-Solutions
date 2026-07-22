@@ -10,7 +10,7 @@ export default function ProcessSection() {
           <SectionLabel>How We Work</SectionLabel>
           <h2
             className="text-[1.6rem] sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-3 sm:mb-4 max-w-2xl mx-auto"
-            style={{ fontFamily: "'Poppins', sans-serif", color: '#0E0E2C' }}
+            style={{ color: '#0E0E2C' }}
           >
             A Process Designed for{' '}
             <span className="text-gradient-purple">Clarity</span>
@@ -49,7 +49,7 @@ export default function ProcessSection() {
                     </div>
                   </div>
 
-                  <h3 className="text-base sm:text-lg font-semibold text-ink mb-2 sm:mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>{step.title}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-ink mb-2 sm:mb-3">{step.title}</h3>
                   <p className="text-xs sm:text-sm text-ink-muted leading-relaxed">{step.description}</p>
                 </div>
               </AnimatedSection>

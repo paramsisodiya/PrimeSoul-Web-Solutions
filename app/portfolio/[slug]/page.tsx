@@ -135,7 +135,7 @@ export default function CaseStudyPage() {
                 <span className="w-2 h-2 rounded-full" style={{ background: projectColor }} />
                 {project.category}
               </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#0E0E2C] mb-6" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#0E0E2C] mb-6">
                 {project.title}
               </h1>
               <p className="max-w-2xl text-lg leading-8 text-[#4B5275] mb-8">{project.description || 'A premium project case study from PrimeSoul.'}</p>
@@ -223,7 +223,7 @@ export default function CaseStudyPage() {
         <section className="bg-[#FAFAFE] py-12">
           <AnimatedSection className="mx-auto max-w-5xl px-6">
             <p className="text-[10px] uppercase tracking-[0.3em] font-semibold mb-4 text-center" style={{ color: projectColor }}>Before & After</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-ink text-center mb-8" style={{ fontFamily: "'Poppins', sans-serif" }}>See the Transformation</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-ink text-center mb-8">See the Transformation</h2>
             <BeforeAfterSlider
               beforeImage={project.beforeImage}
               afterImage={project.afterImage || project.image || ''}
@@ -246,7 +246,7 @@ export default function CaseStudyPage() {
                   <span className="text-2xl">{s.icon}</span>
                   <p className="text-[10px] uppercase tracking-[0.3em] font-semibold" style={{ color: projectColor }}>{s.label}</p>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-[#0E0E2C] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>{s.title}</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#0E0E2C] mb-4">{s.title}</h2>
                 <p className="text-base leading-8 text-[#475569]">{s.content}</p>
               </div>
             </AnimatedSection>
@@ -262,7 +262,7 @@ export default function CaseStudyPage() {
               <p className="text-[10px] uppercase tracking-[0.3em] font-semibold text-[#AEAEC8] mb-4">Next Project</p>
               <Link href={`/portfolio/${nextProject.slug}`} className="group flex items-center justify-between gap-8 py-4 transition-colors">
                 <div>
-                  <h3 className="text-3xl sm:text-4xl font-bold text-[#0E0E2C] group-hover:text-[#7B2FF2] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <h3 className="text-3xl sm:text-4xl font-bold text-[#0E0E2C] group-hover:text-[#7B2FF2] transition-colors">
                     {nextProject.title}
                   </h3>
                   <p className="text-[#7A7A9E] mt-2">{nextProject.category} · {nextProject.year}</p>

@@ -34,7 +34,7 @@ export default function ServicesPage() {
             <SectionLabel>Services</SectionLabel>
             <h1
               className="text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-5"
-              style={{ fontFamily: 'Playfair Display, serif', color: '#0D1340' }}
+              style={{ color: '#0D1340' }}
             >
               Everything Your{' '}
               <span style={{
@@ -139,7 +139,6 @@ export default function ServicesPage() {
             <SectionLabel>Our Process</SectionLabel>
             <h2
               className="text-3xl md:text-4xl font-bold text-ink mb-4"
-              style={{ fontFamily: 'Playfair Display, serif' }}
             >
               How Every Project Unfolds
             </h2>
@@ -151,7 +150,6 @@ export default function ServicesPage() {
                   <div
                     className="text-3xl font-bold mb-4"
                     style={{
-                      fontFamily: 'Playfair Display, serif',
                       color: i % 2 === 0 ? '#1E3AE0' : '#2EC4C4',
                     }}
                   >
@@ -174,7 +172,6 @@ export default function ServicesPage() {
               <SectionLabel>Estimate Your Project</SectionLabel>
               <h2
                 className="text-3xl md:text-4xl font-bold text-ink mb-4"
-                style={{ fontFamily: 'Playfair Display, serif' }}
               >
                 Get an Instant Quote
               </h2>
@@ -205,7 +202,7 @@ export default function ServicesPage() {
       <section className="py-20 bg-white text-center">
         <div className="max-w-7xl mx-auto px-6">
           <AnimatedSection>
-            <h2 className="text-3xl font-bold text-ink mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+            <h2 className="text-3xl font-bold text-ink mb-4">
               Not sure which service fits?
             </h2>
             <p className="text-ink-secondary mb-8 max-w-md mx-auto">

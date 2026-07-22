@@ -75,7 +75,7 @@ export default function PortfolioSection() {
             <SectionLabel>Case Studies</SectionLabel>
             <h2
               className="text-[1.6rem] sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-3 sm:mb-4"
-              style={{ fontFamily: "'Poppins', sans-serif", color: '#0E0E2C' }}
+              style={{ color: '#0E0E2C' }}
             >
               Work That Speaks{' '}
               <span className="text-gradient-purple">for Itself</span>
@@ -122,7 +122,6 @@ export default function PortfolioSection() {
                 <div className="flex-1 min-w-0">
                   <h3
                     className="text-base sm:text-xl md:text-2xl font-bold text-ink group-hover:text-brand-primary transition-colors truncate"
-                    style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     {project.title}
                   </h3>
@@ -212,7 +211,7 @@ export default function PortfolioSection() {
 
                 {/* Content */}
                 <div className="p-6">
-                  <h3 className="font-semibold text-ink text-base group-hover:text-brand-primary transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <h3 className="font-semibold text-ink text-base group-hover:text-brand-primary transition-colors">
                     {project.title}
                   </h3>
                   <p className="text-xs text-ink-muted mt-1">

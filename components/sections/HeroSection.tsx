@@ -5,7 +5,7 @@ import Link from 'next/link'
 import MagneticButton from '@/components/ui/MagneticButton'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import { doc, getDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { doc, getDoc, getDocs, collection, addDoc, serverTimestamp, query, orderBy, limit } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 
 const ParticleBackground = dynamic(() => import('@/components/ui/ParticleBackground'), { ssr: false })
@@ -19,7 +19,15 @@ interface ABTest {
   active: boolean
 }
 
-const HERO_SLIDES = [
+interface HeroSlide {
+  img: string
+  title: string
+  category: string
+  description: string
+  tech: string
+}
+
+const FALLBACK_SLIDES: HeroSlide[] = [
   {
     img: '/images/project-school.png',
     title: 'SVNS School Khilchipur',
@@ -56,14 +64,45 @@ export default function HeroSection() {
   const [abVariantWord, setAbVariantWord] = useState('Success')
   const abRef = useRef<{ testId: string; variant: number } | null>(null)
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [slides, setSlides] = useState<HeroSlide[]>(FALLBACK_SLIDES)
+  const [slidesLoading, setSlidesLoading] = useState(true)
+
+  // Fetch latest portfolio items from Firestore
+  useEffect(() => {
+    const fetchPortfolio = async () => {
+      try {
+        const snap = await getDocs(query(collection(db, 'portfolio'), orderBy('createdAt', 'desc'), limit(5)))
+        if (!snap.empty) {
+          const items: HeroSlide[] = snap.docs.map(d => {
+            const data = d.data()
+            const techRaw = data.tech || data.technologies || ''
+            const tech = Array.isArray(techRaw) ? techRaw.join(' · ') : String(techRaw)
+            return {
+              img: data.image || '/images/project-school.png',
+              title: data.title || 'Untitled Project',
+              category: data.category || 'Website',
+              description: data.description || data.shortDescription || '',
+              tech,
+            }
+          })
+          if (items.length > 0) setSlides(items)
+        }
+      } catch {
+        // Keep fallback slides on error
+      } finally {
+        setSlidesLoading(false)
+      }
+    }
+    fetchPortfolio()
+  }, [])
 
   // Auto-advance hero slides every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length)
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
     }, 3000)
     return () => clearInterval(interval)
-  }, [])
+  }, [slides.length])
 
   // Log A/B conversion on CTA click
   const logConversion = useCallback(async () => {
@@ -352,7 +391,7 @@ export default function HeroSection() {
             >
               {/* Story-style progress bar */}
               <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 p-2">
-                {HERO_SLIDES.map((_, i) => (
+                {slides.map((_, i) => (
                   <div
                     key={i}
                     className="flex-1 h-[3px] rounded-full overflow-hidden"
@@ -372,29 +411,31 @@ export default function HeroSection() {
 
               {/* Image area with cross-fade */}
               <div className="relative h-56">
-                {HERO_SLIDES.map((slide, i) => (
-                  <Image
-                    key={slide.img}
-                    src={slide.img}
-                    alt={slide.title}
-                    fill
-                    className="object-cover"
-                    priority={i === 0}
-                    style={{
-                      opacity: i === currentSlide ? 1 : 0,
-                      transition: 'opacity 0.4s ease',
-                    }}
-                    placeholder={i === 0 ? 'blur' : undefined}
-                    blurDataURL={i === 0 ? 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsM' : undefined}
-                  />
-                ))}
+                {slidesLoading ? (
+                  <div className="w-full h-full bg-gradient-to-br from-purple-100 to-purple-50 animate-pulse rounded-t-3xl" />
+                ) : (
+                  slides.map((slide, i) => (
+                    <Image
+                      key={`${slide.img}-${i}`}
+                      src={slide.img}
+                      alt={slide.title}
+                      fill
+                      className="object-cover"
+                      priority={i === 0}
+                      style={{
+                        opacity: i === currentSlide ? 1 : 0,
+                        transition: 'opacity 0.4s ease',
+                      }}
+                    />
+                  ))
+                )}
                 {/* Purple overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/10 via-transparent to-transparent" />
               </div>
               <div className="bg-white p-5">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-semibold uppercase tracking-widest text-ink-muted">
-                    {HERO_SLIDES[currentSlide].category}
+                    {slides[currentSlide]?.category}
                   </span>
                   <span
                     className="text-xs font-semibold px-2.5 py-1 rounded-full"
@@ -403,8 +444,8 @@ export default function HeroSection() {
                     Live
                   </span>
                 </div>
-                <p className="font-semibold text-ink text-sm">{HERO_SLIDES[currentSlide].title}</p>
-                <p className="text-xs text-ink-muted mt-1">{HERO_SLIDES[currentSlide].description}</p>
+                <p className="font-semibold text-ink text-sm">{slides[currentSlide]?.title}</p>
+                <p className="text-xs text-ink-muted mt-1">{slides[currentSlide]?.description}</p>
               </div>
             </div>
 
@@ -446,7 +487,7 @@ export default function HeroSection() {
               }}
             >
               <div className="w-2 h-2 rounded-full animate-pulse-slow" style={{ background: '#A855F7' }} />
-              <span className="text-white text-xs font-medium">{HERO_SLIDES[currentSlide].tech}</span>
+              <span className="text-white text-xs font-medium">{slides[currentSlide]?.tech}</span>
             </div>
 
             {/* Floating badge */}
@@ -462,34 +503,65 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Mobile hero visual */}
+          {/* Mobile hero visual — auto-sliding carousel */}
           <div className="lg:hidden relative w-full">
-            <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide -mx-4 px-4">
-              {[
-                { img: '/images/project-school.png', title: 'SVNS School', cat: 'Institutional' },
-                { img: '/images/project-solar.png', title: 'A&S Solar', cat: 'Business' },
-                { img: '/images/project-portfolio.png', title: 'Portfolio', cat: 'Personal' },
-              ].map((project, i) => (
-                <div
-                  key={project.title}
-                  className="flex-shrink-0 w-[260px] rounded-2xl overflow-hidden bg-white"
-                  style={{
-                    border: '1px solid #E8E5F5',
-                    boxShadow: '0 4px 20px -4px rgba(123,47,242,0.1)',
-                    opacity: loaded ? 1 : 0,
-                    transform: loaded ? 'translateY(0)' : 'translateY(20px)',
-                    transition: `all 0.6s cubic-bezier(0.22,1,0.36,1) ${0.4 + i * 0.15}s`,
-                  }}
-                >
-                  <div className="relative h-36">
-                    <Image src={project.img} alt={project.title} fill className="object-cover" />
+            <div
+              className="rounded-2xl overflow-hidden bg-white"
+              style={{
+                border: '1px solid #E8E5F5',
+                boxShadow: '0 4px 20px -4px rgba(123,47,242,0.1)',
+                opacity: loaded ? 1 : 0,
+                transform: loaded ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'all 0.6s cubic-bezier(0.22,1,0.36,1) 0.4s',
+              }}
+            >
+              {/* Progress bar */}
+              <div className="flex gap-1 p-2">
+                {slides.map((_, i) => (
+                  <div
+                    key={i}
+                    className="flex-1 h-[3px] rounded-full overflow-hidden"
+                    style={{ background: 'rgba(123,47,242,0.15)' }}
+                  >
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        background: '#7B2FF2',
+                        width: i < currentSlide ? '100%' : i === currentSlide ? '100%' : '0%',
+                        animation: i === currentSlide ? 'hero-progress-fill 3s linear forwards' : 'none',
+                      }}
+                    />
                   </div>
-                  <div className="p-3">
-                    <p className="text-xs font-semibold text-ink-muted uppercase tracking-wider">{project.cat}</p>
-                    <p className="text-sm font-semibold text-ink mt-0.5">{project.title}</p>
-                  </div>
+                ))}
+              </div>
+
+              {/* Image cross-fade */}
+              <div className="relative h-44">
+                {slides.map((slide, i) => (
+                  <Image
+                    key={`mobile-${slide.img}-${i}`}
+                    src={slide.img}
+                    alt={slide.title}
+                    fill
+                    className="object-cover"
+                    style={{
+                      opacity: i === currentSlide ? 1 : 0,
+                      transition: 'opacity 0.4s ease',
+                    }}
+                  />
+                ))}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
+              </div>
+
+              {/* Info */}
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-semibold text-ink-muted uppercase tracking-wider">{slides[currentSlide]?.category}</span>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ background: 'rgba(123,47,242,0.08)', color: '#7B2FF2' }}>Live</span>
                 </div>
-              ))}
+                <p className="font-semibold text-ink text-sm">{slides[currentSlide]?.title}</p>
+                <p className="text-xs text-ink-muted mt-1">{slides[currentSlide]?.description}</p>
+              </div>
             </div>
           </div>
         </div>

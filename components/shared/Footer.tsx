@@ -13,6 +13,7 @@ const LINKS = {
     { href: '/audit', label: 'Free Audit' },
     { href: '/blog', label: 'Blog' },
     { href: '/contact', label: 'Contact' },
+    { href: '/testimonial/submit', label: 'Share Testimonial' },
   ],
   services: [
     'Web Design & Development',

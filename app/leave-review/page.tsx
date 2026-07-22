@@ -52,7 +52,7 @@ export default function TestimonialRequestPage() {
     <main className="min-h-screen bg-[#FAFAFE] pt-32 pb-20 px-6">
       <AnimatedSection className="max-w-2xl mx-auto">
         <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-5xl font-bold text-[#0E0E2C] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <h1 className="text-3xl md:text-5xl font-bold text-[#0E0E2C] mb-4">
             How did we do?
           </h1>
           <p className="text-[#4A4A6A]">

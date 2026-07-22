@@ -55,7 +55,7 @@ const navItems = [
   { href: '/admin/webhooks', label: 'Webhooks', icon: Webhook },
   { href: '/admin/sections', label: 'Sections', icon: LayoutList },
   { href: '/admin/activity', label: 'Activity Log', icon: Activity },
-
+  { href: '/admin/referrals', label: 'Referrals', icon: Flame },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
 

@@ -78,7 +78,7 @@ export default function PortfolioPage() {
             <SectionLabel>Portfolio</SectionLabel>
             <h1
               className="text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-5"
-              style={{ fontFamily: 'Playfair Display, serif', color: '#0D1340' }}
+              style={{ color: '#0D1340' }}
             >
               Projects That{' '}
               <span style={{
@@ -243,7 +243,7 @@ export default function PortfolioPage() {
       <section className="py-20" style={{ background: '#F8F9FE' }}>
         <div className="max-w-7xl mx-auto px-6 text-center">
           <AnimatedSection>
-            <h2 className="text-3xl font-bold text-ink mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+            <h2 className="text-3xl font-bold text-ink mb-4">
               Your Project Could Be Next
             </h2>
             <p className="text-ink-secondary mb-8 max-w-md mx-auto">

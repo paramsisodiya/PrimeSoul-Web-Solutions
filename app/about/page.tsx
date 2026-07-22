@@ -59,7 +59,7 @@ export default function AboutPage() {
             <SectionLabel>About PrimeSoul</SectionLabel>
             <h1
               className="text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-5"
-              style={{ fontFamily: 'Playfair Display, serif', color: '#0D1340' }}
+              style={{ color: '#0D1340' }}
             >
               Built by Someone Who{' '}
               <span style={{
@@ -132,7 +132,6 @@ export default function AboutPage() {
               <p className="text-xs font-semibold uppercase tracking-widest text-ink-muted mb-3">Founder</p>
               <h2
                 className="text-4xl font-bold text-ink mb-2"
-                style={{ fontFamily: 'Playfair Display, serif' }}
               >
                 {AGENCY.founder.name}
               </h2>
@@ -196,7 +195,6 @@ export default function AboutPage() {
               <SectionLabel>Skills & Expertise</SectionLabel>
               <h2
                 className="text-3xl md:text-4xl font-bold text-ink mb-8"
-                style={{ fontFamily: 'Playfair Display, serif' }}
               >
                 What I Do Well
               </h2>
@@ -227,7 +225,6 @@ export default function AboutPage() {
               <SectionLabel>Our Values</SectionLabel>
               <h2
                 className="text-3xl md:text-4xl font-bold text-ink mb-8"
-                style={{ fontFamily: 'Playfair Display, serif' }}
               >
                 How We Operate
               </h2>
@@ -258,7 +255,6 @@ export default function AboutPage() {
           <AnimatedSection>
             <h2
               className="text-3xl md:text-4xl font-bold text-ink mb-5"
-              style={{ fontFamily: 'Playfair Display, serif' }}
             >
               Ready to Start Something?
             </h2>

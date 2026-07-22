@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, useState } from 'react'
 
 interface TurnstileWidgetProps {
   onToken: (token: string) => void
@@ -22,8 +22,13 @@ export default function TurnstileWidget({ onToken, onExpire }: TurnstileWidgetPr
   const containerRef = useRef<HTMLDivElement>(null)
   const widgetIdRef = useRef<string | null>(null)
   const scriptLoadedRef = useRef(false)
+  const [loadFailed, setLoadFailed] = useState(false)
 
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+
+  if (!siteKey) {
+    console.warn('[TurnstileWidget] NEXT_PUBLIC_TURNSTILE_SITE_KEY is not set. Captcha will not render.')
+  }
 
   const renderWidget = useCallback(() => {
     if (!containerRef.current || !window.turnstile || !siteKey) return
@@ -33,13 +38,17 @@ export default function TurnstileWidget({ onToken, onExpire }: TurnstileWidgetPr
       sitekey: siteKey,
       callback: (token: string) => onToken(token),
       'expired-callback': () => onExpire?.(),
+      'error-callback': () => setLoadFailed(true),
       theme: 'auto',
       size: 'flexible',
     })
   }, [siteKey, onToken, onExpire])
 
   useEffect(() => {
-    if (!siteKey) return
+    if (!siteKey) {
+      setLoadFailed(true)
+      return
+    }
 
     // If turnstile is already loaded, render immediately
     if (window.turnstile) {
@@ -56,6 +65,7 @@ export default function TurnstileWidget({ onToken, onExpire }: TurnstileWidgetPr
       script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad'
       script.async = true
       script.defer = true
+      script.onerror = () => setLoadFailed(true)
       document.head.appendChild(script)
     }
 
@@ -71,7 +81,14 @@ export default function TurnstileWidget({ onToken, onExpire }: TurnstileWidgetPr
     }
   }, [siteKey, renderWidget])
 
-  if (!siteKey) return null
-
-  return <div ref={containerRef} className="mt-2" />
+  return (
+    <div style={{ minHeight: 65 }}>
+      <div ref={containerRef} className="mt-2" />
+      {loadFailed && (
+        <p className="text-red-500 text-xs mt-1">
+          Captcha failed to load. Please refresh the page.
+        </p>
+      )}
+    </div>
+  )
 }
