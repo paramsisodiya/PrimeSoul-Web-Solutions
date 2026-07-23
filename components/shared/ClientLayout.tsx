@@ -16,7 +16,6 @@ import ScrollToTop from '@/components/shared/ScrollToTop'
 import ChatbotWidget from '@/components/shared/ChatbotWidget'
 import DynamicSEO from '@/components/shared/DynamicSEO'
 import LeadMagnetPopup from '@/components/shared/LeadMagnetPopup'
-import ThemeToggle from '@/components/shared/ThemeToggle'
 import ErrorBoundary from '@/components/shared/ErrorBoundary'
 import PageViewTracker from '@/components/shared/PageViewTracker'
 
@@ -48,7 +47,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <SocialProofToast />
       <ExitIntentPopup />
       <LeadMagnetPopup />
-      <ThemeToggle />
       <ChatbotWidget />
       <PageViewTracker />
     </>

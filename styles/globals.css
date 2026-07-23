@@ -44,50 +44,7 @@
   --font-mono: 'DM Mono', monospace;
 }
 
-/* ============================================
-   DARK MODE — data-theme overrides
-   ============================================ */
-[data-theme='dark'] {
-  --surface-base: #0E0E2C;
-  --surface-card: #161640;
-  --surface-subtle: #1a1a4e;
-  --surface-border: #2a2a5e;
-  --ink: #E8E5F5;
-  --ink-secondary: #AEAEC8;
-  --ink-muted: #7A7A9E;
-  --ink-faint: #4A4A6A;
-}
 
-[data-theme='dark'] body {
-  background: #0E0E2C;
-  color: #E8E5F5;
-}
-
-[data-theme='dark'] .bg-white {
-  background-color: var(--surface-card) !important;
-}
-
-[data-theme='dark'] .bg-\[\#FAFAFE\],
-[data-theme='dark'] .bg-\[\#F8F9FE\] {
-  background-color: var(--surface-base) !important;
-}
-
-[data-theme='dark'] .text-ink,
-[data-theme='dark'] .text-\[\#0E0E2C\] {
-  color: var(--ink) !important;
-}
-
-[data-theme='dark'] .text-ink-secondary,
-[data-theme='dark'] .text-\[\#4A4A6A\],
-[data-theme='dark'] .text-\[\#7A7A9E\] {
-  color: var(--ink-secondary) !important;
-}
-
-[data-theme='dark'] .border-surface-border,
-[data-theme='dark'] .border-\[\#E8E5F5\],
-[data-theme='dark'] .border-\[\#E2E8F8\] {
-  border-color: var(--surface-border) !important;
-}
 
 * {
   box-sizing: border-box;
