@@ -7,7 +7,7 @@ export const AGENCY = {
     role: 'Founder & Lead Developer',
     location: 'Rajgarh, Madhya Pradesh',
     bio: 'A self-driven developer and designer obsessed with building digital products that actually work. From pixel-perfect interfaces to scalable web systems — every project gets my full attention.',
-    email: 'paramsisodiya061@gmail.com',
+    email: 'primesoulwebsolutions@gmail.com',
     phone: '8770404559',
     whatsapp: '918770404559',
   },

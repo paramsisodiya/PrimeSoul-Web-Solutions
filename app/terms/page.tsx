@@ -40,7 +40,7 @@ export default function TermsPage() {
         <p>PrimeSoul shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services or the websites we build.</p>
 
         <h2>8. Contact</h2>
-        <p>For questions regarding these terms, contact us at <a href="mailto:paramsisodiya061@gmail.com" className="text-brand-primary">paramsisodiya061@gmail.com</a>.</p>
+        <p>For questions regarding these terms, contact us at <a href="mailto:primesoulwebsolutions@gmail.com" className="text-brand-primary">primesoulwebsolutions@gmail.com</a>.</p>
       </div>
     </section>
   )

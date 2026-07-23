@@ -151,7 +151,7 @@ export default function AboutPage() {
 
               {/* Contact info */}
               <div className="flex flex-col gap-3 mb-8">
-                <a href="mailto:paramsisodiya061@gmail.com" className="flex items-center gap-3 text-sm text-ink-secondary hover:text-ink transition-colors">
+                <a href="mailto:primesoulwebsolutions@gmail.com" className="flex items-center gap-3 text-sm text-ink-secondary hover:text-ink transition-colors">
                   <EmailIcon />
                   {AGENCY.founder.email}
                 </a>

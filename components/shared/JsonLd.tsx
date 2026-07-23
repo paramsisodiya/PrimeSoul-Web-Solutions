@@ -37,7 +37,7 @@ export default function JsonLd() {
           '@type': 'ContactPoint',
           telephone: '+91-8770404559',
           contactType: 'customer service',
-          email: 'paramsisodiya061@gmail.com',
+          email: 'primesoulwebsolutions@gmail.com',
           availableLanguage: ['English', 'Hindi'],
         },
         sameAs: [
@@ -65,7 +65,7 @@ export default function JsonLd() {
         image: 'https://primesoul.tech/images/logo.png',
         url: 'https://primesoul.tech',
         telephone: '+91-8770404559',
-        email: 'paramsisodiya061@gmail.com',
+        email: 'primesoulwebsolutions@gmail.com',
         priceRange: '₹₹',
         address: {
           '@type': 'PostalAddress',

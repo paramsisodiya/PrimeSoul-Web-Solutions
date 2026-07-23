@@ -143,7 +143,7 @@ export default function ContactPage() {
               </div>
               <div className="space-y-4">
                 {[
-                  { icon: Mail, label: 'Email', value: 'paramsisodiya061@gmail.com', href: 'mailto:paramsisodiya061@gmail.com' },
+                  { icon: Mail, label: 'Email', value: 'primesoulwebsolutions@gmail.com', href: 'mailto:primesoulwebsolutions@gmail.com' },
                   { icon: Phone, label: 'WhatsApp', value: 'Available on request', href: 'https://wa.me/91' },
                   { icon: MapPin, label: 'Location', value: 'Rajgarh, Madhya Pradesh, India', href: null },
                 ].map(item => {
