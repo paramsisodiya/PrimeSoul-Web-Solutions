@@ -183,6 +183,33 @@ export const SERVICES = [
     icon: 'shield',
     accent: '#1E3AE0',
   },
+  {
+    id: 'ai-automation',
+    title: 'AI & Business Automation',
+    shortTitle: 'AI & Automation',
+    description: 'Streamline your operations with custom AI chatbots, workflow automation, CRM sync, and smart data pipelines.',
+    features: ['AI Support Chatbots', 'Workflow Automation', 'Lead Qualification', 'API & CRM Sync'],
+    icon: 'bot',
+    accent: '#8B5CF6',
+  },
+  {
+    id: 'data-analytics',
+    title: 'Data Analytics',
+    shortTitle: 'Data Analytics',
+    description: 'Transform raw data into growth insights. Custom dashboards, GA4 tracking, conversion funnels, and reporting.',
+    features: ['GA4 & GTM Setup', 'Looker Dashboards', 'Conversion Funnels', 'Heatmaps & Insights'],
+    icon: 'bar-chart',
+    accent: '#10B981',
+  },
+  {
+    id: 'email-marketing',
+    title: 'Email Marketing',
+    shortTitle: 'Email Marketing',
+    description: 'High-converting email campaigns, automated lifecycle flows, cart recovery, and responsive HTML email design.',
+    features: ['Automated Email Flows', 'Template Design', 'Copywriting', 'Deliverability Setup'],
+    icon: 'mail',
+    accent: '#E879F9',
+  },
 ]
 
 export const PROCESS_STEPS = [

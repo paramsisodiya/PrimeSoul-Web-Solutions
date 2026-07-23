@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import { SERVICE_PAGES } from '@/lib/service-pages'
 import {
   Monitor, Smartphone, Globe, PenTool, LayoutTemplate, Palette, LineChart,
-  Search, Share2, ImageIcon, Wrench, Megaphone, MapPin, Code, Zap, Edit, BarChart
+  Search, Share2, ImageIcon, Wrench, Megaphone, MapPin, Code, Zap, Edit, BarChart, Bot, Mail
 } from 'lucide-react'
 
 const getServiceIcon = (iconName: string) => {
@@ -29,6 +29,8 @@ const getServiceIcon = (iconName: string) => {
     case 'zap': return <Zap size={20} strokeWidth={1.5} />;
     case 'edit': return <Edit size={20} strokeWidth={1.5} />;
     case 'bar-chart': return <BarChart size={20} strokeWidth={1.5} />;
+    case 'bot': return <Bot size={20} strokeWidth={1.5} />;
+    case 'mail': return <Mail size={20} strokeWidth={1.5} />;
     default: return <Monitor size={20} strokeWidth={1.5} />;
   }
 }

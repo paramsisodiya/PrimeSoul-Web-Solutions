@@ -10,6 +10,9 @@ import TurnstileWidget from '@/components/shared/TurnstileWidget'
 const services = [
   'Website Design & Development',
   'E-Commerce Development',
+  'AI & Business Automation',
+  'Data Analytics',
+  'Email Marketing',
   'Landing Page Design',
   'UI/UX Design',
   'SEO Optimization',
