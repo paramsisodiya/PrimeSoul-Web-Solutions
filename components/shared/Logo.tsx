@@ -9,7 +9,7 @@ interface LogoProps {
   variant?: 'light' | 'dark'
 }
 
-export default function Logo({ className = '', iconSize = 36, variant = 'light' }: LogoProps) {
+export default function Logo({ className = '', iconSize = 38, variant = 'light' }: LogoProps) {
   const isDark = variant === 'dark'
 
   return (
@@ -31,23 +31,15 @@ export default function Logo({ className = '', iconSize = 36, variant = 'light' 
       {/* Text Brand */}
       <div className="flex flex-col justify-center leading-none">
         {/* PRIMESOUL */}
-        <div className="flex items-center text-[20px] sm:text-[22px] font-extrabold tracking-[-0.01em] font-heading uppercase">
-          {/* Custom P with dot notch accent */}
-          <span className="relative inline-flex items-center" style={{ color: isDark ? '#FFFFFF' : '#0B0F28' }}>
-            <span
-              className="absolute -left-1.5 top-[5px] w-[3px] h-[3px] rounded-full"
-              style={{ background: '#1D4ED8' }}
-            />
-            P
-          </span>
-          <span style={{ color: isDark ? '#FFFFFF' : '#0B0F28' }}>RIME</span>
+        <div className="flex items-center text-[21px] sm:text-[23px] font-black tracking-[-0.02em] font-heading uppercase">
+          <span style={{ color: isDark ? '#FFFFFF' : '#0E0E2C' }}>PRIME</span>
           <span style={{ color: '#1D4ED8' }}>SOUL</span>
         </div>
 
         {/* WEB SOLUTIONS */}
         <span
-          className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.28em] mt-[3px] font-heading"
-          style={{ color: isDark ? 'rgba(255,255,255,0.7)' : '#0B0F28' }}
+          className="text-[9.5px] sm:text-[10.5px] font-bold uppercase tracking-[0.25em] mt-[3px] font-heading"
+          style={{ color: isDark ? 'rgba(255,255,255,0.7)' : '#0E0E2C' }}
         >
           WEB SOLUTIONS
         </span>
