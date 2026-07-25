@@ -9,70 +9,387 @@ interface Message {
   options?: string[]
 }
 
-const BOT_NAME = 'PrimeSoul AI'
-const RESPONSES: Record<string, { reply: string; options?: string[] }> = {
-  greeting: {
-    reply: "Hi there! 👋 I'm the PrimeSoul assistant. How can I help you today?",
-    options: ['I need a website', 'Show me pricing', 'What services do you offer?', 'Talk to a human'],
-  },
-  'i need a website': {
-    reply: "Awesome! We'd love to help build your dream website. 🚀 What type of project are you looking for?",
-    options: ['Business website', 'E-commerce store', 'Landing page', 'Web application', 'Not sure yet'],
-  },
-  'business website': {
-    reply: "Great choice! Our business websites start from ₹2,999 and include responsive design, SEO optimization, and a custom admin panel. Typical delivery is 2-3 weeks. Want to get started?",
-    options: ['Get a quote', 'See portfolio', 'Talk to a human'],
-  },
-  'e-commerce store': {
-    reply: "We build powerful e-commerce solutions with payment integration, inventory management, and beautiful product pages. Starting from ₹6,999. Interested?",
-    options: ['Get a quote', 'See portfolio', 'Talk to a human'],
-  },
-  'landing page': {
-    reply: "Landing pages are our specialty! High-converting, fast-loading pages with animations. Starting from ₹1,999. Ready to start?",
-    options: ['Get a quote', 'Talk to a human'],
-  },
-  'web application': {
-    reply: "Web apps with dashboards, databases, and custom logic — we've got you covered! Let's discuss your requirements in detail.",
-    options: ['Get a quote', 'Talk to a human'],
-  },
-  'not sure yet': {
-    reply: "No worries! Tell me about your business and what you're trying to achieve, and I'll recommend the best approach. Or you can book a free strategy call with our founder.",
-    options: ['Book a free call', 'Talk to a human', 'Show me pricing'],
-  },
-  'show me pricing': {
-    reply: "Here's a quick overview:\n\n💼 Starter — ₹2,999 (5 pages, responsive)\n🚀 Professional — ₹7,999 (10 pages, CMS, SEO)\n👑 Premium — ₹14,999+ (Custom, E-commerce, App)\n\nAll plans include free hosting setup and 30 days of support!",
-    options: ['Get a quote', 'I need a website', 'Talk to a human'],
-  },
-  'what services do you offer?': {
-    reply: "We offer a full range of digital services:\n\n🎨 Website Design & Development\n🛒 E-Commerce Solutions\n📱 Responsive & Mobile-First Design\n🔍 SEO & Performance Optimization\n⚡ Custom Web Applications\n🎯 UI/UX Design\n\nWhat interests you most?",
-    options: ['I need a website', 'Show me pricing', 'Talk to a human'],
-  },
-  'get a quote': {
-    reply: "Perfect! I'll redirect you to our contact form where you can share your project details. We respond within 2-4 hours! 🎯",
-    options: ['Go to contact form', 'Talk to a human', 'Ask something else'],
-  },
-  'see portfolio': {
-    reply: "Check out our latest work — real projects for real clients! Each project was built with care and attention to detail. 💎",
-    options: ['View portfolio', 'Get a quote', 'Talk to a human'],
-  },
-  'talk to a human': {
-    reply: "Sure! You can reach Param directly:\n\n📱 WhatsApp: +91 8770404559\n📧 Email: contact@primesoul.tech\n\nOr I can redirect you to WhatsApp right now!",
-    options: ['Open WhatsApp', 'Go to contact form', 'Ask something else'],
-  },
-  'book a free call': {
-    reply: "Great idea! A 15-minute free strategy call with our founder — no obligations. Let me take you to the booking page!",
-    options: ['Go to contact form', 'Talk to a human'],
-  },
-  'ask something else': {
-    reply: "Of course! What would you like to know?",
-    options: ['I need a website', 'Show me pricing', 'What services do you offer?', 'Talk to a human'],
-  },
+interface QAItem {
+  id: string
+  triggers: string[]
+  reply: string
+  options?: string[]
 }
 
+const BOT_NAME = 'PrimeSoul AI'
+
+const STOP_WORDS = new Set([
+  'kya', 'hai', 'mera', 'mujhe', 'please', 'batao', 'the', 'is', 'what', 'how', 'do', 'you',
+  'a', 'an', 'of', 'in', 'to', 'for', 'with', 'on', 'at', 'by', 'from', 'and', 'or', 'ka',
+  'ki', 'ke', 'ko', 'par', 'se', 'mein', 'me', 'hum', 'aap', 'aur', 'tell', 'about', 'can',
+  'give', 'i', 'want', 'need', 'bata', 'de', 'bhai', 'sir', 'are', 'your', 'my', 'we',
+  'hoge', 'hoga', 'ho', 'tha', 'thi', 'the', 'kar', 'karo', 'karein', 'karta'
+])
+
+const QA_DATABASE: QAItem[] = [
+  // PRICING & BUDGET
+  {
+    id: 'pricing',
+    triggers: [
+      'price kya hai', 'pricing', 'kitna paisa lagega', 'cost kya hai', 'fees', 'charges',
+      'rate', 'budget', 'price', 'cost', 'paisa', 'kitne paise', 'paise', 'ratecard',
+      'package', 'packages', 'kitna lagega', 'kitne me banega'
+    ],
+    reply: 'Hamare packages ₹5,000 se shuru hote hain. Website design: ₹5K-25K, Full-stack web app: ₹25K-1L+, Meta Ads setup: ₹3K-10K/month, Social Media Management: ₹5K-15K/month, Graphic Design: ₹500/design se. Exact quote ke liye contact karein — har project alag hota hai!',
+    options: ['🛠️ Services', '📞 Contact', '📁 Portfolio']
+  },
+  {
+    id: 'payment_mode',
+    triggers: [
+      'payment kaise kare', 'payment mode', 'upi', 'advance', 'payment', 'pay',
+      'bank transfer', 'cash', 'gpay', 'phonepe', 'paytm'
+    ],
+    reply: 'Hum UPI, bank transfer, aur cash accept karte hain. Zyaadatar projects mein 50% advance aur 50% delivery par lete hain.',
+    options: ['💰 Pricing', '📞 Contact']
+  },
+  {
+    id: 'emi',
+    triggers: [
+      'emi', 'installment', 'kist', 'kisht', 'part payment', 'installment option', 'monthly payment'
+    ],
+    reply: 'Bade projects (₹25K+) par hum flexible payment plan offer kar sakte hain. Baat karte hain — WhatsApp karein: 8770404559',
+    options: ['📞 Contact', '💰 Pricing']
+  },
+
+  // SERVICES
+  {
+    id: 'services',
+    triggers: [
+      'kya kya karte ho', 'services kya hai', 'kya offer karte ho', 'what services',
+      'services', 'service', 'kya kaam karte ho', 'kaam', 'all services'
+    ],
+    reply: 'Hum ye services offer karte hain:\n✅ Website Design & Development\n✅ Full-Stack Web Applications\n✅ Meta Ads (Facebook/Instagram)\n✅ Google Business Profile Setup\n✅ Social Media Management\n✅ Graphic Design\n✅ SEO & Performance\n✅ Brand Identity\n\nKaunsi service chahiye?',
+    options: ['💰 Pricing', '⏱️ Timeline', '📁 Portfolio', '📞 Contact']
+  },
+  {
+    id: 'website_dev',
+    triggers: [
+      'website banate ho', 'website design', 'web development', 'website', 'web design',
+      'site banwana', 'landing page', 'ecommerce website', 'online store', 'web app'
+    ],
+    reply: 'Haan! Hum professional websites banate hain — business websites, school/college websites, portfolio, e-commerce, aur full-stack web apps. Starting ₹5,000 se. Details ke liye contact karein!',
+    options: ['💰 Pricing', '📁 Portfolio', '📞 Contact']
+  },
+  {
+    id: 'meta_ads',
+    triggers: [
+      'meta ads', 'facebook ads', 'instagram ads', 'digital marketing', 'ads chalana',
+      'ads', 'ad campaign', 'fb ads', 'insta ads', 'marketing'
+    ],
+    reply: 'Haan! Hum Facebook aur Instagram par ad campaigns setup aur manage karte hain. Lead generation, brand awareness, product promotion — sab karte hain. Starting ₹3,000/month. Baat karein?',
+    options: ['💰 Pricing', '📞 Contact']
+  },
+  {
+    id: 'google_business',
+    triggers: [
+      'google business', 'gbp', 'google map', 'google pe dikhna', 'google maps',
+      'gmb', 'local business listing', 'map listing', 'google search'
+    ],
+    reply: 'Hum aapka Google Business Profile setup aur optimize karte hain taaki aap Google Maps aur local search mein top par aao. One-time setup ₹1,500-3,000.',
+    options: ['💰 Pricing', '📞 Contact']
+  },
+  {
+    id: 'social_media',
+    triggers: [
+      'social media', 'instagram manage', 'facebook page', 'content posting', 'smm',
+      'social media management', 'page manage', 'reels', 'insta page'
+    ],
+    reply: 'Hum aapke Facebook aur Instagram ko professionally manage karte hain — regular posts, festival creatives, event posts, reels ideas. Starting ₹5,000/month.',
+    options: ['💰 Pricing', '📞 Contact']
+  },
+  {
+    id: 'graphic_design',
+    triggers: [
+      'graphic design', 'logo', 'banner', 'poster', 'creative', 'graphics',
+      'designing', 'brochure', 'visiting card', 'flyer'
+    ],
+    reply: 'Hum banners, posters, social media creatives, logos, aur branding design karte hain. Per design ₹500 se shuru. Bulk orders par discount milta hai!',
+    options: ['💰 Pricing', '📁 Portfolio', '📞 Contact']
+  },
+  {
+    id: 'seo',
+    triggers: [
+      'seo', 'google ranking', 'search engine', 'website rank', 'google search ranking',
+      'seo package', 'rank website'
+    ],
+    reply: 'Hum SEO karke aapki website ko Google par rank karate hain — on-page SEO, local SEO, performance optimization. Package ₹3,000/month se shuru.',
+    options: ['💰 Pricing', '📞 Contact']
+  },
+  {
+    id: 'mobile_app',
+    triggers: [
+      'app banana', 'mobile app', 'android app', 'ios app', 'apk', 'play store app', 'app development'
+    ],
+    reply: 'Hum abhi web applications banate hain jo mobile par bhi perfectly kaam karti hain (PWA). Native Android/iOS app development abhi available nahi hai. Web app se kaam chalega?',
+    options: ['🛠️ Services', '📞 Contact']
+  },
+
+  // TIMELINE
+  {
+    id: 'timeline',
+    triggers: [
+      'kitne din lagenge', 'time kitna lagega', 'kab ready hoga', 'deadline', 'timeline',
+      'time', 'duration', 'kitna time', 'delivery time', 'kitne din'
+    ],
+    reply: 'Timeline project ke size par depend karti hai:\n• Simple website: 3-7 din\n• Business website: 1-2 hafta\n• Full-stack web app: 3-6 hafta\n• Graphic design: 1-3 din\n\nRush delivery bhi possible hai!',
+    options: ['💰 Pricing', '📞 Contact']
+  },
+
+  // PROCESS
+  {
+    id: 'process',
+    triggers: [
+      'kaise kaam karte ho', 'process kya hai', 'kaise shuru kare', 'steps', 'workflow',
+      'procedure', 'how it works'
+    ],
+    reply: 'Hamara process:\n1️⃣ Free consultation call\n2️⃣ Requirement samjhna\n3️⃣ Proposal & quote\n4️⃣ Design approval\n5️⃣ Development\n6️⃣ Testing\n7️⃣ Launch!\n\nSimple aur transparent.',
+    options: ['⏱️ Timeline', '📞 Contact']
+  },
+  {
+    id: 'free_consultation',
+    triggers: [
+      'free consultation', 'call karna', 'baat karni hai', 'meeting', 'consultation',
+      'strategy call', 'book call', 'schedule call'
+    ],
+    reply: 'Bilkul! Free strategy call book karein: calendly.com/paramsisodiya061/30min — Ya WhatsApp karein: 8770404559',
+    options: ['📞 Contact', '💬 Open WhatsApp']
+  },
+
+  // PORTFOLIO & TRUST
+  {
+    id: 'portfolio',
+    triggers: [
+      'portfolio', 'kaam dekha hai', 'previous work', 'example', 'past projects',
+      'sample', 'demo', 'work show'
+    ],
+    reply: 'Hamare kuch projects:\n🏫 SVNS School Khilchipur\n☀️ A&S Solar Solutions\n📰 MP Darpan E-News Portal\n🎓 Sankalp Shikhar Academy\n\nPoora portfolio dekhein: primesoul.tech/portfolio',
+    options: ['🌐 Open Portfolio Page', '💰 Pricing', '📞 Contact']
+  },
+  {
+    id: 'client_reviews',
+    triggers: [
+      'client', 'customers', 'kitne clients', 'reviews', 'testimonials', 'ratings',
+      'feedback', 'satisfied clients'
+    ],
+    reply: 'Humne 35+ businesses ke saath kaam kiya hai — schools, solar companies, local businesses, startups. 100% client satisfaction! Testimonials dekhein: primesoul.tech/#testimonials',
+    options: ['📁 Portfolio', '📞 Contact']
+  },
+  {
+    id: 'trust',
+    triggers: [
+      'trusted', 'genuine', 'fraud to nahi', 'real company', 'trust', 'legit', 'safe',
+      'is it real', 'fake to nahi'
+    ],
+    reply: "Bilkul genuine hain! Hum Rajgarh, MP mein based hain. 3+ saal ka experience, 35+ projects, real clients. Google par 'PrimeSoul Web Solutions' search karein ya call karein: 8770404559",
+    options: ['📞 Contact', '📁 Portfolio']
+  },
+
+  // CONTACT & LOCATION
+  {
+    id: 'contact',
+    triggers: [
+      'contact', 'number', 'phone', 'call', 'reach', 'mobile number', 'phone number',
+      'contact number', 'sampark'
+    ],
+    reply: 'Hum se sampark karein:\n📞 WhatsApp: 8770404559\n📧 Email: paramsisodiya061@gmail.com\n📍 Rajgarh, Madhya Pradesh\n🌐 primesoul.tech/contact',
+    options: ['💬 Open WhatsApp', 'Go to Contact Page']
+  },
+  {
+    id: 'whatsapp',
+    triggers: [
+      'whatsapp', 'message', 'wa me', 'whatsapp chat', 'whatsapp message'
+    ],
+    reply: 'WhatsApp par message karein: wa.me/918770404559 — Hum 2-4 ghante mein reply karte hain!',
+    options: ['💬 Open WhatsApp', '📞 Contact']
+  },
+  {
+    id: 'location',
+    triggers: [
+      'location', 'address', 'office', 'kahan ho', 'city', 'where located',
+      'office address', 'rajgarh', 'mp'
+    ],
+    reply: 'Hum Rajgarh, Madhya Pradesh mein based hain. Clients ko hum India bhar mein serve karte hain — sab kaam online hota hai!',
+    options: ['📞 Contact']
+  },
+  {
+    id: 'email',
+    triggers: [
+      'email', 'mail', 'gmail', 'email address'
+    ],
+    reply: 'Email karein: paramsisodiya061@gmail.com — Ya WhatsApp zyada fast hai: 8770404559',
+    options: ['💬 Open WhatsApp', '📞 Contact']
+  },
+
+  // ABOUT COMPANY
+  {
+    id: 'about_company',
+    triggers: [
+      'kaun ho', 'about', 'company', 'primesoul kya hai', 'about us', 'who are you',
+      'primesoul', 'about company'
+    ],
+    reply: 'PrimeSoul Web Solutions ek digital agency hai based in Rajgarh, MP. Hum websites, apps, aur digital marketing services provide karte hain. 3+ saal ka experience, 35+ projects delivered, dedicated team of professionals!',
+    options: ['🛠️ Services', '📁 Portfolio', '📞 Contact']
+  },
+  {
+    id: 'founder',
+    triggers: [
+      'founder', 'owner', 'ceo', 'team', 'param', 'shyam', 'who owns', 'founder name'
+    ],
+    reply: 'PrimeSoul ki founding Param Sisodiya ne ki thi. Hamare CEO hain Shyam Sisodiya. Hamare paas 8-10 professionals ki dedicated team hai!',
+    options: ['📞 Contact', '📁 Portfolio']
+  },
+  {
+    id: 'experience',
+    triggers: [
+      'experience', 'kitne saal', 'purani company', 'how many years', 'how long'
+    ],
+    reply: 'Hum 3+ saal se kaam kar rahe hain aur 35+ projects successfully deliver kar chuke hain!',
+    options: ['📁 Portfolio', '📞 Contact']
+  },
+
+  // SUPPORT & MAINTENANCE
+  {
+    id: 'support',
+    triggers: [
+      'support', 'maintenance', 'baad mein help', 'update', 'after sales',
+      'maintenance plan', 'website support'
+    ],
+    reply: 'Haan! Hum website delivery ke baad bhi support dete hain. Monthly maintenance plans ₹299-999/month mein available hain jisme hosting check, updates, aur minor changes include hain.',
+    options: ['💰 Pricing', '📞 Contact']
+  },
+  {
+    id: 'hosting',
+    triggers: [
+      'hosting', 'domain', 'server', 'domain name', 'web hosting'
+    ],
+    reply: 'Hum domain registration aur hosting setup mein bhi help karte hain. Iske alawa aapki existing hosting manage karne ka bhi option hai.',
+    options: ['🛠️ Services', '📞 Contact']
+  },
+  {
+    id: 'warranty',
+    triggers: [
+      'warranty', 'guarantee', 'agar kuch toot gaya', 'bug fix', 'free support',
+      '30 days support'
+    ],
+    reply: 'Hamare saare projects mein delivery ke baad 30 days ki free support included hai. Koi bhi bug ya issue free fix hoga!',
+    options: ['📞 Contact']
+  },
+
+  // GREETINGS & CLOSINGS
+  {
+    id: 'greetings',
+    triggers: [
+      'hi', 'hello', 'hey', 'namaste', 'helo', 'hie', 'gm', 'good morning', 'good evening', 'hnji'
+    ],
+    reply: 'Hello! 👋 Main PrimeSoul ka assistant hoon. Aapki kaise madad kar sakta hoon? Website, digital marketing, ya koi aur service ke baare mein jaanna chahte hain?',
+    options: ['💰 Pricing', '🛠️ Services', '⏱️ Timeline', '📁 Portfolio', '📞 Contact']
+  },
+  {
+    id: 'thanks',
+    triggers: [
+      'thanks', 'thank you', 'shukriya', 'dhanyawad', 'thank u', 'thx'
+    ],
+    reply: 'Aapka swagat hai! 😊 Koi aur sawaal ho toh zaroor poochhen. Ya seedha baat karein: wa.me/918770404559',
+    options: ['📞 Contact', '💰 Pricing']
+  },
+  {
+    id: 'bye',
+    triggers: [
+      'bye', 'ok', 'theek hai', 'band karo', 'goodbye', 'tc', 'ok thanks', 'alvida'
+    ],
+    reply: 'Shukriya PrimeSoul choose karne ke liye! Kisi bhi kaam ke liye hum hamesha available hain. 🙏',
+    options: ['📞 Contact']
+  }
+]
+
 const ACTION_LINKS: Record<string, string> = {
+  'go to contact page': '/contact',
   'go to contact form': '/contact',
+  'contact form': '/contact',
+  'primesoul.tech/contact': '/contact',
+  'open portfolio page': '/portfolio',
   'view portfolio': '/portfolio',
+  'open portfolio': '/portfolio',
+  'primesoul.tech/portfolio': '/portfolio',
   'open whatsapp': 'https://wa.me/918770404559?text=Hi%20PrimeSoul%2C%20I%20need%20help%20with%20a%20project!',
+  '💬 open whatsapp': 'https://wa.me/918770404559?text=Hi%20PrimeSoul%2C%20I%20need%20help%20with%20a%20project!',
+  'wa.me/918770404559': 'https://wa.me/918770404559?text=Hi%20PrimeSoul%2C%20I%20need%20help%20with%20a%20project!',
+}
+
+function cleanText(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s]/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function extractKeywords(text: string): string[] {
+  const words = cleanText(text).split(' ').filter(w => w.length > 0)
+  const filtered = words.filter(w => !STOP_WORDS.has(w))
+  return filtered.length > 0 ? filtered : words
+}
+
+function findBestMatch(userInput: string): QAItem | null {
+  const cleanedUser = cleanText(userInput)
+  const userKeywords = extractKeywords(userInput)
+  if (userKeywords.length === 0) return null
+
+  let bestMatch: QAItem | null = null
+  let maxScore = 0
+
+  for (const item of QA_DATABASE) {
+    for (const trigger of item.triggers) {
+      const cleanedTrigger = cleanText(trigger)
+
+      // Exact phrase match
+      if (cleanedUser === cleanedTrigger) {
+        return item
+      }
+
+      let score = 0
+
+      // Substring match
+      if (cleanedUser.length > 2 && cleanedTrigger.length > 2) {
+        if (cleanedUser.includes(cleanedTrigger) || cleanedTrigger.includes(cleanedUser)) {
+          score = 0.9
+        }
+      }
+
+      // Keyword overlap match
+      const triggerKeywords = extractKeywords(trigger)
+      let overlapCount = 0
+
+      for (const uKw of userKeywords) {
+        const isMatched = triggerKeywords.some(tKw =>
+          tKw === uKw || (tKw.length > 3 && uKw.length > 3 && (tKw.includes(uKw) || uKw.includes(tKw)))
+        )
+        if (isMatched) {
+          overlapCount++
+        }
+      }
+
+      const keywordScore = overlapCount / userKeywords.length
+      score = Math.max(score, keywordScore)
+
+      if (score > maxScore) {
+        maxScore = score
+        bestMatch = item
+      }
+    }
+  }
+
+  // 30% similarity threshold
+  if (maxScore >= 0.30) {
+    return bestMatch
+  }
+
+  return null
 }
 
 export default function ChatbotWidget() {
@@ -103,40 +420,50 @@ export default function ChatbotWidget() {
   const handleOpen = () => {
     setIsOpen(true)
     if (messages.length === 0) {
-      const g = RESPONSES.greeting
-      addBotMessage(g.reply, g.options)
+      addBotMessage(
+        "Hello! 👋 Main PrimeSoul ka assistant hoon. Aapki kaise madad kar sakta hoon? Aap neeche diye gaye options tap kar sakte hain ya apna sawaal type kar sakte hain:",
+        ['💰 Pricing', '🛠️ Services', '⏱️ Timeline', '📁 Portfolio', '📞 Contact']
+      )
     }
     setTimeout(() => inputRef.current?.focus(), 300)
   }
 
   const handleUserMessage = (text: string) => {
     if (!text.trim()) return
-    setMessages(prev => [...prev, { id: Date.now(), text, sender: 'user' }])
+    const userText = text.trim()
+    setMessages(prev => [...prev, { id: Date.now(), text: userText, sender: 'user' }])
     setInputText('')
     scrollToBottom()
 
     // Check for action links
-    const actionKey = text.toLowerCase()
-    if (ACTION_LINKS[actionKey]) {
+    const lowerInput = userText.toLowerCase()
+    let actionTarget: string | null = null
+    for (const [key, link] of Object.entries(ACTION_LINKS)) {
+      if (lowerInput.includes(key)) {
+        actionTarget = link
+        break
+      }
+    }
+
+    if (actionTarget) {
       setTimeout(() => {
-        if (ACTION_LINKS[actionKey].startsWith('http')) {
-          window.open(ACTION_LINKS[actionKey], '_blank')
+        if (actionTarget!.startsWith('http')) {
+          window.open(actionTarget!, '_blank')
         } else {
-          window.location.href = ACTION_LINKS[actionKey]
+          window.location.href = actionTarget!
         }
       }, 500)
-      return
     }
 
     // Find matching response
-    const key = text.toLowerCase()
-    const response = RESPONSES[key]
-    if (response) {
-      addBotMessage(response.reply, response.options)
+    const match = findBestMatch(userText)
+
+    if (match) {
+      addBotMessage(match.reply, match.options)
     } else {
       addBotMessage(
-        "I'm not sure about that, but I'd love to help! You can reach our team directly for detailed answers. 😊",
-        ['Talk to a human', 'Show me pricing', 'I need a website']
+        "Maine aapka sawaal samjha nahi. Aap seedha WhatsApp par baat kar sakte hain: wa.me/918770404559 — ya contact form fill karein: primesoul.tech/contact",
+        ['💬 Open WhatsApp', 'Go to Contact Page', '💰 Pricing', '🛠️ Services']
       )
     }
   }
@@ -239,3 +566,4 @@ export default function ChatbotWidget() {
     </>
   )
 }
+
