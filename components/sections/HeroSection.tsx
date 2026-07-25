@@ -261,7 +261,7 @@ export default function HeroSection() {
 
             {/* Headline with text reveal animation */}
             <h1
-              className="text-[2.5rem] sm:text-5xl md:text-6xl xl:text-[72px] font-extrabold leading-[1.05] tracking-[-0.03em] mb-5 sm:mb-6 text-ink"
+              className="text-[2.5rem] sm:text-5xl md:text-6xl xl:text-[72px] font-extrabold leading-[1.05] tracking-[-0.03em] mb-5 sm:mb-6"
             >
               {/* Word-by-word reveal */}
               <span
@@ -278,7 +278,7 @@ export default function HeroSection() {
               <span
                 className="relative inline-block font-display italic"
                 style={{
-                  background: 'linear-gradient(135deg, #7B2FF2 0%, #E879F9 100%)',
+                  background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',

@@ -37,7 +37,7 @@ export default function AuditPage() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <AnimatedSection>
             <SectionLabel>Free Website Audit</SectionLabel>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0E0E2C] tracking-tight mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
               Is your website <span className="text-gradient-purple">costing you</span> clients?
             </h1>
             <p className="text-lg text-[#4A4A6A] leading-relaxed mb-8">
@@ -66,7 +66,7 @@ export default function AuditPage() {
           <AnimatedSection delay={100} className="bg-white rounded-3xl p-8 md:p-10 shadow-xl border border-white/20 relative overflow-hidden">
             <div className="absolute -top-20 -right-20 w-64 h-64 bg-gradient-to-br from-[#7B2FF2]/10 to-[#E879F9]/10 rounded-full blur-3xl -z-10" />
             
-            <h3 className="text-2xl font-bold text-[#0E0E2C] mb-2">Claim Your Free Audit</h3>
+            <h3 className="text-2xl font-bold mb-2">Claim Your Free Audit</h3>
             <p className="text-[#4A4A6A] mb-8">Enter your email below. We&apos;ll analyze your site and send you a detailed report within 24 hours.</p>
 
             {status === 'success' ? (

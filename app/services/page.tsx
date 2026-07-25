@@ -34,11 +34,10 @@ export default function ServicesPage() {
             <SectionLabel>Services</SectionLabel>
             <h1
               className="text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-5"
-              style={{ color: '#0D1340' }}
             >
               Everything Your{' '}
               <span style={{
-                background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
+                background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -76,7 +75,7 @@ export default function ServicesPage() {
                     >
                       {ICONS[service.icon] || ICONS['monitor']}
                     </div>
-                    <h2 className="text-xl font-semibold text-ink mb-3">{service.title}</h2>
+                    <h2 className="text-xl font-semibold mb-3">{service.title}</h2>
                     <p className="text-sm text-ink-muted leading-relaxed line-clamp-3">{service.heroDescription}</p>
                   </div>
 
@@ -138,7 +137,7 @@ export default function ServicesPage() {
           <AnimatedSection className="mb-14 text-center">
             <SectionLabel>Our Process</SectionLabel>
             <h2
-              className="text-3xl md:text-4xl font-bold text-ink mb-4"
+              className="text-3xl md:text-4xl font-bold mb-4"
             >
               How Every Project Unfolds
             </h2>
@@ -155,7 +154,7 @@ export default function ServicesPage() {
                   >
                     {step.step}
                   </div>
-                  <h3 className="font-semibold text-ink mb-2">{step.title}</h3>
+                  <h3 className="font-semibold mb-2">{step.title}</h3>
                   <p className="text-sm text-ink-muted leading-relaxed">{step.description}</p>
                 </div>
               </AnimatedSection>
@@ -171,7 +170,7 @@ export default function ServicesPage() {
             <AnimatedSection>
               <SectionLabel>Estimate Your Project</SectionLabel>
               <h2
-                className="text-3xl md:text-4xl font-bold text-ink mb-4"
+                className="text-3xl md:text-4xl font-bold mb-4"
               >
                 Get an Instant Quote
               </h2>

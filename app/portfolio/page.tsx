@@ -78,11 +78,10 @@ export default function PortfolioPage() {
             <SectionLabel>Portfolio</SectionLabel>
             <h1
               className="text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-5"
-              style={{ color: '#0D1340' }}
             >
               Projects That{' '}
               <span style={{
-                background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
+                background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -165,7 +164,7 @@ export default function PortfolioPage() {
                     <div className="p-7">
                       <div className="flex items-start justify-between gap-4 mb-4">
                         <div>
-                          <h2 className="text-xl font-semibold text-ink group-hover:text-brand-navy transition-colors">
+                          <h2 className="text-xl font-semibold group-hover:text-brand-navy transition-colors">
                             {project.title}
                           </h2>
                           <p className="text-sm text-ink-muted mt-1">
@@ -243,7 +242,7 @@ export default function PortfolioPage() {
       <section className="py-20" style={{ background: '#F8F9FE' }}>
         <div className="max-w-7xl mx-auto px-6 text-center">
           <AnimatedSection>
-            <h2 className="text-3xl font-bold text-ink mb-4">
+            <h2 className="text-3xl font-bold mb-4">
               Your Project Could Be Next
             </h2>
             <p className="text-ink-secondary mb-8 max-w-md mx-auto">

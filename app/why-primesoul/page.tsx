@@ -49,7 +49,7 @@ export default function WhyChooseUsPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <AnimatedSection className="text-center mb-16 md:mb-24">
             <SectionLabel>Why Choose Us</SectionLabel>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0E0E2C] tracking-tight mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
               Why Choose <span className="text-gradient-purple">PrimeSoul Web Solutions</span>?
             </h1>
             <p className="text-lg text-[#4A4A6A] leading-relaxed">
@@ -59,21 +59,21 @@ export default function WhyChooseUsPage() {
 
           <div className="space-y-12">
             <AnimatedSection delay={100} className="bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-white/20">
-              <h2 className="text-2xl md:text-3xl font-bold text-[#0E0E2C] mb-4">Team-Driven Quality & Involvement</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Team-Driven Quality & Involvement</h2>
               <p className="text-[#4A4A6A] leading-relaxed text-lg">
                 At PrimeSoul Web Solutions, you are not handed off to junior developers or outsourced teams. Our leadership is directly involved in every project, ensuring that the final deliverable meets the highest standards of code quality, design aesthetics, and performance.
               </p>
             </AnimatedSection>
 
             <AnimatedSection delay={200} className="bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-white/20">
-              <h2 className="text-2xl md:text-3xl font-bold text-[#0E0E2C] mb-4">Real Services with Tangible Results</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Real Services with Tangible Results</h2>
               <p className="text-[#4A4A6A] leading-relaxed text-lg">
                 We don&apos;t sell vanity metrics. From building lightning-fast web applications using Next.js to optimizing your Google Business Profile, every service we offer is designed to increase your visibility, capture more leads, and generate revenue.
               </p>
             </AnimatedSection>
 
             <AnimatedSection delay={300} className="bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-white/20">
-              <h2 className="text-2xl md:text-3xl font-bold text-[#0E0E2C] mb-4">Regional Specialization & Client Types</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Regional Specialization & Client Types</h2>
               <p className="text-[#4A4A6A] leading-relaxed text-lg mb-4">
                 We have proven experience delivering customized solutions for specific industries:
               </p>
@@ -85,7 +85,7 @@ export default function WhyChooseUsPage() {
             </AnimatedSection>
 
             <AnimatedSection delay={400} className="bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-white/20">
-              <h2 className="text-2xl md:text-3xl font-bold text-[#0E0E2C] mb-4">Pricing Transparency</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Pricing Transparency</h2>
               <p className="text-[#4A4A6A] leading-relaxed text-lg">
                 No hidden costs. No surprise invoices. We provide complete pricing transparency upfront. Whether it&apos;s our website development packages or our ongoing maintenance plans (starting at ₹999/month), you know exactly what you&apos;re paying for and what you get in return.
               </p>

@@ -36,7 +36,7 @@ export default function CareersPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <AnimatedSection className="text-center mb-16">
           <SectionLabel>Join Our Team</SectionLabel>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0E0E2C] tracking-tight mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
             Careers at <span className="text-gradient-purple">PrimeSoul</span>
           </h1>
           <p className="text-lg text-[#4A4A6A] leading-relaxed max-w-2xl mx-auto">
@@ -56,7 +56,7 @@ export default function CareersPage() {
                     <polyline points="22 4 12 14.01 9 11.01"></polyline>
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-[#0E0E2C] mb-4">Application Received!</h3>
+                <h3 className="text-2xl font-bold mb-4">Application Received!</h3>
                 <p className="text-[#4A4A6A]">Thank you for your interest. We&apos;ll review your application and get back to you soon.</p>
                 <button
                   onClick={() => setStatus('idle')}

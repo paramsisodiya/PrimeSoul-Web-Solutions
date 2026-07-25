@@ -71,7 +71,7 @@ function StatCounter({
         <span
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight inline-block transition-transform duration-500 group-hover:scale-105"
           style={{
-            background: 'linear-gradient(135deg, #7B2FF2 0%, #A855F7 50%, #E879F9 100%)',
+            background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
             backgroundSize: '200% 200%',
             animation: isVisible ? 'gradient-shift 4s ease infinite' : 'none',
             WebkitBackgroundClip: 'text',
@@ -94,7 +94,7 @@ function StatCounter({
 
       {/* Label */}
       <h3
-        className="text-lg md:text-xl font-bold mb-3 tracking-tight text-ink"
+        className="text-lg md:text-xl font-bold mb-3 tracking-tight"
       >
         {stat.label}
       </h3>
@@ -155,7 +155,7 @@ export default function TrustSection() {
             <AnimatedSection direction="left">
               <SectionLabel>Beyond Expectations</SectionLabel>
               <h2
-                className="text-[1.7rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-5 sm:mb-6 text-ink"
+                className="text-[1.7rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-5 sm:mb-6"
               >
                 Empowering brands with{' '}
                 <span className="text-gradient-purple font-display italic">innovative strategies</span>{' '}
@@ -298,7 +298,7 @@ export default function TrustSection() {
           <AnimatedSection className="text-center mb-12 sm:mb-20">
             <SectionLabel>Impact Numbers</SectionLabel>
             <h2
-              className="text-[1.6rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-3 sm:mb-4 text-ink"
+              className="text-[1.6rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-3 sm:mb-4"
             >
               Numbers That{' '}
               <span className="text-gradient-purple font-display italic">Speak Volumes</span>

@@ -44,7 +44,7 @@ export default function ClientsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <AnimatedSection className="text-center mb-16 md:mb-24">
           <SectionLabel>Our Clients</SectionLabel>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0E0E2C] tracking-tight mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
             Trusted by <span className="text-gradient-purple">Growing Brands</span>
           </h1>
           <p className="text-lg text-[#4A4A6A] leading-relaxed max-w-2xl mx-auto">
@@ -88,7 +88,7 @@ export default function ClientsPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-[#0E0E2C]">{client.name}</h3>
+                    <h3 className="text-xl font-bold">{client.name}</h3>
                     <p className="text-sm font-semibold text-[#7B2FF2]">{client.industry}</p>
                   </div>
                 </div>

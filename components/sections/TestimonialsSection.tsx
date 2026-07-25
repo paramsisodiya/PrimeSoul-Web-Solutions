@@ -111,7 +111,7 @@ export default function TestimonialsSection() {
           >
             See What Our{' '}
             <span className="font-display italic" style={{
-              background: 'linear-gradient(135deg, #A855F7 0%, #E879F9 100%)',
+              background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',

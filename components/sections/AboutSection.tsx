@@ -67,7 +67,7 @@ export default function AboutSection() {
             <div className="sticky top-32">
               <SectionLabel>Who We Are</SectionLabel>
               <h2
-                className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-tight tracking-[-0.03em] mb-6 sm:mb-8 text-ink"
+                className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-tight tracking-[-0.03em] mb-6 sm:mb-8"
               >
                 Built to Deliver. <span className="text-gradient-purple font-display italic">Driven by Results.</span>
               </h2>
@@ -95,7 +95,7 @@ export default function AboutSection() {
                     <p
                       className="text-2xl sm:text-3xl font-extrabold mb-1"
                       style={{
-                        background: 'linear-gradient(135deg, #7B2FF2 0%, #A855F7 100%)',
+                        background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         backgroundClip: 'text',
@@ -123,7 +123,7 @@ export default function AboutSection() {
                       }}
                     >
                       <h4
-                        className="text-base sm:text-lg font-bold text-ink mb-1"
+                        className="text-base sm:text-lg font-bold mb-1"
                         style={{
                           fontWeight: leader.isPrimary ? 800 : 700,
                         }}
@@ -154,7 +154,7 @@ export default function AboutSection() {
             <div>
               <SectionLabel>What We Do</SectionLabel>
               <h3
-                className="text-2xl sm:text-3xl font-extrabold mb-8 text-ink"
+                className="text-2xl sm:text-3xl font-extrabold mb-8"
               >
                 Comprehensive digital excellence.
               </h3>
@@ -191,7 +191,7 @@ export default function AboutSection() {
                       </div>
                       <div>
                         <h4 
-                          className="text-lg sm:text-xl font-bold text-ink mb-2 sm:mb-3 transition-colors"
+                          className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 transition-colors"
                         >
                           {item.title}
                         </h4>

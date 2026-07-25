@@ -101,7 +101,7 @@ function ServiceCard3D({ service, index }: { service: typeof SERVICES[number]; i
 
           {/* Content — slightly elevated */}
           <div className="card-3d-content">
-            <h3 className="text-lg font-semibold text-ink mb-3">{service.title}</h3>
+            <h3 className="text-lg font-semibold mb-3">{service.title}</h3>
             <p className="text-sm text-ink-muted leading-relaxed mb-6">{service.description}</p>
 
             {/* Features */}
@@ -141,7 +141,7 @@ export default function ServicesSection() {
           <div className="max-w-2xl">
             <SectionLabel>What We Do</SectionLabel>
             <h2
-              className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-tight tracking-[-0.03em] mb-5 sm:mb-6 text-ink"
+              className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-tight tracking-[-0.03em] mb-5 sm:mb-6"
             >
               Services Built for{' '}
               <span className="text-gradient-purple font-display italic">

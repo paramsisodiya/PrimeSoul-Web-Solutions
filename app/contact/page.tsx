@@ -122,7 +122,12 @@ export default function ContactPage() {
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
               Let&apos;s Build Something{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7B2FF2] to-[#E879F9]">
+              <span className="font-display italic" style={{
+                background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}>
                 Extraordinary
               </span>
             </h1>
@@ -141,7 +146,7 @@ export default function ContactPage() {
             {/* Info */}
             <AnimatedSection direction="left" className="lg:col-span-2 space-y-6">
               <div>
-                <h2 className="text-2xl font-bold text-ink mb-2">Contact Information</h2>
+                <h2 className="text-2xl font-bold mb-2">Contact Information</h2>
                 <p className="text-ink-muted text-sm">Based in Rajgarh, MP — working with clients across India and globally.</p>
               </div>
               <div className="space-y-4">
@@ -174,7 +179,7 @@ export default function ContactPage() {
 
               {/* Call Me Back */}
               <div className="p-5 bg-white border border-surface-border rounded-2xl">
-                <h3 className="text-ink font-bold text-sm mb-1 flex items-center gap-2">
+                <h3 className="font-bold text-sm mb-1 flex items-center gap-2">
                   <Phone size={16} className="text-[#7B2FF2]" />
                   Request a Callback
                 </h3>
@@ -222,7 +227,7 @@ export default function ContactPage() {
                     <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <CheckCircle size={32} className="text-green-500" />
                     </div>
-                    <h3 className="text-ink text-xl font-bold mb-2">Message Sent!</h3>
+                    <h3 className="text-xl font-bold mb-2">Message Sent!</h3>
                     <p className="text-ink-muted text-sm mb-6">Thank you for reaching out! We&apos;ll get back to you within 24 hours.</p>
                     <button onClick={() => setStatus('idle')} className="bg-gradient-to-r from-[#7B2FF2] to-[#A855F7] text-white px-6 py-2.5 rounded-xl text-sm font-medium hover:opacity-90 transition-all">
                       Send Another Message
@@ -230,7 +235,7 @@ export default function ContactPage() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
-                    <h3 className="text-ink text-xl font-bold mb-6">Tell Us About Your Project</h3>
+                    <h3 className="text-xl font-bold mb-6">Tell Us About Your Project</h3>
                     <div className="grid sm:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-ink-muted text-xs font-semibold uppercase tracking-wider mb-2">Your Name *</label>
@@ -320,7 +325,7 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <AnimatedSection>
               <SectionLabel>Book a Call</SectionLabel>
-              <h2 className="text-3xl font-bold text-ink mb-4">
+              <h2 className="text-3xl font-bold mb-4">
                 Prefer a Live Conversation?
               </h2>
               <p className="text-ink-muted mb-6">

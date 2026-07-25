@@ -79,11 +79,10 @@ export default function AboutPage() {
             <SectionLabel>About PrimeSoul</SectionLabel>
             <h1
               className="text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-5"
-              style={{ color: '#0D1340' }}
             >
               Built by a Team That{' '}
               <span style={{
-                background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
+                background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -105,7 +104,7 @@ export default function AboutPage() {
             {/* Content */}
             <AnimatedSection direction="left">
               <SectionLabel>Our Story</SectionLabel>
-              <h2 className="text-4xl font-bold text-ink mb-6">
+              <h2 className="text-4xl font-bold mb-6">
                 Built to Deliver. Driven by Results.
               </h2>
               <div className="flex flex-col gap-5 mb-8">
@@ -136,7 +135,7 @@ export default function AboutPage() {
                     <p
                       className="text-2xl sm:text-3xl font-extrabold mb-1"
                       style={{
-                        background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
+                        background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         backgroundClip: 'text',
@@ -185,7 +184,7 @@ export default function AboutPage() {
             {/* Leadership Cards */}
             <AnimatedSection direction="right">
               <SectionLabel>Leadership</SectionLabel>
-              <h2 className="text-3xl font-bold text-ink mb-8">
+              <h2 className="text-3xl font-bold mb-8">
                 The Team Behind PrimeSoul
               </h2>
               <div className="flex flex-col gap-5">
@@ -201,7 +200,7 @@ export default function AboutPage() {
                     }}
                   >
                     <h3
-                      className="text-xl sm:text-2xl text-ink mb-1"
+                      className="text-xl sm:text-2xl mb-1"
                       style={{ fontWeight: leader.isPrimary ? 800 : 700 }}
                     >
                       {leader.name}
@@ -253,7 +252,7 @@ export default function AboutPage() {
             <AnimatedSection>
               <SectionLabel>Skills & Expertise</SectionLabel>
               <h2
-                className="text-3xl md:text-4xl font-bold text-ink mb-8"
+                className="text-3xl md:text-4xl font-bold mb-8"
               >
                 What We Do Well
               </h2>
@@ -283,7 +282,7 @@ export default function AboutPage() {
             <AnimatedSection delay={100}>
               <SectionLabel>Our Values</SectionLabel>
               <h2
-                className="text-3xl md:text-4xl font-bold text-ink mb-8"
+                className="text-3xl md:text-4xl font-bold mb-8"
               >
                 How We Operate
               </h2>
@@ -298,7 +297,7 @@ export default function AboutPage() {
                       className="w-8 h-1 rounded-full mb-4"
                       style={{ background: value.accent }}
                     />
-                    <h3 className="text-sm font-semibold text-ink mb-2">{value.title}</h3>
+                    <h3 className="text-sm font-semibold mb-2">{value.title}</h3>
                     <p className="text-xs text-ink-muted leading-relaxed">{value.description}</p>
                   </div>
                 ))}
@@ -313,7 +312,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-6 text-center">
           <AnimatedSection>
             <h2
-              className="text-3xl md:text-4xl font-bold text-ink mb-5"
+              className="text-3xl md:text-4xl font-bold mb-5"
             >
               Ready to Start Something?
             </h2>

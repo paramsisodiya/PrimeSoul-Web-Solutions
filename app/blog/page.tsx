@@ -55,7 +55,12 @@ export default function BlogPage() {
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
             The PrimeSoul{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7B2FF2] to-[#E879F9]">Blog</span>
+            <span className="font-display italic" style={{
+              background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>Blog</span>
           </h1>
           <p className="text-[#7A7A9E] text-lg max-w-2xl mx-auto">
             Web design tips, development guides, SEO strategies — written for Indian businesses.
@@ -74,7 +79,7 @@ export default function BlogPage() {
               <div className="w-20 h-20 bg-[#7B2FF2]/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
                 <FileText size={36} className="text-[#7B2FF2]" />
               </div>
-              <h2 className="text-2xl font-bold text-[#0E0E2C] mb-3">Blog Coming Soon</h2>
+              <h2 className="text-2xl font-bold mb-3">Blog Coming Soon</h2>
               <p className="text-[#7A7A9E] text-base max-w-md mx-auto mb-8">
                 We&apos;re working on insightful articles. Check back soon!
               </p>
