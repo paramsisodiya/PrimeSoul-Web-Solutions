@@ -82,20 +82,25 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  const DARK_HERO_PATHS = ['/contact', '/blog', '/locations']
+  const isDarkHeroPage = DARK_HERO_PATHS.some(path => pathname?.startsWith(path))
+
+  const isDarkHeader = !scrolled && isDarkHeroPage
+
   return (
     <>
       <header
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
           scrolled
-            ? 'bg-white/92 backdrop-blur-2xl border-b border-surface-border shadow-[0_2px_24px_-4px_rgba(123,47,242,0.06)] py-3'
+            ? 'bg-white border-b border-surface-border shadow-md py-3'
             : 'bg-transparent py-5'
         )}
         style={{ top: 'var(--announcement-height, 0px)' }}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <Logo />
+          <Logo variant={isDarkHeader ? 'dark' : 'light'} />
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
@@ -108,6 +113,8 @@ export default function Navbar() {
                       'nav-link-underline text-sm font-medium transition-colors duration-200 flex items-center gap-1',
                       pathname?.startsWith('/services')
                         ? 'text-brand-primary active'
+                        : isDarkHeader
+                        ? 'text-white/80 hover:text-white'
                         : 'text-ink-secondary hover:text-ink'
                     )}
                   >
@@ -182,6 +189,8 @@ export default function Navbar() {
                     'nav-link-underline text-sm font-medium transition-colors duration-200',
                     pathname === link.href
                       ? 'text-brand-primary active'
+                      : isDarkHeader
+                      ? 'text-white/80 hover:text-white'
                       : 'text-ink-secondary hover:text-ink'
                   )}
                 >
@@ -197,7 +206,10 @@ export default function Navbar() {
               href="https://wa.me/918770404559?text=Hi%20PrimeSoul%2C%20I'm%20interested%20in%20your%20services"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm font-medium text-ink-secondary hover:text-ink transition-colors"
+              className={cn(
+                "flex items-center gap-2 text-sm font-medium transition-colors",
+                isDarkHeader ? "text-white/80 hover:text-white" : "text-ink-secondary hover:text-ink"
+              )}
             >
               <WhatsAppIcon />
               WhatsApp
