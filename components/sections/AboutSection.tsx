@@ -95,7 +95,7 @@ export default function AboutSection() {
                     <p
                       className="text-2xl sm:text-3xl font-extrabold mb-1"
                       style={{
-                        background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
+                        background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         backgroundClip: 'text',

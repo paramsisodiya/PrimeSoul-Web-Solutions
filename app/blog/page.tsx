@@ -56,7 +56,7 @@ export default function BlogPage() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
             The PrimeSoul{' '}
             <span className="font-display italic" style={{
-              background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
+              background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',

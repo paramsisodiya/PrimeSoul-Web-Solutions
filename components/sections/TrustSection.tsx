@@ -71,7 +71,7 @@ function StatCounter({
         <span
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight inline-block transition-transform duration-500 group-hover:scale-105"
           style={{
-            background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
+            background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
             backgroundSize: '200% 200%',
             animation: isVisible ? 'gradient-shift 4s ease infinite' : 'none',
             WebkitBackgroundClip: 'text',
