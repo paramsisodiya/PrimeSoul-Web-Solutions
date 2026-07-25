@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import Logo from '@/components/shared/Logo'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { SERVICE_PAGES } from '@/lib/service-pages'
@@ -94,14 +95,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-9 h-9 overflow-hidden rounded-xl">
-              <Image src="/images/logo.png" alt="PrimeSoul" fill className="object-contain" priority />
-            </div>
-            <span className="text-[22px] font-extrabold tracking-[-0.02em] leading-none" style={{ color: '#000000ff', fontFamily: "'Playfair Display, serif" }}>
-              PrimeSoul
-            </span>
-          </Link>
+          <Logo />
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
@@ -268,14 +262,7 @@ export default function Navbar() {
         )}>
           {/* Logo */}
           <div className="mb-12">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="relative w-10 h-10 overflow-hidden rounded-xl">
-                <Image src="/images/logo.png" alt="PrimeSoul" fill className="object-contain" />
-              </div>
-              <span className="text-2xl font-extrabold tracking-[-0.02em] leading-none" style={{ color: '#2AA7A7', fontFamily: "'Poppins', sans-serif" }}>
-                PrimeSoul
-              </span>
-            </div>
+            <Logo />
           </div>
 
           {/* Mobile Nav — Services (with sub), Portfolio, Contact */}

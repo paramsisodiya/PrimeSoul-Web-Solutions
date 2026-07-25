@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import Logo from '@/components/shared/Logo'
 
 const LINKS = {
   pages: [
@@ -45,19 +46,9 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-12 sm:mb-16">
           {/* Brand column */}
           <div className="col-span-2">
-            <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-white/5">
-                <Image src="/images/logo-dark.png" alt="PrimeSoul" fill className="object-contain" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-extrabold tracking-[-0.02em] leading-none" style={{ color: '#2AA7A7', fontFamily: "'Poppins', sans-serif" }}>
-                  PrimeSoul
-                </span>
-                <span className="text-[9px] font-medium uppercase tracking-[0.25em] text-white/30 mt-1" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                  Web Solutions
-                </span>
-              </div>
-            </Link>
+            <div className="mb-6">
+              <Logo variant="dark" />
+            </div>
             <p className="text-white/40 text-xs sm:text-sm leading-relaxed max-w-xs mb-6 sm:mb-8">
               A digital agency crafting premium web experiences for businesses that understand the value of quality.
             </p>
