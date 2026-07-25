@@ -14,7 +14,7 @@ import AboutSection from '@/components/sections/AboutSection'
 import ServicesSection from '@/components/sections/ServicesSection'
 import PortfolioSection from '@/components/sections/PortfolioSection'
 import ProcessSection from '@/components/sections/ProcessSection'
-import FounderSection from '@/components/sections/FounderSection'
+
 import PricingSection from '@/components/sections/PricingSection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import FAQSection from '@/components/sections/FAQSection'
@@ -37,7 +37,7 @@ const SECTION_COMPONENTS: Record<string, React.ComponentType> = {
   services: ServicesSection,
   portfolio: PortfolioSection,
   process: ProcessSection,
-  founder: FounderSection,
+
   pricing: PricingSection,
   testimonials: TestimonialsSection,
   faq: FAQSection,
@@ -55,7 +55,7 @@ const DEFAULT_ORDER: SectionConfig[] = [
   { id: 'services', label: 'Services', enabled: true },
   { id: 'portfolio', label: 'Portfolio', enabled: true },
   { id: 'process', label: 'Our Process', enabled: true },
-  { id: 'founder', label: 'Founder Section', enabled: true },
+
   { id: 'pricing', label: 'Pricing', enabled: true },
   { id: 'testimonials', label: 'Testimonials', enabled: true },
   { id: 'faq', label: 'FAQ Section', enabled: true },

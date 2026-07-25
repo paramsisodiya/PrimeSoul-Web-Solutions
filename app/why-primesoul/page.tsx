@@ -3,13 +3,13 @@ import SectionLabel from '@/components/ui/SectionLabel'
 
 export const metadata = {
   title: 'Why Choose PrimeSoul Web Solutions?',
-  description: 'Learn why businesses choose PrimeSoul Web Solutions. Real services, transparent pricing, and founder-led involvement for premium digital products.',
+  description: 'Learn why businesses choose PrimeSoul Web Solutions. Real services, transparent pricing, and team-driven involvement for premium digital products.',
 }
 
 const faqs = [
   {
     question: "Why choose PrimeSoul Web Solutions over a typical agency?",
-    answer: "Unlike typical agencies that outsource work or use generic templates, PrimeSoul Web Solutions is founder-led. Every project gets personal attention, custom design, and is built with modern tech stacks like Next.js for superior performance."
+    answer: "Unlike typical agencies that outsource work or use generic templates, PrimeSoul Web Solutions is team-driven. Every project gets personal attention, custom design, and is built with modern tech stacks like Next.js for superior performance."
   },
   {
     question: "What types of clients does PrimeSoul Web Solutions work with?",
@@ -59,9 +59,9 @@ export default function WhyChooseUsPage() {
 
           <div className="space-y-12">
             <AnimatedSection delay={100} className="bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-white/20">
-              <h2 className="text-2xl md:text-3xl font-bold text-[#0E0E2C] mb-4">Founder-Led Quality & Involvement</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-[#0E0E2C] mb-4">Team-Driven Quality & Involvement</h2>
               <p className="text-[#4A4A6A] leading-relaxed text-lg">
-                At PrimeSoul Web Solutions, you are not handed off to junior developers or outsourced teams. The founder is directly involved in every project, ensuring that the final deliverable meets the highest standards of code quality, design aesthetics, and performance.
+                At PrimeSoul Web Solutions, you are not handed off to junior developers or outsourced teams. Our leadership is directly involved in every project, ensuring that the final deliverable meets the highest standards of code quality, design aesthetics, and performance.
               </p>
             </AnimatedSection>
 

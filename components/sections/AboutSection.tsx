@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 
@@ -29,6 +28,28 @@ const WHAT_WE_DO = [
   }
 ]
 
+const STATS = [
+  { value: '3+', label: 'Years of Experience' },
+  { value: '35+', label: 'Projects Delivered' },
+  { value: '100%', label: 'Client Satisfaction' },
+  { value: '8–10', label: 'Team Members' },
+]
+
+const LEADERSHIP = [
+  {
+    name: 'Param Sisodiya',
+    role: 'Founder',
+    description: 'Visionary behind PrimeSoul, driving the agency\u2019s direction, client relationships, and overall growth strategy.',
+    isPrimary: true,
+  },
+  {
+    name: 'Shyam Sisodiya',
+    role: 'CEO',
+    description: 'Leading day-to-day operations and ensuring every project is delivered with precision, quality, and on time.',
+    isPrimary: false,
+  },
+]
+
 export default function AboutSection() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
 
@@ -41,40 +62,88 @@ export default function AboutSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
           
-          {/* Left Column: Who We Are */}
+          {/* Left Column: Company Intro + Mission + Stats */}
           <AnimatedSection direction="left">
             <div className="sticky top-32">
               <SectionLabel>Who We Are</SectionLabel>
               <h2
                 className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-tight tracking-[-0.03em] mb-6 sm:mb-8 text-ink"
               >
-                We are architects of the <span className="text-gradient-purple font-display italic">digital realm</span>.
+                Built to Deliver. <span className="text-gradient-purple font-display italic">Driven by Results.</span>
               </h2>
               <div className="space-y-6 text-base text-ink-secondary leading-relaxed">
                 <p>
-                  PrimeSoul isn&apos;t just another agency. We are a collective of passionate creators, strategic thinkers, and technical experts dedicated to transforming bold visions into extraordinary digital realities.
-                </p>
-                <p>
-                  Founded on the belief that digital experiences should be both breathtaking and highly functional, we bridge the gap between aesthetic brilliance and engineering excellence. We don&apos;t just build websites; we craft digital ecosystems that empower brands to dominate their industries.
-                </p>
-                <p>
-                  Our approach is rooted in partnership. We immerse ourselves in your business, understanding your unique challenges and objectives, to deliver bespoke solutions that create lasting impact.
+                  PrimeSoul Web Solutions is a focused digital agency based in Rajgarh, Madhya Pradesh — helping businesses across India establish a powerful online presence. With 3 years of experience, 35+ successful projects, and a dedicated team of professionals, we combine strategy, design, and technology to deliver real business outcomes.
                 </p>
               </div>
-              
-              {/* Stats/Highlight ribbon */}
-              <div className="mt-10 sm:mt-12 inline-flex items-center gap-6 p-4 rounded-2xl bg-surface-base border border-surface-border">
-                <div className="flex -space-x-4">
-                  <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden relative bg-brand-primary/20">
-                     <Image src="/images/team-working.png" alt="Team" fill className="object-cover" />
+
+              {/* Our Mission */}
+              <div className="mt-10 sm:mt-12 p-6 rounded-2xl bg-surface-base border border-surface-border">
+                <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-brand-primary mb-3">OUR MISSION</p>
+                <p className="text-sm sm:text-base text-ink-secondary leading-relaxed">
+                  To empower every business — big or small — with a premium digital presence that drives real growth, builds trust, and creates lasting impact.
+                </p>
+              </div>
+
+              {/* Company Stats Row */}
+              <div className="mt-10 sm:mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {STATS.map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="text-center p-4 rounded-2xl bg-surface-subtle/50 border border-surface-border transition-all duration-300 hover:border-brand-primary/20 hover:shadow-sm"
+                  >
+                    <p
+                      className="text-2xl sm:text-3xl font-extrabold mb-1"
+                      style={{
+                        background: 'linear-gradient(135deg, #7B2FF2 0%, #A855F7 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                      }}
+                    >
+                      {stat.value}
+                    </p>
+                    <p className="text-xs sm:text-sm text-ink-muted font-medium">{stat.label}</p>
                   </div>
-                  <div className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center bg-brand-dark text-white font-bold text-sm" style={{ background: '#0E0E2C' }}>
-                    100%
-                  </div>
-                </div>
-                <div>
-                  <p className="font-bold text-ink">In-House Talent</p>
-                  <p className="text-sm text-ink-muted">No outsourcing, guaranteed.</p>
+                ))}
+              </div>
+
+              {/* Leadership Section */}
+              <div className="mt-10 sm:mt-12">
+                <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-ink-muted mb-5">LEADERSHIP</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {LEADERSHIP.map((leader) => (
+                    <div
+                      key={leader.name}
+                      className="relative p-5 sm:p-6 rounded-2xl bg-white border transition-all duration-300 hover:shadow-md"
+                      style={{
+                        borderColor: leader.isPrimary ? 'rgba(123,47,242,0.25)' : '#E8E5F5',
+                        borderLeftWidth: leader.isPrimary ? '3px' : '1px',
+                        borderLeftColor: leader.isPrimary ? '#7B2FF2' : '#E8E5F5',
+                      }}
+                    >
+                      <h4
+                        className="text-base sm:text-lg font-bold text-ink mb-1"
+                        style={{
+                          fontWeight: leader.isPrimary ? 800 : 700,
+                        }}
+                      >
+                        {leader.name}
+                      </h4>
+                      <span
+                        className="inline-block text-[10px] sm:text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3"
+                        style={{
+                          background: 'rgba(123,47,242,0.08)',
+                          color: '#7B2FF2',
+                        }}
+                      >
+                        {leader.role}
+                      </span>
+                      <p className="text-sm text-ink-secondary leading-relaxed">
+                        {leader.description}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

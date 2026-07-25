@@ -4,9 +4,9 @@ export const AGENCY = {
   description: 'We craft premium digital solutions — from high-converting websites to full-scale web platforms — for businesses that refuse to settle for average.',
   founder: {
     name: 'Param Sisodiya',
-    role: 'Founder & Lead Developer',
+    role: 'Founder',
     location: 'Rajgarh, Madhya Pradesh',
-    bio: 'A self-driven developer and designer obsessed with building digital products that actually work. From pixel-perfect interfaces to scalable web systems — every project gets my full attention.',
+    bio: 'Visionary behind PrimeSoul, driving the agency\'s direction, client relationships, and overall growth strategy. Our team combines design, engineering, and strategy to deliver premium digital products.',
     email: 'primesoulwebsolutions@gmail.com',
     phone: '8770404559',
     whatsapp: '918770404559',

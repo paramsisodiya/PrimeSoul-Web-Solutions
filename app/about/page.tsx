@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
-import { AGENCY } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'About | PrimeSoul Web Solutions',
@@ -43,6 +41,28 @@ const SKILLS = [
   { label: 'SEO & Performance', level: 88 },
 ]
 
+const STATS = [
+  { value: '3+', label: 'Years of Experience' },
+  { value: '35+', label: 'Projects Delivered' },
+  { value: '100%', label: 'Client Satisfaction' },
+  { value: '8–10', label: 'Team Members' },
+]
+
+const LEADERSHIP = [
+  {
+    name: 'Param Sisodiya',
+    role: 'Founder',
+    description: 'Visionary behind PrimeSoul, driving the agency\u2019s direction, client relationships, and overall growth strategy.',
+    isPrimary: true,
+  },
+  {
+    name: 'Shyam Sisodiya',
+    role: 'CEO',
+    description: 'Leading day-to-day operations and ensuring every project is delivered with precision, quality, and on time.',
+    isPrimary: false,
+  },
+]
+
 export default function AboutPage() {
   return (
     <>
@@ -61,7 +81,7 @@ export default function AboutPage() {
               className="text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-5"
               style={{ color: '#0D1340' }}
             >
-              Built by Someone Who{' '}
+              Built by a Team That{' '}
               <span style={{
                 background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
                 WebkitBackgroundClip: 'text',
@@ -72,96 +92,76 @@ export default function AboutPage() {
               </span>
             </h1>
             <p className="text-lg text-ink-secondary leading-relaxed">
-              PrimeSoul isn&apos;t a team of dozens or a corporation with layers. It&apos;s a focused studio led by a developer who is personally invested in every project&apos;s success.
+              PrimeSoul Web Solutions is a focused agency with a dedicated team personally invested in every project&apos;s success. We combine strategy, design, and technology to deliver real business outcomes.
             </p>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* Founder section */}
+      {/* Company Intro + Leadership */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Image */}
-            <AnimatedSection direction="left">
-              <div className="relative">
-                <div
-                  className="relative rounded-3xl overflow-hidden aspect-[4/5] max-w-sm mx-auto lg:mx-0"
-                  style={{
-                    boxShadow: '0 24px 80px -16px rgba(30,58,224,0.20)',
-                    border: '1px solid rgba(226,232,248,0.8)',
-                  }}
-                >
-                  <Image
-                    src="/images/founder.jpg"
-                    alt="Param Sisodiya — Founder of PrimeSoul"
-                    fill
-                    className="object-cover object-top"
-                  />
-                  {/* Gradient overlay at bottom */}
-                  <div
-                    className="absolute bottom-0 left-0 right-0 h-32"
-                    style={{ background: 'linear-gradient(to top, rgba(30,58,224,0.15), transparent)' }}
-                  />
-                </div>
-
-                {/* Floating card */}
-                <div
-                  className="absolute -bottom-4 -right-4 lg:right-12 rounded-2xl p-4 bg-white"
-                  style={{
-                    boxShadow: '0 8px 40px -8px rgba(30,58,224,0.18)',
-                    border: '1px solid #E2E8F8',
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="w-2 h-2 rounded-full animate-pulse-slow"
-                      style={{ background: '#2EC4C4' }}
-                    />
-                    <div>
-                      <p className="text-xs font-semibold text-ink">Available for Projects</p>
-                      <p className="text-xs text-ink-muted">Rajgarh, MP · Remote Friendly</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
-
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
             {/* Content */}
-            <AnimatedSection direction="right">
-              <p className="text-xs font-semibold uppercase tracking-widest text-ink-muted mb-3">Founder</p>
-              <h2
-                className="text-4xl font-bold text-ink mb-2"
-              >
-                {AGENCY.founder.name}
+            <AnimatedSection direction="left">
+              <SectionLabel>Our Story</SectionLabel>
+              <h2 className="text-4xl font-bold text-ink mb-6">
+                Built to Deliver. Driven by Results.
               </h2>
-              <p className="text-brand-navy font-medium mb-6">{AGENCY.founder.role}</p>
-
               <div className="flex flex-col gap-5 mb-8">
                 <p className="text-ink-secondary leading-relaxed">
-                  I started building websites as a way to solve real problems for people around me. The school in Khilchipur needed a digital presence. A local solar company had no way to reach customers online. A portfolio needed to convert visitors into clients.
+                  PrimeSoul Web Solutions is a focused digital agency based in Rajgarh, Madhya Pradesh — helping businesses across India establish a powerful online presence. With 3 years of experience, 35+ successful projects, and a dedicated team of professionals, we combine strategy, design, and technology to deliver real business outcomes.
                 </p>
                 <p className="text-ink-secondary leading-relaxed">
-                  PrimeSoul grew from that work — from the belief that every business, regardless of size or location, deserves a professional digital presence that actually performs.
+                  PrimeSoul grew from a genuine belief that every business, regardless of size or location, deserves a professional digital presence that actually performs. We obsess over the details that most people won&apos;t notice but will definitely feel: load speeds, interaction quality, the way a headline makes someone lean forward.
                 </p>
-                <p className="text-ink-secondary leading-relaxed">
-                  I obsess over the details that most people won&apos;t notice but will definitely feel: load speeds, interaction quality, the way a headline makes someone lean forward. That&apos;s the standard every project gets.
+              </div>
+
+              {/* Mission */}
+              <div className="p-6 rounded-2xl bg-surface-subtle/50 border border-surface-border mb-8">
+                <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-brand-primary mb-3">OUR MISSION</p>
+                <p className="text-sm sm:text-base text-ink-secondary leading-relaxed">
+                  To empower every business — big or small — with a premium digital presence that drives real growth, builds trust, and creates lasting impact.
                 </p>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                {STATS.map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="text-center p-4 rounded-2xl bg-white border border-surface-border transition-all duration-300 hover:border-brand-primary/20 hover:shadow-sm"
+                    style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}
+                  >
+                    <p
+                      className="text-2xl sm:text-3xl font-extrabold mb-1"
+                      style={{
+                        background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                      }}
+                    >
+                      {stat.value}
+                    </p>
+                    <p className="text-xs text-ink-muted font-medium">{stat.label}</p>
+                  </div>
+                ))}
               </div>
 
               {/* Contact info */}
               <div className="flex flex-col gap-3 mb-8">
                 <a href="mailto:primesoulwebsolutions@gmail.com" className="flex items-center gap-3 text-sm text-ink-secondary hover:text-ink transition-colors">
                   <EmailIcon />
-                  {AGENCY.founder.email}
+                  primesoulwebsolutions@gmail.com
                 </a>
                 <a href="tel:8770404559" className="flex items-center gap-3 text-sm text-ink-secondary hover:text-ink transition-colors">
                   <PhoneIcon />
-                  +91 {AGENCY.founder.phone}
+                  +91 8770404559
                 </a>
                 <span className="flex items-center gap-3 text-sm text-ink-muted">
                   <LocationIcon />
-                  {AGENCY.founder.location}
+                  Rajgarh, Madhya Pradesh
                 </span>
               </div>
 
@@ -171,16 +171,75 @@ export default function AboutPage() {
                   className="px-6 py-3 rounded-xl text-sm font-semibold text-white"
                   style={{ background: 'linear-gradient(135deg, #1E3AE0 0%, #2B47D9 100%)', boxShadow: '0 8px 24px -8px rgba(30,58,224,0.4)' }}
                 >
-                  Work With Me
+                  Work With Us
                 </Link>
-                <a
-                  href="https://paramsisodiya.netlify.app"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/portfolio"
                   className="px-6 py-3 rounded-xl text-sm font-semibold text-ink border border-surface-border bg-white hover:bg-surface-subtle transition-colors"
                 >
-                  View Portfolio
-                </a>
+                  View Our Work
+                </Link>
+              </div>
+            </AnimatedSection>
+
+            {/* Leadership Cards */}
+            <AnimatedSection direction="right">
+              <SectionLabel>Leadership</SectionLabel>
+              <h2 className="text-3xl font-bold text-ink mb-8">
+                The Team Behind PrimeSoul
+              </h2>
+              <div className="flex flex-col gap-5">
+                {LEADERSHIP.map((leader) => (
+                  <div
+                    key={leader.name}
+                    className="relative p-6 sm:p-8 rounded-2xl bg-white transition-all duration-300 hover:shadow-lg"
+                    style={{
+                      border: leader.isPrimary ? '1px solid rgba(30,58,224,0.2)' : '1px solid #E2E8F8',
+                      borderLeftWidth: leader.isPrimary ? '3px' : '1px',
+                      borderLeftColor: leader.isPrimary ? '#1E3AE0' : '#E2E8F8',
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
+                    }}
+                  >
+                    <h3
+                      className="text-xl sm:text-2xl text-ink mb-1"
+                      style={{ fontWeight: leader.isPrimary ? 800 : 700 }}
+                    >
+                      {leader.name}
+                    </h3>
+                    <span
+                      className="inline-block text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full mb-4"
+                      style={{
+                        background: 'rgba(30,58,224,0.08)',
+                        color: '#1E3AE0',
+                      }}
+                    >
+                      {leader.role}
+                    </span>
+                    <p className="text-ink-secondary leading-relaxed">
+                      {leader.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Floating availability card */}
+              <div
+                className="mt-6 rounded-2xl p-4 bg-white"
+                style={{
+                  boxShadow: '0 8px 40px -8px rgba(30,58,224,0.18)',
+                  border: '1px solid #E2E8F8',
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-2 h-2 rounded-full animate-pulse-slow"
+                    style={{ background: '#2EC4C4' }}
+                  />
+                  <div>
+                    <p className="text-xs font-semibold text-ink">Available for Projects</p>
+                    <p className="text-xs text-ink-muted">Rajgarh, MP · Remote Friendly</p>
+                  </div>
+                </div>
               </div>
             </AnimatedSection>
           </div>
@@ -196,7 +255,7 @@ export default function AboutPage() {
               <h2
                 className="text-3xl md:text-4xl font-bold text-ink mb-8"
               >
-                What I Do Well
+                What We Do Well
               </h2>
               <div className="flex flex-col gap-5">
                 {SKILLS.map((skill, i) => (
@@ -296,4 +355,3 @@ function LocationIcon() {
     </svg>
   )
 }
-
