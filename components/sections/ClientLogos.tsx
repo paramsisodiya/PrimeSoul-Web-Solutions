@@ -1,127 +1,148 @@
 'use client'
 
 import AnimatedSection from '@/components/ui/AnimatedSection'
+import { Sun, GraduationCap, Monitor, ShoppingBag, Activity, Zap } from 'lucide-react'
 
-const CLIENTS = [
-  { name: 'A&S Solar Solutions', initials: 'A&S', icon: 'solar' },
-  { name: 'SVNS School Khilchipur', initials: 'SV', icon: 'edu' },
-  { name: 'Param Portfolio', initials: 'PP', icon: 'portfolio' },
-  { name: 'E-Commerce Platform', initials: 'EC', icon: 'ecom' },
+const CLIENT_ITEMS = [
+  {
+    name: 'A&S Solar Solutions',
+    category: 'Clean Energy',
+    icon: Sun,
+    gradient: 'from-[#F59E0B] to-[#EF4444]',
+    badge: 'Solar Energy'
+  },
+  {
+    name: 'SVNS Educational School',
+    category: 'EdTech & Education',
+    icon: GraduationCap,
+    gradient: 'from-[#3B82F6] to-[#1D4ED8]',
+    badge: 'Education'
+  },
+  {
+    name: 'Param Web Solutions',
+    category: 'Digital Portfolio',
+    icon: Monitor,
+    gradient: 'from-[#10B981] to-[#059669]',
+    badge: 'Web App'
+  },
+  {
+    name: 'Apex E-Commerce Store',
+    category: 'Retail & E-Com',
+    icon: ShoppingBag,
+    gradient: 'from-[#EC4899] to-[#8B5CF6]',
+    badge: 'E-Commerce'
+  },
+  {
+    name: 'HealthPulse Clinic',
+    category: 'Healthcare Tech',
+    icon: Activity,
+    gradient: 'from-[#06B6D4] to-[#3B82F6]',
+    badge: 'Healthcare'
+  },
+  {
+    name: 'FinTech Growth SaaS',
+    category: 'SaaS & Automation',
+    icon: Zap,
+    gradient: 'from-[#8B5CF6] to-[#D946EF]',
+    badge: 'Automation'
+  },
 ]
 
-// Premium SVG icons for each client category
-function ClientIcon({ type, size = 22 }: { type: string; size?: number }) {
-  const strokeColor = 'currentColor'
-  const strokeWidth = 1.4
-
-  switch (type) {
-    case 'solar':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-        </svg>
-      )
-    case 'edu':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-          <path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5" />
-        </svg>
-      )
-    case 'portfolio':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
-          <rect x="2" y="3" width="20" height="14" rx="2" />
-          <path d="M8 21h8M12 17v4" />
-        </svg>
-      )
-    case 'ecom':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <path d="M16 10a4 4 0 01-8 0" />
-        </svg>
-      )
-    default:
-      return null
-  }
-}
-
 export default function ClientLogos() {
+  // Duplicate array for seamless infinite marquee loop
+  const marqueeItems = [...CLIENT_ITEMS, ...CLIENT_ITEMS, ...CLIENT_ITEMS]
+
   return (
     <section
-      className="relative overflow-hidden"
-      style={{
-        background: '#0E0E2C',
-        paddingTop: '20px',
-        paddingBottom: '24px',
-      }}
+      className="relative overflow-hidden py-12 sm:py-16 select-none"
+      style={{ background: '#070A1B' }}
     >
-      {/* Top accent line */}
+      {/* Top Ambient Glow */}
+      <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[600px] h-40 bg-[#1D4ED8]/10 blur-[100px] pointer-events-none" />
+
+      {/* Top Accent Divider */}
       <div
         className="absolute top-0 left-0 right-0 h-px"
         style={{
-          background: 'linear-gradient(90deg, transparent 0%, rgba(123,47,242,0.3) 50%, transparent 100%)',
+          background: 'linear-gradient(90deg, transparent 0%, rgba(29, 78, 216, 0.4) 50%, transparent 100%)',
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 mb-8 sm:mb-10 text-center">
         <AnimatedSection>
-          <div className="flex flex-col items-center">
-            <p
-              className="text-center text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em] mb-4 sm:mb-5"
-              style={{
-                color: 'rgba(255,255,255,0.35)',
-              }}
-            >
-              Trusted by growing businesses
-            </p>
-
-            <div className="flex items-center justify-center gap-6 sm:gap-10 md:gap-14">
-              {CLIENTS.map((client) => (
-                <div
-                  key={client.name}
-                  className="group relative flex flex-col items-center"
-                >
-                  {/* Outlined circle with icon — grayscale to color on hover */}
-                  <div
-                    className="w-[52px] h-[52px] sm:w-[60px] sm:h-[60px] rounded-full flex items-center justify-center transition-all duration-500 grayscale-hover text-white/55 group-hover:text-brand-accent"
-                    style={{
-                      border: '1.5px solid rgba(255,255,255,0.1)',
-                      background: 'rgba(255,255,255,0.02)',
-                    }}
-                  >
-                    <ClientIcon type={client.icon} size={22} />
-                  </div>
-
-                  {/* Tooltip on hover */}
-                  <div
-                    className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0 pointer-events-none"
-                    style={{
-                      fontSize: '9px',
-                      fontWeight: 600,
-                      letterSpacing: '0.08em',
-                      color: 'rgba(255,255,255,0.5)',
-                    }}
-                  >
-                    {client.name}
-                  </div>
-                </div>
-              ))}
-            </div>
+          {/* Header Pill */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 mb-3 backdrop-blur-md shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-[#00C9A7] animate-pulse" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#00C9A7]">
+              Trusted By Growing Businesses
+            </span>
           </div>
+
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+            Powering Digital Growth Across Industries
+          </h3>
         </AnimatedSection>
       </div>
 
-      {/* Bottom accent line */}
+      {/* Peak Infinite Marquee Banner with Edge Fade Mask */}
+      <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+        <div className="flex items-center gap-4 sm:gap-6 w-max animate-marquee-left hover:[animation-play-state:paused] py-2">
+          {marqueeItems.map((client, index) => {
+            const IconComponent = client.icon
+            return (
+              <div
+                key={`${client.name}-${index}`}
+                className="group relative flex items-center gap-4 px-5 sm:px-6 py-3.5 sm:py-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-[#00C9A7]/50 transition-all duration-300 min-w-[240px] sm:min-w-[280px] shadow-lg hover:shadow-[0_10px_30px_-10px_rgba(0,201,167,0.25)] hover:-translate-y-1 cursor-pointer"
+              >
+                {/* Glowing Icon Container */}
+                <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${client.gradient} p-0.5 flex-shrink-0 shadow-md transition-transform duration-300 group-hover:scale-110`}>
+                  <div className="w-full h-full bg-[#080B1E] rounded-[10px] flex items-center justify-center text-white">
+                    <IconComponent size={20} strokeWidth={2} />
+                  </div>
+                </div>
+
+                {/* Text Info */}
+                <div className="flex flex-col text-left">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-bold text-white group-hover:text-[#00C9A7] transition-colors leading-tight">
+                      {client.name}
+                    </span>
+                  </div>
+                  <span className="text-[11px] font-semibold text-white/50 group-hover:text-white/80 transition-colors mt-0.5">
+                    {client.category}
+                  </span>
+                </div>
+
+                {/* Corner Glow Accent on Hover */}
+                <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-bl from-[#00C9A7]/20 to-transparent rounded-tr-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Bottom Accent Divider */}
       <div
         className="absolute bottom-0 left-0 right-0 h-px"
         style={{
-          background: 'linear-gradient(90deg, transparent 0%, rgba(123,47,242,0.2) 50%, transparent 100%)',
+          background: 'linear-gradient(90deg, transparent 0%, rgba(0, 201, 167, 0.3) 50%, transparent 100%)',
         }}
       />
+
+      {/* Inline styles for keyframe marquee animation if missing in CSS */}
+      <style jsx>{`
+        @keyframes marquee-left {
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-33.333%);
+          }
+        }
+        .animate-marquee-left {
+          animation: marquee-left 28s linear infinite;
+        }
+      `}</style>
     </section>
   )
 }
