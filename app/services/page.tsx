@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 import PricingCalculator from '@/components/sections/PricingCalculator'
@@ -128,6 +129,45 @@ export default function ServicesPage() {
               </AnimatedSection>
             ))}
           </div>
+
+          {/* Visual Architecture & Design System Showcase */}
+          <AnimatedSection className="mt-16">
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* 3D Analytics Card */}
+              <div className="relative rounded-3xl overflow-hidden bg-[#080B1E] border border-white/10 p-7 sm:p-8 text-white shadow-xl group">
+                <div className="relative h-60 sm:h-64 w-full rounded-2xl overflow-hidden mb-6 border border-white/15">
+                  <Image
+                    src="/images/analytics-dashboard-3d.png"
+                    alt="3D Web Application Analytics Dashboard Render"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#080B1E]/70 via-transparent to-transparent" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">High-Performance Web Dashboards</h3>
+                <p className="text-white/60 text-sm leading-relaxed">
+                  Real-time data visualization, custom admin panels, and scalable Next.js 14 serverless backend architectures.
+                </p>
+              </div>
+
+              {/* Design System Card */}
+              <div className="relative rounded-3xl overflow-hidden bg-white border border-surface-border p-7 sm:p-8 text-[#0E0E2C] shadow-xl group">
+                <div className="relative h-60 sm:h-64 w-full rounded-2xl overflow-hidden mb-6 border border-surface-border">
+                  <Image
+                    src="/images/creative-design-system.png"
+                    alt="Figma UI/UX Design System & Wireframing Setup"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/70 via-transparent to-transparent" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Tailored UI/UX Design Systems</h3>
+                <p className="text-ink-secondary text-sm leading-relaxed">
+                  Pixel-perfect Figma wireframing, color typography systems, and accessible micro-interactions crafted for conversions.
+                </p>
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 

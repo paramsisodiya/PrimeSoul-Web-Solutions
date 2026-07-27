@@ -184,39 +184,38 @@ export default function TrustSection() {
             {/* Right: Professional photo composition */}
             <AnimatedSection direction="right">
               <div className="relative h-[320px] sm:h-[420px] md:h-[480px]">
-                {/* Main photo — workspace */}
+                {/* Main photo — Interactive Growth Metrics Chart */}
                 <div
                   className="absolute top-0 right-0 w-[80%] sm:w-[75%] h-[260px] sm:h-[340px] md:h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden transition-transform duration-500 hover:scale-[1.02]"
                   style={{
-                    boxShadow: '0 32px 80px -20px rgba(123,47,242,0.18)',
+                    boxShadow: '0 32px 80px -20px rgba(30,58,224,0.22)',
                     border: '1px solid rgba(232,229,245,0.6)',
                   }}
                 >
                   <Image
-                    src="/images/team-working.png"
-                    alt="Professional workspace showing modern web development"
+                    src="/images/client-growth-metrics.png"
+                    alt="PrimeSoul client digital growth charts and revenue analytics"
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                  {/* Subtle purple overlay */}
                   <div
                     className="absolute inset-0"
-                    style={{ background: 'linear-gradient(145deg, rgba(123,47,242,0.05) 0%, transparent 60%)' }}
+                    style={{ background: 'linear-gradient(145deg, rgba(30,58,224,0.08) 0%, transparent 60%)' }}
                   />
                 </div>
 
-                {/* Secondary photo — phone mockup */}
+                {/* Secondary photo — Code review session */}
                 <div
                   className="absolute bottom-0 left-0 w-[50%] sm:w-[55%] h-[200px] sm:h-[260px] md:h-[300px] rounded-2xl sm:rounded-3xl overflow-hidden transition-transform duration-500 hover:scale-[1.02] z-10"
                   style={{
-                    boxShadow: '0 24px 64px -16px rgba(0,0,0,0.15)',
+                    boxShadow: '0 24px 64px -16px rgba(0,0,0,0.18)',
                     border: '4px solid white',
                   }}
                 >
                   <Image
-                    src="/images/phone-mockup.png"
-                    alt="Mobile responsive design showcase"
+                    src="/images/code-review-session.png"
+                    alt="PrimeSoul software developers analyzing TypeScript React code"
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 30vw"

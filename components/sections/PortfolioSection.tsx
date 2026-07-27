@@ -27,7 +27,7 @@ const FALLBACK_PROJECTS: Project[] = [
     id: '1',
     title: 'Madhya Pradesh Darpan',
     slug: 'madhya-pradesh-darpan',
-    image: '/images/project-portfolio.png',
+    image: '/images/responsive-devices-mockup.png',
     category: 'Web Application',
     client: 'Ankita Trivedi',
     year: '2026',
