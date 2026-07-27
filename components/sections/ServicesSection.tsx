@@ -1,128 +1,154 @@
-"use client";
+'use client'
+
 import { useState, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 import { SERVICES } from '@/lib/data'
+import { Monitor, Layers, Code, Sparkles, TrendingUp, ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react'
 
-const SERVICE_CATEGORIES = [
-  {
-    id: 'strategy',
-    label: 'Strategy',
-    watermark: 'STRATEGY',
-    services: [
-      'Market Research & Analysis',
-      'Brand Strategy',
-      'Digital Marketing Strategy',
-      'Content Strategy',
-      'SEO & SEM Strategy',
-      'Customer Journey Mapping',
-      'Go-to-Market Strategy',
-      'Social Media Strategy',
-    ],
-  },
-  {
-    id: 'development',
-    label: 'Development',
-    watermark: 'DEVELOPMENT',
-    services: [
-      'Web Design & Development',
-      'Full-Stack Applications',
-      'E-Commerce Solutions',
-      'API Architecture',
-      'Database Design (MongoDB/PostgreSQL)',
-      'Admin Dashboards',
-      'Performance Optimization',
-      'Progressive Web Apps',
-    ],
-  },
-  {
-    id: 'design',
-    label: 'Design',
-    watermark: 'DESIGN',
-    services: [
-      'UI/UX Design',
-      'Logo & Branding Design',
-      'User Experience Research',
-      'Wireframing & Prototyping',
-      'Design Systems',
-      'Motion Graphics',
-      'Social Media Assets',
-      'Print & Packaging Design',
-    ],
-  },
-]
-
-// 3D card tilt handler
-function use3DTilt() {
-  const [tilt, setTilt] = useState({ x: 0, y: 0 })
-  const ref = useRef<HTMLDivElement>(null)
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return
-    const rect = ref.current.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width - 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5
-    setTilt({ x: y * -10, y: x * 10 })
-  }, [])
-
-  const handleMouseLeave = useCallback(() => {
-    setTilt({ x: 0, y: 0 })
-  }, [])
-
-  return { ref, tilt, handleMouseMove, handleMouseLeave }
+// Icon mapping dictionary
+function ServiceIcon({ name, className = '' }: { name: string; className?: string }) {
+  const iconProps = { size: 24, strokeWidth: 1.8, className }
+  switch (name) {
+    case 'monitor':
+      return <Monitor {...iconProps} />
+    case 'layers':
+      return <Layers {...iconProps} />
+    case 'code':
+      return <Code {...iconProps} />
+    case 'sparkles':
+      return <Sparkles {...iconProps} />
+    case 'trending-up':
+      return <TrendingUp {...iconProps} />
+    case 'shield':
+      return <ShieldCheck {...iconProps} />
+    default:
+      return <Monitor {...iconProps} />
+  }
 }
 
-// Individual 3D service card
-function ServiceCard3D({ service, index }: { service: typeof SERVICES[number]; index: number }) {
-  const { ref, tilt, handleMouseMove, handleMouseLeave } = use3DTilt()
+// Custom 3D Tilt + Cursor Spotlight Card Component
+function InteractiveServiceCard({
+  service,
+  index,
+}: {
+  service: typeof SERVICES[number]
+  index: number
+}) {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [isHovered, setIsHovered] = useState(false)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    setMousePos({ x, y })
+
+    // Calculate 3D tilt
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const tiltX = (y - centerY) / 18
+    const tiltY = (centerX - x) / 18
+    setTilt({ x: tiltX, y: tiltY })
+  }, [])
+
+  const handleMouseEnter = () => setIsHovered(true)
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+    setTilt({ x: 0, y: 0 })
+  }
 
   return (
-    <AnimatedSection delay={index * 60}>
-      <div className="card-3d" ref={ref} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+    <AnimatedSection delay={index * 100}>
+      <div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="group relative rounded-3xl bg-white p-7 sm:p-8 border border-surface-border transition-all duration-300 cursor-pointer overflow-hidden"
+        style={{
+          boxShadow: isHovered
+            ? '0 24px 60px -15px rgba(30, 58, 224, 0.18)'
+            : '0 4px 20px -4px rgba(0, 0, 0, 0.03)',
+          transform: isHovered
+            ? `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(-6px)`
+            : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)',
+        }}
+      >
+        {/* Dynamic Cursor Spotlight Radial Glow */}
         <div
-          className="card-3d-inner card-glow-hover group relative rounded-3xl p-8 bg-white cursor-default transition-all duration-300"
+          className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           style={{
-            border: '1px solid #E8E5F5',
-            boxShadow: '0 2px 24px -4px rgba(123,47,242,0.06)',
-            transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+            background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(30, 58, 224, 0.08), transparent 80%)`,
           }}
-        >
-          {/* Icon — floats in 3D */}
+        />
+
+        {/* Top Active Accent Line */}
+        <div
+          className="absolute top-0 left-0 right-0 h-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-t-3xl"
+          style={{
+            background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
+          }}
+        />
+
+        {/* Header Icon + Number Badge */}
+        <div className="flex items-center justify-between mb-6 relative z-10">
           <div
-            className="card-3d-icon inline-flex items-center justify-center w-12 h-12 rounded-2xl mb-6 transition-all duration-300 group-hover:shadow-lg"
+            className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-md"
             style={{
-              background: 'rgba(123,47,242,0.08)',
-              color: '#7B2FF2',
+              background: isHovered
+                ? 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)'
+                : 'rgba(30, 58, 224, 0.08)',
+              color: isHovered ? '#FFFFFF' : '#1E3AE0',
+              boxShadow: isHovered ? '0 10px 25px -5px rgba(30, 58, 224, 0.35)' : 'none',
             }}
           >
             <ServiceIcon name={service.icon} />
           </div>
 
-          {/* Content — slightly elevated */}
-          <div className="card-3d-content">
-            <h3 className="text-lg font-semibold mb-3">{service.title}</h3>
-            <p className="text-sm text-ink-muted leading-relaxed mb-6">{service.description}</p>
+          <span className="text-xs font-bold uppercase tracking-widest text-ink-muted/50 group-hover:text-[#1E3AE0] transition-colors">
+            0{index + 1}
+          </span>
+        </div>
 
-            {/* Features */}
-            <ul className="flex flex-col gap-2">
-              {service.features.map((feature) => (
-                <li key={feature} className="flex items-center gap-2 text-xs text-ink-secondary">
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <circle cx="6" cy="6" r="6" fill="rgba(123,47,242,0.08)" />
-                    <path d="M3 6l2 2 4-4" stroke="#7B2FF2" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  {feature}
-                </li>
-              ))}
-            </ul>
+        {/* Title & Description */}
+        <div className="relative z-10">
+          <h3 className="text-xl font-extrabold text-[#0E0E2C] group-hover:text-[#1E3AE0] transition-colors mb-3 leading-tight">
+            {service.title}
+          </h3>
+          <p className="text-sm text-ink-secondary leading-relaxed mb-6 font-normal">
+            {service.description}
+          </p>
+
+          {/* Features List */}
+          <ul className="space-y-2.5 mb-8 border-t border-surface-border pt-5">
+            {service.features.map((feature) => (
+              <li
+                key={feature}
+                className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-ink-secondary group-hover:text-[#0E0E2C] transition-colors"
+              >
+                <CheckCircle2
+                  size={16}
+                  className="text-[#1E3AE0] group-hover:text-[#2EC4C4] transition-colors flex-shrink-0"
+                />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+
+          {/* Footer CTA Link */}
+          <div className="flex items-center gap-2 text-xs font-bold text-[#1E3AE0] uppercase tracking-wider group-hover:text-[#2EC4C4] transition-colors">
+            <span>Explore Service</span>
+            <ArrowRight
+              size={15}
+              className="group-hover:translate-x-1.5 transition-transform duration-300"
+            />
           </div>
-
-          {/* Bottom accent line on hover */}
-          <div
-            className="absolute bottom-0 left-8 right-8 h-px rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ background: 'linear-gradient(90deg, transparent, rgba(123,47,242,0.4), transparent)' }}
-          />
         </div>
       </div>
     </AnimatedSection>
@@ -130,137 +156,61 @@ function ServiceCard3D({ service, index }: { service: typeof SERVICES[number]; i
 }
 
 export default function ServicesSection() {
-  const [activeTab, setActiveTab] = useState(0)
-  const active = SERVICE_CATEGORIES[activeTab]
-
   return (
-    <section className="py-20 sm:py-28 relative overflow-hidden mesh-gradient-bg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <AnimatedSection className="mb-16">
-          <div className="max-w-2xl">
-            <SectionLabel>What We Do</SectionLabel>
-            <h2
-              className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-tight tracking-[-0.03em] mb-5 sm:mb-6"
-            >
-              Services Built for{' '}
-              <span className="text-gradient-purple font-display italic">
-                Real Business Growth
-              </span>
-            </h2>
-            <p className="text-ink-secondary text-base leading-relaxed">
-              Every service we offer is designed to solve a real problem — not to add complexity.
-            </p>
-          </div>
+    <section className="py-20 sm:py-28 relative overflow-hidden bg-[#FAFAFE]">
+      {/* Background Ambient Glow Spheres */}
+      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#1E3AE0]/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-[#2EC4C4]/5 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <AnimatedSection className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
+          <SectionLabel>What We Do</SectionLabel>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em] text-[#0E0E2C] mb-4">
+            Services Built for{' '}
+            <span className="text-gradient-purple font-display italic">
+              Real Business Growth
+            </span>
+          </h2>
+          <p className="text-base text-ink-secondary leading-relaxed">
+            Every solution we engineer combines high-end design, cutting-edge technology, and performance optimization to turn visitors into loyal clients.
+          </p>
         </AnimatedSection>
 
-        {/* Porto-style tabbed services */}
-        <AnimatedSection>
-          <div className="relative">
-            {/* Watermark */}
-            <div className="watermark-text text-[clamp(80px,12vw,180px)] top-1/2 right-0 -translate-y-1/2" aria-hidden="true">
-              {active.watermark}
-            </div>
-
-            {/* Tab buttons */}
-            <div className="flex gap-2 mb-8 sm:mb-12 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
-              {SERVICE_CATEGORIES.map((cat, i) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveTab(i)}
-                  className="relative px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 btn-tap"
-                  style={{
-                    background: activeTab === i ? 'linear-gradient(135deg, #7B2FF2, #8B5CF6)' : 'white',
-                    color: activeTab === i ? 'white' : '#4A4A6A',
-                    border: `1px solid ${activeTab === i ? 'transparent' : '#E8E5F5'}`,
-                    boxShadow: activeTab === i ? '0 8px 32px -8px rgba(123,47,242,0.35)' : '0 2px 8px rgba(0,0,0,0.04)',
-                  }}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Service list with stagger */}
-            <div className="relative grid md:grid-cols-2 gap-x-12 gap-y-4 max-w-3xl">
-              {active.services.map((service, i) => (
-                <div
-                  key={`${active.id}-${service}`}
-                  className="flex items-center gap-3 py-3 border-b border-surface-border group cursor-default transition-all hover:border-brand-primary/20 hover:pl-2"
-                  style={{
-                    opacity: 1,
-                    animation: `reveal-up 0.4s cubic-bezier(0.22,1,0.36,1) ${i * 50}ms both`,
-                  }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
-                    <circle cx="8" cy="8" r="8" fill="rgba(123,47,242,0.08)" />
-                    <path d="M5 8l2.5 2.5L11 6" stroke="#7B2FF2" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  <span className="text-sm text-ink-secondary group-hover:text-ink transition-colors font-medium">
-                    {service}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </AnimatedSection>
-
-        {/* 3D Service cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
-          {SERVICES.map((service, i) => (
-            <ServiceCard3D key={service.id} service={service} index={i} />
+        {/* 3D Spotlight Service Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {SERVICES.map((service, index) => (
+            <InteractiveServiceCard
+              key={service.id}
+              service={service}
+              index={index}
+            />
           ))}
         </div>
 
-        {/* CTA */}
-        <AnimatedSection className="mt-14 text-center">
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-primary hover:gap-4 transition-all duration-200"
-          >
-            Explore all services
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
+        {/* Bottom Callout Banner */}
+        <AnimatedSection className="mt-16 text-center">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-6 sm:p-8 rounded-3xl bg-white border border-surface-border shadow-lg max-w-2xl mx-auto">
+            <div className="text-left flex-1">
+              <h4 className="text-base sm:text-lg font-bold text-[#0E0E2C] mb-1">
+                Need a custom digital solution?
+              </h4>
+              <p className="text-xs sm:text-sm text-ink-muted">
+                We design tailored web applications, admin dashboards, and custom integrations.
+              </p>
+            </div>
+            <Link
+              href="/contact"
+              className="flex-shrink-0 px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold text-white shadow-md hover:scale-105 transition-transform"
+              style={{
+                background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
+              }}
+            >
+              Talk to Our Team →
+            </Link>
+          </div>
         </AnimatedSection>
       </div>
     </section>
   )
-}
-
-function ServiceIcon({ name }: { name: string }) {
-  const icons: Record<string, React.ReactNode> = {
-    monitor: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2" /><path d="M8 21h8M12 17v4" />
-      </svg>
-    ),
-    layers: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-      </svg>
-    ),
-    code: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
-      </svg>
-    ),
-    sparkles: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" /><path d="M5 17l.75 2.25L8 20l-2.25.75L5 23l-.75-2.25L2 20l2.25-.75L5 17z" />
-      </svg>
-    ),
-    'trending-up': (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" />
-      </svg>
-    ),
-    shield: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      </svg>
-    ),
-  }
-  return <>{icons[name] || icons.monitor}</>
 }
