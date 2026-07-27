@@ -29,6 +29,20 @@ interface HeroSlide {
 
 const FALLBACK_SLIDES: HeroSlide[] = [
   {
+    img: '/images/web-design-laptop.png',
+    title: 'SaaS & Web Applications',
+    category: 'High-Performance Web App',
+    description: 'Custom Next.js 14 dashboards & platform architecture',
+    tech: 'Next.js 14 · TypeScript · Tailwind CSS',
+  },
+  {
+    img: '/images/mobile-app-showcase.png',
+    title: 'E-Commerce & Retail Stores',
+    category: 'Mobile Web Platform',
+    description: 'High-converting mobile-first web storefronts',
+    tech: 'React · Supabase · Stripe Payments',
+  },
+  {
     img: '/images/project-school.png',
     title: 'SVNS School Khilchipur',
     category: 'Institutional Website',
@@ -41,20 +55,6 @@ const FALLBACK_SLIDES: HeroSlide[] = [
     category: 'Business Website',
     description: 'Solar energy company with lead generation',
     tech: 'Next.js · Firebase · Tailwind',
-  },
-  {
-    img: '/images/project-portfolio.png',
-    title: 'Personal Portfolio',
-    category: 'Portfolio Website',
-    description: 'Developer portfolio with project showcase',
-    tech: 'Next.js · TypeScript · Framer Motion',
-  },
-  {
-    img: '/images/project-ecommerce.avif',
-    title: 'E-Commerce Platform',
-    category: 'E-Commerce',
-    description: 'Full-stack store with payments and admin',
-    tech: 'Next.js · Supabase · Stripe',
   },
 ]
 
