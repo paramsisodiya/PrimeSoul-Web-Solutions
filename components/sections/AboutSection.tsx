@@ -35,21 +35,6 @@ const STATS = [
   { value: '8–10', label: 'Team Members' },
 ]
 
-const LEADERSHIP = [
-  {
-    name: 'Param Sisodiya',
-    role: 'Founder',
-    description: 'Visionary behind PrimeSoul, driving the agency\u2019s direction, client relationships, and overall growth strategy.',
-    isPrimary: true,
-  },
-  {
-    name: 'Shyam Sisodiya',
-    role: 'CEO',
-    description: 'Leading day-to-day operations and ensuring every project is delivered with precision, quality, and on time.',
-    isPrimary: false,
-  },
-]
-
 export default function AboutSection() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
 
@@ -106,45 +91,6 @@ export default function AboutSection() {
                     <p className="text-xs sm:text-sm text-ink-muted font-medium">{stat.label}</p>
                   </div>
                 ))}
-              </div>
-
-              {/* Leadership Section */}
-              <div className="mt-10 sm:mt-12">
-                <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-ink-muted mb-5">LEADERSHIP</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {LEADERSHIP.map((leader) => (
-                    <div
-                      key={leader.name}
-                      className="relative p-5 sm:p-6 rounded-2xl bg-white border transition-all duration-300 hover:shadow-md"
-                      style={{
-                        borderColor: leader.isPrimary ? 'rgba(123,47,242,0.25)' : '#E8E5F5',
-                        borderLeftWidth: leader.isPrimary ? '3px' : '1px',
-                        borderLeftColor: leader.isPrimary ? '#7B2FF2' : '#E8E5F5',
-                      }}
-                    >
-                      <h4
-                        className="text-base sm:text-lg font-bold mb-1"
-                        style={{
-                          fontWeight: leader.isPrimary ? 800 : 700,
-                        }}
-                      >
-                        {leader.name}
-                      </h4>
-                      <span
-                        className="inline-block text-[10px] sm:text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3"
-                        style={{
-                          background: 'rgba(123,47,242,0.08)',
-                          color: '#7B2FF2',
-                        }}
-                      >
-                        {leader.role}
-                      </span>
-                      <p className="text-sm text-ink-secondary leading-relaxed">
-                        {leader.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </AnimatedSection>
