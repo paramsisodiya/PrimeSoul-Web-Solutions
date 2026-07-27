@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 import { SERVICES } from '@/lib/data'
@@ -188,26 +189,68 @@ export default function ServicesSection() {
           ))}
         </div>
 
-        {/* Bottom Callout Banner */}
-        <AnimatedSection className="mt-16 text-center">
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-6 sm:p-8 rounded-3xl bg-white border border-surface-border shadow-lg max-w-2xl mx-auto">
-            <div className="text-left flex-1">
-              <h4 className="text-base sm:text-lg font-bold text-[#0E0E2C] mb-1">
-                Need a custom digital solution?
-              </h4>
-              <p className="text-xs sm:text-sm text-ink-muted">
-                We design tailored web applications, admin dashboards, and custom integrations.
-              </p>
+        {/* Bottom Callout Visual Banner */}
+        <AnimatedSection className="mt-16 sm:mt-20">
+          <div className="relative rounded-3xl overflow-hidden bg-[#080B1E] border border-white/10 shadow-2xl p-6 sm:p-10 md:p-12 text-white">
+            {/* Ambient Backlight Glow */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#1E3AE0]/20 to-[#2EC4C4]/15 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative z-10 grid lg:grid-cols-12 gap-8 items-center">
+              {/* Left Column: Text Info */}
+              <div className="lg:col-span-7 space-y-4 text-left">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold uppercase tracking-widest text-[#2EC4C4]">
+                  <span>✦ Direct Studio Access</span>
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
+                  Need a custom web application or enterprise solution?
+                </h3>
+
+                <p className="text-white/60 text-sm sm:text-base leading-relaxed max-w-xl">
+                  Work directly with our lead developers and UX designers. We build custom Next.js architectures, scalable backend databases, and real-time dashboards.
+                </p>
+
+                <div className="pt-2 flex flex-wrap items-center gap-4">
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-bold text-white shadow-lg transition-all hover:scale-105"
+                    style={{
+                      background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
+                    }}
+                  >
+                    <span>Talk to Our Engineering Team</span>
+                    <ArrowRight size={16} />
+                  </Link>
+
+                  <Link
+                    href="/portfolio"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-semibold text-white/80 hover:text-white bg-white/10 hover:bg-white/15 border border-white/15 transition-all"
+                  >
+                    Explore Case Studies
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right Column: Authentic Team Office Photo Card */}
+              <div className="lg:col-span-5">
+                <div className="relative rounded-2xl overflow-hidden border border-white/15 shadow-xl group">
+                  <div className="relative h-64 sm:h-72 w-full">
+                    <Image
+                      src="/images/agency-office-team.png"
+                      alt="PrimeSoul agency team developers working on web app"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 1024px) 100vw, 35vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080B1E]/70 via-transparent to-transparent" />
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-black/60 backdrop-blur-md border border-white/15">
+                    <p className="text-xs font-bold text-white">Rajgarh Engineering Studio</p>
+                    <p className="text-[10px] text-white/60">Full-stack Next.js & React Specialists</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <Link
-              href="/contact"
-              className="flex-shrink-0 px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold text-white shadow-md hover:scale-105 transition-transform"
-              style={{
-                background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)',
-              }}
-            >
-              Talk to Our Team →
-            </Link>
           </div>
         </AnimatedSection>
       </div>
