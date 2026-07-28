@@ -7,6 +7,7 @@ import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { doc, getDoc, getDocs, collection, addDoc, serverTimestamp, query, orderBy, limit } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import TrustBadgesWidget from '@/components/ui/TrustBadgesWidget'
 
 const ParticleBackground = dynamic(() => import('@/components/ui/ParticleBackground'), { ssr: false })
 
@@ -246,17 +247,16 @@ export default function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left — content */}
           <div>
-            {/* Subtitle badge */}
+            {/* Trust Badge Widget */}
             <div
-              className="pill-badge pill-badge--purple mb-8"
+              className="mb-8"
               style={{
                 opacity: loaded ? 1 : 0,
                 transform: loaded ? 'translateY(0)' : 'translateY(20px)',
                 transition: 'all 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s',
               }}
             >
-              <span className="dot" />
-              Beyond Expectations
+              <TrustBadgesWidget />
             </div>
 
             {/* Headline with text reveal animation */}
