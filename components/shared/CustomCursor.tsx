@@ -1,56 +1,103 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function CustomCursor() {
-  const glowRef = useRef<HTMLDivElement>(null)
-  const pos = useRef({ x: -100, y: -100 })
+  const dotRef = useRef<HTMLDivElement>(null)
+  const ringRef = useRef<HTMLDivElement>(null)
+  
+  const mouse = useRef({ x: -100, y: -100 })
+  const ringPos = useRef({ x: -100, y: -100 })
+  
+  const [hoverState, setHoverState] = useState<'none' | 'pointer' | 'image'>('none')
+  const [isTouch, setIsTouch] = useState(true)
 
   useEffect(() => {
-    // Only on non-touch devices
     if (typeof window === 'undefined') return
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-    if (isTouchDevice) return
+    const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 768
+    setIsTouch(touch)
+    if (touch) return
 
     let rafId: number
 
-    const move = (e: MouseEvent) => {
-      pos.current = { x: e.clientX, y: e.clientY }
-    }
-
-    const animate = () => {
-      if (glowRef.current) {
-        glowRef.current.style.transform = `translate(${pos.current.x}px, ${pos.current.y}px)`
+    const handleMouseMove = (e: MouseEvent) => {
+      mouse.current = { x: e.clientX, y: e.clientY }
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`
       }
-      rafId = requestAnimationFrame(animate)
+
+      // Check hover element
+      const target = e.target as HTMLElement | null
+      if (target) {
+        const isImage = target.tagName === 'IMG' || target.closest('img') || target.closest('[data-cursor-image]')
+        const isClickable = target.closest('a, button, input, [role="button"], .cursor-pointer, [data-cursor="View"]')
+        
+        if (isImage) {
+          setHoverState('image')
+        } else if (isClickable) {
+          setHoverState('pointer')
+        } else {
+          setHoverState('none')
+        }
+      }
     }
 
-    document.addEventListener('mousemove', move, { passive: true })
-    rafId = requestAnimationFrame(animate)
+    const animateRing = () => {
+      // Lerp ring movement
+      ringPos.current.x += (mouse.current.x - ringPos.current.x) * 0.18
+      ringPos.current.y += (mouse.current.y - ringPos.current.y) * 0.18
+
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0)`
+      }
+      rafId = requestAnimationFrame(animateRing)
+    }
+
+    document.addEventListener('mousemove', handleMouseMove, { passive: true })
+    rafId = requestAnimationFrame(animateRing)
 
     return () => {
-      document.removeEventListener('mousemove', move)
+      document.removeEventListener('mousemove', handleMouseMove)
       cancelAnimationFrame(rafId)
     }
   }, [])
 
+  if (isTouch) return null
+
   return (
-    <>
-      {/* Subtle glow that follows the cursor tip — normal cursor stays visible */}
+    <div className="hidden md:block pointer-events-none fixed inset-0 z-[99999] overflow-hidden">
+      {/* 6px Small Dot - Instant */}
       <div
-        ref={glowRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9999]"
+        ref={dotRef}
+        className="absolute top-0 left-0 -ml-1 -mt-1 w-2.5 h-2.5 rounded-full bg-white transition-opacity duration-200 pointer-events-none"
         style={{
-          width: '18px',
-          height: '18px',
-          marginLeft: '-2px',
-          marginTop: '-2px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(123,47,242,0.35) 0%, rgba(123,47,242,0.08) 50%, transparent 70%)',
-          filter: 'blur(1px)',
+          opacity: hoverState !== 'none' ? 0 : 1,
+          mixBlendMode: 'difference',
           willChange: 'transform',
         }}
       />
-    </>
+
+      {/* 32px Trailing Ring - Smooth Lerp */}
+      <div
+        ref={ringRef}
+        className="absolute top-0 left-0 rounded-full pointer-events-none flex items-center justify-center transition-all duration-300 ease-out border"
+        style={{
+          width: hoverState === 'image' ? '64px' : hoverState === 'pointer' ? '52px' : '32px',
+          height: hoverState === 'image' ? '64px' : hoverState === 'pointer' ? '52px' : '32px',
+          marginLeft: hoverState === 'image' ? '-32px' : hoverState === 'pointer' ? '-26px' : '-16px',
+          marginTop: hoverState === 'image' ? '-32px' : hoverState === 'pointer' ? '-26px' : '-16px',
+          borderColor: hoverState !== 'none' ? 'rgba(123, 47, 242, 0.8)' : 'rgba(255, 255, 255, 0.4)',
+          backgroundColor: hoverState === 'pointer' ? 'rgba(123, 47, 242, 0.15)' : hoverState === 'image' ? 'rgba(14, 14, 44, 0.75)' : 'transparent',
+          backdropFilter: hoverState === 'image' ? 'blur(4px)' : 'none',
+          willChange: 'transform',
+        }}
+      >
+        {hoverState === 'image' && (
+          <span className="text-[10px] font-bold uppercase tracking-wider text-white animate-fadeIn">
+            View
+          </span>
+        )}
+      </div>
+    </div>
   )
 }

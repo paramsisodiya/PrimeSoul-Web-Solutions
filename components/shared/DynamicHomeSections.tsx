@@ -1,10 +1,9 @@
 'use client'
 
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 
-// Import all sections
 import HeroSection from '@/components/sections/HeroSection'
 import MarqueeSection from '@/components/sections/MarqueeSection'
 import VideoSection from '@/components/sections/VideoSection'
@@ -12,9 +11,9 @@ import ClientLogos from '@/components/sections/ClientLogos'
 import TrustSection from '@/components/sections/TrustSection'
 import AboutSection from '@/components/sections/AboutSection'
 import ServicesSection from '@/components/sections/ServicesSection'
+import HowWeWorkSection from '@/components/sections/HowWeWorkSection'
 import PortfolioSection from '@/components/sections/PortfolioSection'
 import ProcessSection from '@/components/sections/ProcessSection'
-
 import PricingSection from '@/components/sections/PricingSection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import FAQSection from '@/components/sections/FAQSection'
@@ -35,9 +34,9 @@ const SECTION_COMPONENTS: Record<string, React.ComponentType> = {
   trust: TrustSection,
   about: AboutSection,
   services: ServicesSection,
+  howWeWork: HowWeWorkSection,
   portfolio: PortfolioSection,
   process: ProcessSection,
-
   pricing: PricingSection,
   testimonials: TestimonialsSection,
   faq: FAQSection,
@@ -53,9 +52,9 @@ const DEFAULT_ORDER: SectionConfig[] = [
   { id: 'trust', label: 'Trust Section', enabled: true },
   { id: 'about', label: 'About Section', enabled: true },
   { id: 'services', label: 'Services', enabled: true },
+  { id: 'howWeWork', label: 'How We Work', enabled: true },
   { id: 'portfolio', label: 'Portfolio', enabled: true },
   { id: 'process', label: 'Our Process', enabled: true },
-
   { id: 'pricing', label: 'Pricing', enabled: true },
   { id: 'testimonials', label: 'Testimonials', enabled: true },
   { id: 'faq', label: 'FAQ Section', enabled: true },
@@ -63,9 +62,10 @@ const DEFAULT_ORDER: SectionConfig[] = [
   { id: 'cta', label: 'CTA Section', enabled: true },
 ]
 
+const DIVIDER_AFTER = ['hero', 'services', 'portfolio', 'testimonials']
+
 export default function DynamicHomeSections() {
   const [sections, setSections] = useState<SectionConfig[]>(DEFAULT_ORDER)
-  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     const fetchSections = async () => {
@@ -74,13 +74,19 @@ export default function DynamicHomeSections() {
         if (snap.exists()) {
           const data = snap.data()
           if (data.order && Array.isArray(data.order)) {
-            setSections(data.order)
+            // Ensure howWeWork is included if missing in remote config
+            const remoteSections: SectionConfig[] = data.order
+            if (!remoteSections.some(s => s.id === 'howWeWork')) {
+              const servicesIdx = remoteSections.findIndex(s => s.id === 'services')
+              if (servicesIdx !== -1) {
+                remoteSections.splice(servicesIdx + 1, 0, { id: 'howWeWork', label: 'How We Work', enabled: true })
+              }
+            }
+            setSections(remoteSections)
           }
         }
       } catch (err) {
         console.error('Error fetching section config:', err)
-      } finally {
-        setLoaded(true)
       }
     }
     fetchSections()
@@ -93,7 +99,13 @@ export default function DynamicHomeSections() {
         .map(s => {
           const Component = SECTION_COMPONENTS[s.id]
           if (!Component) return null
-          return <Component key={s.id} />
+          const showDivider = DIVIDER_AFTER.includes(s.id)
+          return (
+            <div key={s.id}>
+              <Component />
+              {showDivider && <div className="section-divider" />}
+            </div>
+          )
         })}
     </>
   )

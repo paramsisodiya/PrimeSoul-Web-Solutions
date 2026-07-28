@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import Logo from '@/components/shared/Logo'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
@@ -55,8 +54,8 @@ export default function Navbar() {
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll)
+    const onScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
@@ -71,7 +70,6 @@ export default function Navbar() {
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
-  // Close desktop dropdown on click outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -84,23 +82,22 @@ export default function Navbar() {
 
   const DARK_HERO_PATHS = ['/contact', '/blog', '/locations']
   const isDarkHeroPage = DARK_HERO_PATHS.some(path => pathname?.startsWith(path))
-
   const isDarkHeader = !scrolled && isDarkHeroPage
 
   return (
     <>
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out',
           scrolled
-            ? 'bg-white border-b border-surface-border shadow-md py-3'
+            ? 'bg-[#0A0A1E]/85 backdrop-blur-[20px] border-b border-white/[0.08] py-3.5 shadow-2xl'
             : 'bg-transparent py-5'
         )}
         style={{ top: 'var(--announcement-height, 0px)' }}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           {/* Logo */}
-          <Logo variant={isDarkHeader ? 'dark' : 'light'} />
+          <Logo variant={scrolled || isDarkHeader ? 'dark' : 'light'} />
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
@@ -110,10 +107,10 @@ export default function Navbar() {
                   <button
                     onClick={() => setServicesOpen(!servicesOpen)}
                     className={cn(
-                      'nav-link-underline text-sm font-medium transition-colors duration-200 flex items-center gap-1',
+                      'nav-link-underline text-sm font-medium transition-colors duration-200 flex items-center gap-1.5 py-1',
                       pathname?.startsWith('/services')
                         ? 'text-brand-primary active'
-                        : isDarkHeader
+                        : scrolled || isDarkHeader
                         ? 'text-white/80 hover:text-white'
                         : 'text-ink-secondary hover:text-ink'
                     )}
@@ -130,12 +127,11 @@ export default function Navbar() {
                   {/* Desktop Dropdown - Mega Menu */}
                   <div
                     className={cn(
-                      'absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[680px] rounded-[1.5rem] bg-white border border-surface-border shadow-card-hover transition-all duration-300 overflow-hidden',
+                      'absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[680px] rounded-[1.5rem] bg-white border border-surface-border shadow-2xl transition-all duration-300 overflow-hidden',
                       servicesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
                     )}
                   >
                     <div className="flex">
-                      {/* Left side: Links Grid */}
                       <div className="w-[65%] p-4 grid grid-cols-2 gap-x-2 gap-y-1 bg-white">
                         {SERVICE_PAGES.map((service) => (
                           <Link
@@ -158,7 +154,6 @@ export default function Navbar() {
                         ))}
                       </div>
 
-                      {/* Right side: Highlight Panel */}
                       <div className="w-[35%] bg-surface-subtle border-l border-surface-border p-6 flex flex-col justify-between">
                         <div>
                           <h4 className="text-[10px] font-bold uppercase tracking-widest text-brand-primary mb-4">Why PrimeSoul?</h4>
@@ -186,10 +181,10 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'nav-link-underline text-sm font-medium transition-colors duration-200',
+                    'nav-link-underline text-sm font-medium transition-colors duration-200 py-1',
                     pathname === link.href
                       ? 'text-brand-primary active'
-                      : isDarkHeader
+                      : scrolled || isDarkHeader
                       ? 'text-white/80 hover:text-white'
                       : 'text-ink-secondary hover:text-ink'
                   )}
@@ -200,7 +195,7 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Desktop CTA */}
+          {/* Desktop CTA — Brandyfy Ghost Style */}
           <div className="hidden lg:flex items-center gap-4">
             <a
               href="https://wa.me/918770404559?text=Hi%20PrimeSoul%2C%20I'm%20interested%20in%20your%20services"
@@ -208,7 +203,7 @@ export default function Navbar() {
               rel="noopener noreferrer"
               className={cn(
                 "flex items-center gap-2 text-sm font-medium transition-colors",
-                isDarkHeader ? "text-white/80 hover:text-white" : "text-ink-secondary hover:text-ink"
+                scrolled || isDarkHeader ? "text-white/80 hover:text-white" : "text-ink-secondary hover:text-ink"
               )}
             >
               <WhatsAppIcon />
@@ -216,20 +211,19 @@ export default function Navbar() {
             </a>
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-px hover:shadow-brand-lg"
-              style={{ background: 'linear-gradient(135deg, #7B2FF2 0%, #8B5CF6 100%)' }}
+              className="btn-navbar-cta inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold shadow-lg"
             >
-              Let&apos;s Talk!
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+              <span>Let&apos;s Talk!</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                 <path d="M4 10L10 4M10 4H5M10 4V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
           </div>
 
-          {/* Mobile hamburger — 3-line */}
+          {/* Mobile Hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden p-2 rounded-lg text-ink"
+            className={cn('lg:hidden p-2 rounded-lg', scrolled || isDarkHeader ? 'text-white' : 'text-ink')}
             aria-label="Toggle menu"
           >
             <div className="w-6 h-5 flex flex-col justify-between">
@@ -241,57 +235,39 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Menu — Services, Portfolio, Contact with Services dropdown */}
+      {/* Mobile Menu — Smooth Slide Down + Staggered Fade-In */}
       <div
         className={cn(
-          'fixed inset-0 z-40 lg:hidden transition-all duration-500',
+          'fixed inset-0 z-40 lg:hidden transition-all duration-500 overflow-y-auto',
           menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         )}
       >
-        {/* Backdrop */}
         <div
-          className="absolute inset-0 transition-all duration-500"
-          style={{
-            background: menuOpen ? 'rgba(255,255,255,0.97)' : 'rgba(255,255,255,0)',
-            backdropFilter: menuOpen ? 'blur(24px)' : 'blur(0px)',
-          }}
+          className="absolute inset-0 transition-all duration-500 bg-[#0A0A1E]/95 backdrop-blur-[24px]"
           onClick={() => setMenuOpen(false)}
         />
 
-        {/* Decorative gradient orb */}
-        <div
-          className="absolute top-1/4 right-0 w-[300px] h-[300px] rounded-full pointer-events-none transition-all duration-700"
-          style={{
-            background: 'radial-gradient(circle, rgba(123,47,242,0.06), transparent 70%)',
-            opacity: menuOpen ? 1 : 0,
-            transform: menuOpen ? 'scale(1)' : 'scale(0.5)',
-          }}
-        />
-
         <div className={cn(
-          'relative flex flex-col justify-center h-full px-8 transition-all duration-500',
-          menuOpen ? 'translate-y-0' : 'translate-y-8'
+          'relative flex flex-col justify-center min-h-full py-20 px-8 transition-all duration-500 text-white',
+          menuOpen ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'
         )}>
-          {/* Logo */}
-          <div className="mb-12">
-            <Logo />
+          <div className="mb-8">
+            <Logo variant="dark" />
           </div>
 
-          {/* Mobile Nav — Services (with sub), Portfolio, Contact */}
-          <nav className="flex flex-col gap-2">
-            {/* Services with expandable sub-menu */}
+          <nav className="flex flex-col gap-3">
             <div>
               <button
                 onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
                 className={cn(
-                  'w-full text-left text-3xl font-semibold transition-colors flex items-center justify-between',
-                  pathname?.startsWith('/services') ? 'text-brand-primary' : 'text-ink-secondary hover:text-ink',
+                  'w-full text-left text-2xl font-bold transition-colors flex items-center justify-between py-2',
+                  pathname?.startsWith('/services') ? 'text-[#00C9A7]' : 'text-white/80 hover:text-white',
                   menuOpen && 'menu-link-animated'
                 )}
-                style={{ animationDelay: menuOpen ? '100ms' : '0ms' }}
+                style={{ animationDelay: menuOpen ? '80ms' : '0ms' }}
               >
                 <span className="inline-flex items-center gap-4">
-                  <span className="text-sm font-mono text-ink-faint">01</span>
+                  <span className="text-xs font-mono text-[#00C9A7]">01</span>
                   Services
                 </span>
                 <svg
@@ -302,7 +278,6 @@ export default function Navbar() {
                 </svg>
               </button>
 
-              {/* Sub-menu */}
               <div
                 className="overflow-hidden transition-all duration-400 ease-in-out"
                 style={{
@@ -310,12 +285,12 @@ export default function Navbar() {
                   opacity: mobileServicesOpen ? 1 : 0,
                 }}
               >
-                <div className="pl-12 pt-3 pb-2 flex flex-col gap-2">
+                <div className="pl-10 pt-2 pb-2 flex flex-col gap-2 border-l border-white/10 ml-4">
                   {SERVICE_PAGES.map((service) => (
                     <Link
                       key={service.id}
                       href={`/services/${service.slug}`}
-                      className="flex items-center gap-3 py-2.5 text-base text-ink-secondary hover:text-brand-primary transition-colors"
+                      className="flex items-center gap-3 py-2 text-sm text-white/70 hover:text-white transition-colors"
                     >
                       <div className="w-2 h-2 rounded-full" style={{ background: service.accent }} />
                       {service.shortTitle}
@@ -323,7 +298,7 @@ export default function Navbar() {
                   ))}
                   <Link
                     href="/services"
-                    className="flex items-center gap-2 py-2.5 text-sm font-semibold text-brand-primary"
+                    className="flex items-center gap-2 py-2 text-xs font-bold text-[#00C9A7] uppercase tracking-wider"
                   >
                     View All Services →
                   </Link>
@@ -331,74 +306,34 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Portfolio */}
-            <Link
-              href="/portfolio"
-              className={cn(
-                'text-3xl font-semibold transition-colors py-2',
-                pathname === '/portfolio' ? 'text-brand-primary' : 'text-ink-secondary hover:text-ink',
-                menuOpen && 'menu-link-animated'
-              )}
-              style={{ animationDelay: menuOpen ? '180ms' : '0ms' }}
-            >
-              <span className="inline-flex items-center gap-4">
-                <span className="text-sm font-mono text-ink-faint">02</span>
-                Portfolio
-              </span>
-            </Link>
-
-            {/* Contact */}
-            <Link
-              href="/contact"
-              className={cn(
-                'text-3xl font-semibold transition-colors py-2',
-                pathname === '/contact' ? 'text-brand-primary' : 'text-ink-secondary hover:text-ink',
-                menuOpen && 'menu-link-animated'
-              )}
-              style={{ animationDelay: menuOpen ? '260ms' : '0ms' }}
-            >
-              <span className="inline-flex items-center gap-4">
-                <span className="text-sm font-mono text-ink-faint">03</span>
-                Contact
-              </span>
-            </Link>
-
-            {/* Careers */}
-            <Link
-              href="/careers"
-              className={cn(
-                'text-3xl font-semibold transition-colors py-2',
-                pathname === '/careers' ? 'text-brand-primary' : 'text-ink-secondary hover:text-ink',
-                menuOpen && 'menu-link-animated'
-              )}
-              style={{ animationDelay: menuOpen ? '300ms' : '0ms' }}
-            >
-              <span className="inline-flex items-center gap-4">
-                <span className="text-sm font-mono text-ink-faint">04</span>
-                Careers
-              </span>
-            </Link>
-
-            {/* Free Audit */}
-            <Link
-              href="/audit"
-              className={cn(
-                'text-3xl font-semibold transition-colors py-2',
-                pathname === '/audit' ? 'text-brand-primary' : 'text-ink-secondary hover:text-ink',
-                menuOpen && 'menu-link-animated'
-              )}
-              style={{ animationDelay: menuOpen ? '340ms' : '0ms' }}
-            >
-              <span className="inline-flex items-center gap-4">
-                <span className="text-sm font-mono text-ink-faint">05</span>
-                Free Audit
-              </span>
-            </Link>
+            {[
+              { href: '/portfolio', label: 'Portfolio', num: '02' },
+              { href: '/why-primesoul', label: 'Why Us', num: '03' },
+              { href: '/about', label: 'About Us', num: '04' },
+              { href: '/contact', label: 'Contact', num: '05' },
+              { href: '/careers', label: 'Careers', num: '06' },
+              { href: '/audit', label: 'Free Audit', num: '07' },
+            ].map((link, i) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  'text-2xl font-bold transition-colors py-2',
+                  pathname === link.href ? 'text-[#00C9A7]' : 'text-white/80 hover:text-white',
+                  menuOpen && 'menu-link-animated'
+                )}
+                style={{ animationDelay: menuOpen ? `${120 + i * 50}ms` : '0ms' }}
+              >
+                <span className="inline-flex items-center gap-4">
+                  <span className="text-xs font-mono text-[#00C9A7]">{link.num}</span>
+                  {link.label}
+                </span>
+              </Link>
+            ))}
           </nav>
 
-          {/* Bottom actions */}
           <div
-            className="mt-12 flex flex-col gap-4"
+            className="mt-10 flex flex-col gap-4 pt-6 border-t border-white/10"
             style={{
               opacity: menuOpen ? 1 : 0,
               transform: menuOpen ? 'translateY(0)' : 'translateY(16px)',
@@ -409,15 +344,14 @@ export default function Navbar() {
               href="https://wa.me/918770404559"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-base font-medium text-ink-secondary"
+              className="flex items-center gap-2 text-sm font-medium text-white/80"
             >
               <WhatsAppIcon />
               Chat on WhatsApp
             </a>
             <Link
               href="/contact"
-              className="btn-tap w-full text-center py-4 rounded-full text-base font-semibold text-white shadow-brand"
-              style={{ background: 'linear-gradient(135deg, #7B2FF2 0%, #A855F7 100%)' }}
+              className="btn-shimmer w-full text-center py-3.5 rounded-full text-sm font-bold text-white shadow-xl"
             >
               Let&apos;s Talk!
             </Link>

@@ -3,20 +3,45 @@
 import Image from 'next/image'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
-import { PROCESS_STEPS } from '@/lib/data'
+
+const PROCESS_STEPS_ALTERNATING = [
+  {
+    step: '01',
+    title: 'Discovery & Strategy',
+    description: 'We dive deep into your business goals, target audience, and competitive market to engineer a custom digital roadmap.',
+    image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=500&q=80',
+    imageAlt: 'Discovery and strategy meeting',
+  },
+  {
+    step: '02',
+    title: 'UI/UX Experience Design',
+    description: 'Creating high-fidelity Figma prototypes, modern color systems, and intuitive user journeys crafted for high conversions.',
+    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&q=80',
+    imageAlt: 'UI/UX experience design',
+  },
+  {
+    step: '03',
+    title: 'Next.js Engineering',
+    description: 'Building fast, accessible, and responsive applications using Next.js 14, React, TypeScript, and serverless backends.',
+    image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=500&q=80',
+    imageAlt: 'Web engineering and code development',
+  },
+  {
+    step: '04',
+    title: 'Launch & Continuous Growth',
+    description: 'Rigorous 100/100 Core Web Vitals optimization, live domain deployment, SEO indexing, and ongoing technical support.',
+    image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=500&q=80',
+    imageAlt: 'Product launch and growth monitoring',
+  },
+]
 
 export default function ProcessSection() {
   return (
-    <section className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#FAFAFE' }}>
-      {/* Background Ambient Glow */}
-      <div className="absolute top-1/3 left-0 w-96 h-96 bg-[#1D4ED8]/5 rounded-full blur-3xl pointer-events-none" />
-
+    <section className="py-20 sm:py-28 relative overflow-hidden bg-[#FAFAFE]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <AnimatedSection className="mb-12 sm:mb-16 text-center max-w-2xl mx-auto">
+        <AnimatedSection className="mb-16 sm:mb-20 text-center max-w-2xl mx-auto">
           <SectionLabel>How We Work</SectionLabel>
-          <h2
-            className="text-[1.8rem] sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-3 sm:mb-4 text-[#0E0E2C]"
-          >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-[-0.03em] mb-4 text-[#0E0E2C]">
             A Process Designed for{' '}
             <span className="text-gradient-purple font-display italic">Clarity & Speed</span>
           </h2>
@@ -25,65 +50,49 @@ export default function ProcessSection() {
           </p>
         </AnimatedSection>
 
-        {/* Split Layout: Authentic Photo + Process Steps Grid */}
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          {/* Left Column: Authentic Team Strategy Photo Card (5 cols) */}
-          <AnimatedSection direction="left" className="lg:col-span-5">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-surface-border group">
-              <div className="relative h-[340px] sm:h-[420px] w-full">
-                <Image
-                  src="/images/agency-collaboration.png"
-                  alt="PrimeSoul web development team collaborating on client strategy"
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E2C]/80 via-[#0E0E2C]/20 to-transparent" />
-              </div>
+        {/* Alternating 50/50 Layout for 4 Steps (PART 8e) */}
+        <div className="space-y-16 sm:space-y-24">
+          {PROCESS_STEPS_ALTERNATING.map((step, index) => {
+            const isEven = index % 2 === 0
+            return (
+              <AnimatedSection key={step.step} delay={index * 80}>
+                <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                  {/* Text Column */}
+                  <div className={`lg:col-span-6 space-y-4 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+                    <div className="inline-flex items-center gap-3">
+                      <span className="w-12 h-12 rounded-2xl bg-[#7B2FF2]/10 text-[#7B2FF2] font-black text-lg flex items-center justify-center border border-[#7B2FF2]/20">
+                        {step.step}
+                      </span>
+                      <span className="text-xs font-mono font-bold text-[#00C9A7] uppercase tracking-widest">
+                        Phase 0{index + 1}
+                      </span>
+                    </div>
 
-              {/* Floating Badge */}
-              <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-white/90 backdrop-blur-md border border-white/20 shadow-lg">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full bg-[#00C9A7] animate-pulse" />
-                  <div>
-                    <p className="text-xs font-bold text-[#0E0E2C]">Agile 2-Week Sprints</p>
-                    <p className="text-[11px] text-ink-muted">Continuous delivery & live staging demos</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </AnimatedSection>
-
-          {/* Right Column: Process Steps Stack (7 cols) */}
-          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-5 sm:gap-6">
-            {PROCESS_STEPS.map((step, i) => (
-              <AnimatedSection key={step.step} delay={i * 100}>
-                <div className="relative p-6 rounded-2xl bg-white border border-surface-border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-brand-primary/20 group">
-                  <div className="flex items-center justify-between mb-4">
-                    <span
-                      className="w-12 h-12 rounded-xl flex items-center justify-center text-lg font-black"
-                      style={{
-                        background: 'linear-gradient(135deg, rgba(30,58,224,0.08) 0%, rgba(46,196,196,0.08) 100%)',
-                        color: '#1E3AE0',
-                      }}
-                    >
-                      {step.step}
-                    </span>
-                    <span className="text-xs font-bold uppercase tracking-widest text-ink-faint group-hover:text-[#00C9A7] transition-colors">
-                      Phase 0{i + 1}
-                    </span>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0E0E2C] leading-tight">
+                      {step.title}
+                    </h3>
+                    <p className="text-sm sm:text-base text-ink-secondary leading-relaxed">
+                      {step.description}
+                    </p>
                   </div>
 
-                  <h3 className="text-base sm:text-lg font-bold text-[#0E0E2C] mb-2 group-hover:text-[#1E3AE0] transition-colors">
-                    {step.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-ink-muted leading-relaxed">
-                    {step.description}
-                  </p>
+                  {/* Image Column */}
+                  <div className={`lg:col-span-6 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
+                    <div className="relative rounded-2xl overflow-hidden h-[260px] sm:h-[280px] w-full border border-surface-border shadow-xl group">
+                      <Image
+                        src={step.image}
+                        alt={step.imageAlt}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E2C]/50 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                    </div>
+                  </div>
                 </div>
               </AnimatedSection>
-            ))}
-          </div>
+            )
+          })}
         </div>
       </div>
     </section>
