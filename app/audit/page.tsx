@@ -98,9 +98,10 @@ export default function AuditPage() {
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="btn-shimmer w-full py-4 rounded-xl text-white font-bold text-sm shadow-2xl transition-all"
+                className="w-full py-4 rounded-xl text-white font-bold text-sm shadow-lg hover:scale-[1.02] transition-transform duration-200"
+                style={{ background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)' }}
               >
-                <span>{status === 'submitting' ? 'Analyzing Website...' : 'Get Free Website Audit Report →'}</span>
+                {status === 'submitting' ? 'Analyzing Website...' : 'Get Free Website Audit Report →'}
               </button>
 
               {status === 'success' && (

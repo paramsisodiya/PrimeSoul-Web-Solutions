@@ -126,9 +126,13 @@ export default function CareersPage() {
                 <button
                   type="submit"
                   disabled={status === 'submitting'}
-                  className="btn-shimmer w-full py-4 rounded-xl text-sm font-bold text-white transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-2xl"
+                  className="w-full py-4 rounded-xl text-sm font-semibold text-white transition-all hover:-translate-y-px disabled:opacity-70 disabled:cursor-not-allowed"
+                  style={{
+                    background: 'linear-gradient(135deg, #7B2FF2 0%, #A855F7 100%)',
+                    boxShadow: '0 12px 32px -12px rgba(123,47,242,0.5)'
+                  }}
                 >
-                  <span>{status === 'submitting' ? 'Submitting...' : 'Submit Application'}</span>
+                  {status === 'submitting' ? 'Submitting...' : 'Submit Application'}
                 </button>
               </form>
             )}

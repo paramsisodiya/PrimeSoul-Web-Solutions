@@ -303,11 +303,11 @@ export default function ContactPage() {
                         <p className="text-red-600 text-sm">Something went wrong. Please try again or contact us via WhatsApp.</p>
                       </div>
                     )}
-                    <button type="submit" disabled={status === 'sending'} className="btn-shimmer w-full flex items-center justify-center gap-2 text-white font-bold py-4 rounded-xl transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-2xl text-sm">
+                    <button type="submit" disabled={status === 'sending'} className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#7B2FF2] to-[#A855F7] text-white font-semibold py-4 rounded-xl hover:opacity-90 transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-[#7B2FF2]/30 text-sm">
                       {status === 'sending' ? (
                         <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Sending...</>
                       ) : (
-                        <><Send size={16} /><span>Send Message</span><ArrowRight size={16} /></>
+                        <><Send size={16} />Send Message<ArrowRight size={16} /></>
                       )}
                     </button>
                     <p className="text-center text-ink-muted text-xs">By submitting, you agree to our privacy policy. We never spam.</p>

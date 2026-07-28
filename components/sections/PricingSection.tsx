@@ -275,11 +275,30 @@ export default function PricingSection() {
                   {/* CTA Button */}
                   <Link
                     href="/contact"
-                    className={`w-full text-center py-3.5 rounded-xl text-sm font-bold transition-all duration-300 block relative overflow-hidden ${
-                      plan.highlighted ? 'btn-shimmer shadow-2xl' : 'btn-ghost-secondary'
-                    }`}
+                    className="w-full text-center py-3 rounded-xl text-sm font-semibold transition-all duration-300 block relative overflow-hidden group"
+                    style={
+                      plan.highlighted
+                        ? {
+                          background: 'linear-gradient(135deg, #7B2FF2 0%, #9D5CF5 100%)',
+                          color: '#FFFFFF',
+                          boxShadow: '0 8px 24px -8px rgba(123,47,242,0.4)',
+                        }
+                        : {
+                          background: 'rgba(255,255,255,0.04)',
+                          color: 'rgba(255,255,255,0.7)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                        }
+                    }
                   >
-                    <span>{plan.ctaText || plan.cta || 'Get Started'}</span>
+                    <span className="relative z-10">{plan.ctaText || plan.cta || 'Get Started'}</span>
+                    {plan.highlighted && (
+                      <div
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        style={{
+                          background: 'linear-gradient(135deg, #9D5CF5 0%, #E879F9 100%)',
+                        }}
+                      />
+                    )}
                   </Link>
                 </div>
               </div>

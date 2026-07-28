@@ -353,7 +353,11 @@ export default function HeroSection() {
                 <Link
                   href="/portfolio"
                   onClick={logConversion}
-                  className="btn-shimmer btn-tap group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-bold text-white text-sm transition-all duration-300 shadow-2xl"
+                  className="btn-tap group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-semibold text-white text-sm transition-all duration-300 hover:-translate-y-px hover:shadow-brand-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, #7B2FF2 0%, #8B5CF6 100%)',
+                    boxShadow: '0 8px 32px -8px rgba(123,47,242,0.45)',
+                  }}
                 >
                   View Our Work
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-1 transition-transform">
@@ -364,7 +368,7 @@ export default function HeroSection() {
               <MagneticButton strength={0.2} radius={120}>
                 <Link
                   href="/contact"
-                  className="btn-ghost-secondary btn-tap inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-sm transition-all duration-300"
+                  className="btn-tap inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-ink text-sm border border-surface-border bg-white hover:border-brand-primary/20 hover:bg-brand-light transition-all duration-300"
                 >
                   Start a Project
                 </Link>
