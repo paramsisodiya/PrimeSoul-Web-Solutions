@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 
@@ -9,7 +10,7 @@ const WHAT_WE_DO = [
     title: 'Digital Strategy',
     description: 'We align your business goals with user needs to craft comprehensive roadmaps that drive measurable growth and long-term success.',
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 16 14"></polyline></svg>
     )
   },
   {
@@ -153,6 +154,50 @@ export default function AboutSection() {
           </AnimatedSection>
 
         </div>
+
+        {/* CHANGE 1: Split 50/50 Row below existing content */}
+        <AnimatedSection className="mt-20 pt-16 border-t border-surface-border">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            {/* Left side */}
+            <div className="w-full lg:w-1/2 space-y-6">
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#7B2FF2]">
+                OUR APPROACH
+              </p>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0E0E2C] leading-tight">
+                Built Around Your Business Goals
+              </h3>
+              <ul className="space-y-4 pt-2">
+                {[
+                  'We start by understanding your business deeply',
+                  'Fast delivery — most projects live in 1-2 weeks',
+                  'Ongoing support after every project',
+                ].map((text, i) => (
+                  <li key={i} className="flex items-center gap-3 text-sm sm:text-base text-ink-secondary font-medium">
+                    <div className="w-6 h-6 rounded-full bg-[#7B2FF2]/10 flex items-center justify-center flex-shrink-0 text-[#7B2FF2]">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+                    <span>{text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right side */}
+            <div className="w-full lg:w-1/2">
+              <div className="relative rounded-2xl overflow-hidden shadow-xl group h-[300px] sm:h-[380px] w-full">
+                <Image
+                  src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80"
+                  alt="Built Around Your Business Goals - PrimeSoul Web Solutions"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  unoptimized
+                />
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
       </div>
     </section>
   )

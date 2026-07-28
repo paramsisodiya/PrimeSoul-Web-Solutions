@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 
@@ -12,6 +12,7 @@ import ClientLogos from '@/components/sections/ClientLogos'
 import TrustSection from '@/components/sections/TrustSection'
 import AboutSection from '@/components/sections/AboutSection'
 import ServicesSection from '@/components/sections/ServicesSection'
+import HowWeWorkSection from '@/components/sections/HowWeWorkSection'
 import PortfolioSection from '@/components/sections/PortfolioSection'
 import ProcessSection from '@/components/sections/ProcessSection'
 
@@ -35,6 +36,7 @@ const SECTION_COMPONENTS: Record<string, React.ComponentType> = {
   trust: TrustSection,
   about: AboutSection,
   services: ServicesSection,
+  howWeWork: HowWeWorkSection,
   portfolio: PortfolioSection,
   process: ProcessSection,
 
@@ -53,6 +55,7 @@ const DEFAULT_ORDER: SectionConfig[] = [
   { id: 'trust', label: 'Trust Section', enabled: true },
   { id: 'about', label: 'About Section', enabled: true },
   { id: 'services', label: 'Services', enabled: true },
+  { id: 'howWeWork', label: 'How We Work', enabled: true },
   { id: 'portfolio', label: 'Portfolio', enabled: true },
   { id: 'process', label: 'Our Process', enabled: true },
 
