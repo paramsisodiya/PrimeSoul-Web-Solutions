@@ -15,6 +15,7 @@ import ServicesSection from '@/components/sections/ServicesSection'
 import HowWeWorkSection from '@/components/sections/HowWeWorkSection'
 import PortfolioSection from '@/components/sections/PortfolioSection'
 import ProcessSection from '@/components/sections/ProcessSection'
+import ComparisonSection from '@/components/sections/ComparisonSection'
 
 import PricingSection from '@/components/sections/PricingSection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
@@ -39,6 +40,7 @@ const SECTION_COMPONENTS: Record<string, React.ComponentType> = {
   howWeWork: HowWeWorkSection,
   portfolio: PortfolioSection,
   process: ProcessSection,
+  comparison: ComparisonSection,
 
   pricing: PricingSection,
   testimonials: TestimonialsSection,
@@ -58,6 +60,7 @@ const DEFAULT_ORDER: SectionConfig[] = [
   { id: 'howWeWork', label: 'How We Work', enabled: true },
   { id: 'portfolio', label: 'Portfolio', enabled: true },
   { id: 'process', label: 'Our Process', enabled: true },
+  { id: 'comparison', label: 'PrimeSoul Advantage', enabled: true },
 
   { id: 'pricing', label: 'Pricing', enabled: true },
   { id: 'testimonials', label: 'Testimonials', enabled: true },
