@@ -47,9 +47,9 @@ const SECTION_COMPONENTS: Record<string, React.ComponentType> = {
 
 const DEFAULT_ORDER: SectionConfig[] = [
   { id: 'hero', label: 'Hero Section', enabled: true },
+  { id: 'clientLogos', label: 'Client Logos', enabled: true },
   { id: 'marquee', label: 'Marquee Strip', enabled: true },
   { id: 'video', label: 'Video Section', enabled: true },
-  { id: 'clientLogos', label: 'Client Logos', enabled: true },
   { id: 'trust', label: 'Trust Section', enabled: true },
   { id: 'about', label: 'About Section', enabled: true },
   { id: 'services', label: 'Services', enabled: true },

@@ -1034,3 +1034,25 @@ input[type="range"]::-moz-range-thumb {
     text-wrap: balance;
   }
 }
+
+/* ============================================
+   INFINITE CLIENT MARQUEE ANIMATIONS
+   ============================================ */
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+@keyframes marquee-right {
+  0% { transform: translateX(-33.333%); }
+  100% { transform: translateX(0); }
+}
+.marquee-left {
+  animation: marquee-left 30s linear infinite;
+}
+.marquee-right {
+  animation: marquee-right 30s linear infinite;
+}
+.marquee-container:hover .marquee-left,
+.marquee-container:hover .marquee-right {
+  animation-play-state: paused;
+}

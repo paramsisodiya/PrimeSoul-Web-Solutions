@@ -1,148 +1,69 @@
 'use client'
 
-import AnimatedSection from '@/components/ui/AnimatedSection'
-import { Sun, GraduationCap, Monitor, ShoppingBag, Activity, Zap } from 'lucide-react'
-
-const CLIENT_ITEMS = [
-  {
-    name: 'A&S Solar Solutions',
-    category: 'Clean Energy',
-    icon: Sun,
-    gradient: 'from-[#F59E0B] to-[#EF4444]',
-    badge: 'Solar Energy'
-  },
-  {
-    name: 'SVNS Educational School',
-    category: 'EdTech & Education',
-    icon: GraduationCap,
-    gradient: 'from-[#3B82F6] to-[#1D4ED8]',
-    badge: 'Education'
-  },
-  {
-    name: 'Param Web Solutions',
-    category: 'Digital Portfolio',
-    icon: Monitor,
-    gradient: 'from-[#10B981] to-[#059669]',
-    badge: 'Web App'
-  },
-  {
-    name: 'Apex E-Commerce Store',
-    category: 'Retail & E-Com',
-    icon: ShoppingBag,
-    gradient: 'from-[#EC4899] to-[#8B5CF6]',
-    badge: 'E-Commerce'
-  },
-  {
-    name: 'HealthPulse Clinic',
-    category: 'Healthcare Tech',
-    icon: Activity,
-    gradient: 'from-[#06B6D4] to-[#3B82F6]',
-    badge: 'Healthcare'
-  },
-  {
-    name: 'FinTech Growth SaaS',
-    category: 'SaaS & Automation',
-    icon: Zap,
-    gradient: 'from-[#8B5CF6] to-[#D946EF]',
-    badge: 'Automation'
-  },
+const CLIENTS = [
+  { name: 'A&S Solar Solutions', category: 'Clean Energy' },
+  { name: 'SVNS School Khilchipur', category: 'Education' },
+  { name: 'MP Darpan', category: 'Digital Media' },
+  { name: 'Sankalp Shikhar Academy', category: 'Education' },
+  { name: 'Maa Saraswati Academy', category: 'Education' },
+  { name: 'PrimeSoul Portfolio', category: 'Web App' },
 ]
 
 export default function ClientLogos() {
-  // Duplicate array for seamless infinite marquee loop
-  const marqueeItems = [...CLIENT_ITEMS, ...CLIENT_ITEMS, ...CLIENT_ITEMS]
+  // Duplicate 3x for smooth, seamless loop
+  const row1 = [...CLIENTS, ...CLIENTS, ...CLIENTS]
+  const row2 = [...CLIENTS.slice(3), ...CLIENTS.slice(0, 3), ...CLIENTS, ...CLIENTS]
 
   return (
     <section
-      className="relative overflow-hidden py-12 sm:py-16 select-none"
+      className="relative overflow-hidden py-10 sm:py-12 select-none"
       style={{ background: '#070A1B' }}
     >
-      {/* Top Ambient Glow */}
-      <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[600px] h-40 bg-[#1D4ED8]/10 blur-[100px] pointer-events-none" />
-
-      {/* Top Accent Divider */}
-      <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{
-          background: 'linear-gradient(90deg, transparent 0%, rgba(29, 78, 216, 0.4) 50%, transparent 100%)',
-        }}
-      />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 mb-8 sm:mb-10 text-center">
-        <AnimatedSection>
-          {/* Header Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 mb-3 backdrop-blur-md shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-[#00C9A7] animate-pulse" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#00C9A7]">
-              Trusted By Growing Businesses
-            </span>
-          </div>
-
-          <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight">
-            Powering Digital Growth Across Industries
-          </h3>
-        </AnimatedSection>
+      {/* Centered Small Label */}
+      <div className="text-center mb-6 px-4">
+        <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-[#7A7A9E]">
+          TRUSTED BY BUSINESSES ACROSS INDIA
+        </p>
       </div>
 
-      {/* Peak Infinite Marquee Banner with Edge Fade Mask */}
-      <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-        <div className="flex items-center gap-4 sm:gap-6 w-max animate-marquee-left hover:[animation-play-state:paused] py-2">
-          {marqueeItems.map((client, index) => {
-            const IconComponent = client.icon
-            return (
-              <div
-                key={`${client.name}-${index}`}
-                className="group relative flex items-center gap-4 px-5 sm:px-6 py-3.5 sm:py-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-[#00C9A7]/50 transition-all duration-300 min-w-[240px] sm:min-w-[280px] shadow-lg hover:shadow-[0_10px_30px_-10px_rgba(0,201,167,0.25)] hover:-translate-y-1 cursor-pointer"
-              >
-                {/* Glowing Icon Container */}
-                <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${client.gradient} p-0.5 flex-shrink-0 shadow-md transition-transform duration-300 group-hover:scale-110`}>
-                  <div className="w-full h-full bg-[#080B1E] rounded-[10px] flex items-center justify-center text-white">
-                    <IconComponent size={20} strokeWidth={2} />
-                  </div>
-                </div>
-
-                {/* Text Info */}
-                <div className="flex flex-col text-left">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-white group-hover:text-[#00C9A7] transition-colors leading-tight">
-                      {client.name}
-                    </span>
-                  </div>
-                  <span className="text-[11px] font-semibold text-white/50 group-hover:text-white/80 transition-colors mt-0.5">
-                    {client.category}
-                  </span>
-                </div>
-
-                {/* Corner Glow Accent on Hover */}
-                <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-bl from-[#00C9A7]/20 to-transparent rounded-tr-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+      {/* Marquee Container (Pauses animation on hover) */}
+      <div className="marquee-container relative w-full overflow-hidden space-y-4 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+        
+        {/* Top Row: Scrolls Left */}
+        <div className="flex items-center gap-8 sm:gap-12 w-max marquee-left py-1">
+          {row1.map((client, index) => (
+            <div key={`row1-${client.name}-${index}`} className="flex items-center gap-8 sm:gap-12 flex-shrink-0">
+              <div className="flex flex-col text-left">
+                <span className="text-sm sm:text-base font-bold text-white leading-tight">
+                  {client.name}
+                </span>
+                <span className="text-xs text-[#7A7A9E] mt-0.5 font-medium">
+                  {client.category}
+                </span>
               </div>
-            )
-          })}
+              <span className="text-[#7A7A9E]/40 text-sm font-normal">·</span>
+            </div>
+          ))}
         </div>
+
+        {/* Bottom Row: Scrolls Right */}
+        <div className="flex items-center gap-8 sm:gap-12 w-max marquee-right py-1">
+          {row2.map((client, index) => (
+            <div key={`row2-${client.name}-${index}`} className="flex items-center gap-8 sm:gap-12 flex-shrink-0">
+              <div className="flex flex-col text-left">
+                <span className="text-sm sm:text-base font-bold text-white leading-tight">
+                  {client.name}
+                </span>
+                <span className="text-xs text-[#7A7A9E] mt-0.5 font-medium">
+                  {client.category}
+                </span>
+              </div>
+              <span className="text-[#7A7A9E]/40 text-sm font-normal">·</span>
+            </div>
+          ))}
+        </div>
+
       </div>
-
-      {/* Bottom Accent Divider */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-px"
-        style={{
-          background: 'linear-gradient(90deg, transparent 0%, rgba(0, 201, 167, 0.3) 50%, transparent 100%)',
-        }}
-      />
-
-      {/* Inline styles for keyframe marquee animation if missing in CSS */}
-      <style jsx>{`
-        @keyframes marquee-left {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-33.333%);
-          }
-        }
-        .animate-marquee-left {
-          animation: marquee-left 28s linear infinite;
-        }
-      `}</style>
     </section>
   )
 }
