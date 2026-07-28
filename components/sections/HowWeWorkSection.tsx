@@ -64,12 +64,12 @@ export default function HowWeWorkSection() {
                 {/* Dark Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:from-black/95 transition-all duration-400" />
 
-                {/* Bottom Text Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 z-10 space-y-2">
+                {/* Bottom Glassmorphic Text Panel */}
+                <div className="absolute bottom-4 left-4 right-4 p-5 sm:p-6 z-10 space-y-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg transition-all duration-300 group-hover:bg-white/15 group-hover:border-[#2EC4C4]/40">
                   <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
                     {card.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-medium">
+                  <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-medium">
                     {card.description}
                   </p>
                 </div>

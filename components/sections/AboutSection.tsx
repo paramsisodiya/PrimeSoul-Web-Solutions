@@ -64,7 +64,7 @@ export default function AboutSection() {
               </div>
 
               {/* Our Mission */}
-              <div className="mt-10 sm:mt-12 p-6 rounded-2xl bg-surface-base border border-surface-border">
+              <div className="mt-10 sm:mt-12 p-6 rounded-2xl bg-white/70 backdrop-blur-xl border border-white/60 shadow-lg">
                 <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-brand-primary mb-3">OUR MISSION</p>
                 <p className="text-sm sm:text-base text-ink-secondary leading-relaxed">
                   To empower every business — big or small — with a premium digital presence that drives real growth, builds trust, and creates lasting impact.
@@ -76,7 +76,7 @@ export default function AboutSection() {
                 {STATS.map((stat) => (
                   <div
                     key={stat.label}
-                    className="text-center p-4 rounded-2xl bg-surface-subtle/50 border border-surface-border transition-all duration-300 hover:border-brand-primary/20 hover:shadow-sm"
+                    className="text-center p-4 rounded-2xl bg-white/70 backdrop-blur-xl border border-white/60 shadow-md transition-all duration-300 hover:border-brand-primary/30 hover:shadow-lg hover:-translate-y-1"
                   >
                     <p
                       className="text-2xl sm:text-3xl font-extrabold mb-1"

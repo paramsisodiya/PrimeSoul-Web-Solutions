@@ -71,11 +71,11 @@ function InteractiveServiceCard({
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="group relative rounded-3xl bg-white p-7 sm:p-8 border border-surface-border transition-all duration-300 cursor-pointer overflow-hidden"
+        className="group relative rounded-3xl bg-white/80 backdrop-blur-xl p-7 sm:p-8 border border-white/60 shadow-xl transition-all duration-300 cursor-pointer overflow-hidden hover:bg-white/95 hover:border-[#7B2FF2]/30"
         style={{
           boxShadow: isHovered
-            ? '0 24px 60px -15px rgba(30, 58, 224, 0.18)'
-            : '0 4px 20px -4px rgba(0, 0, 0, 0.03)',
+            ? '0 24px 60px -15px rgba(123, 47, 242, 0.22)'
+            : '0 8px 30px -5px rgba(0, 0, 0, 0.04)',
           transform: isHovered
             ? `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(-6px)`
             : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)',

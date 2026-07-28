@@ -43,7 +43,7 @@ export default function ProcessSection() {
                 <div
                   className={`flex flex-col ${
                     isImageLeft ? 'lg:flex-row-reverse' : 'lg:flex-row'
-                  } items-center gap-10 bg-white p-6 sm:p-8 rounded-3xl border border-surface-border shadow-sm hover:shadow-md transition-shadow duration-300`}
+                  } items-center gap-10 bg-white/80 backdrop-blur-xl p-6 sm:p-8 rounded-3xl border border-white/60 shadow-xl hover:shadow-2xl hover:border-[#7B2FF2]/30 transition-all duration-300`}
                 >
                   {/* Text Content */}
                   <div className="w-full lg:w-1/2 space-y-4">
