@@ -33,11 +33,169 @@ export interface Project {
   image: string
   imageAlt: string
   featured: boolean
+  isProduct?: boolean
   metrics: { label: string; value: string }[]
   color: string
 }
 
+export const PRIMEOMS_PRODUCT = {
+  name: 'PrimeOMS',
+  tagline: 'Restaurant Operations, Simplified',
+  eyebrow: 'PRIMESOUL FLAGSHIP PRODUCT',
+  badge: 'Built & Maintained by PrimeSoul',
+  heroHeadline: 'Smarter Restaurant Operations. Simpler Ordering.',
+  heroDescription: 'PrimeOMS brings restaurant operations into one powerful platform — from digital menus and QR table ordering to billing, customer loyalty, and everyday kitchen workflows.',
+  liveUrl: '/primeoms',
+  pricing: {
+    basic: {
+      name: 'Basic',
+      price: 799,
+      period: 'month',
+      description: 'Ideal for small cafes, quick-service diners, and standalone restaurants.',
+      features: [
+        'High-Resolution Printable QR Codes',
+        'Mobile Digital Menu with Custom Categories',
+        'Contactless Table Ordering',
+        'Live Order Status Pipeline',
+        'Direct UPI & Cash Payment Tracking',
+        'Digital Receipts (SMS/WhatsApp shareable)',
+        'Basic Daily Sales Overview',
+        'Email & WhatsApp Support',
+      ],
+      popular: false,
+      cta: 'Start 14-Day Free Trial',
+    },
+    pro: {
+      name: 'Pro',
+      price: 1499,
+      period: 'month',
+      description: 'For growing restaurants, multi-table venues, and busy food operations.',
+      features: [
+        'Everything in Basic Plan',
+        'Full Real-Time Analytics Dashboard',
+        'Hourly Sales & Peak Hours Distribution',
+        'Best-Selling Items & Category Breakdown',
+        'Customer CRM (Diner Database & History)',
+        'Automated Loyalty & Rewards System',
+        'Promotional Coupons & Digital Gift Cards',
+        'Inventory & Stock Tracking',
+        'Priority Phone & Dedicated WhatsApp Support',
+      ],
+      popular: true,
+      cta: 'Start 14-Day Free Trial',
+    },
+  },
+  featureCategories: [
+    {
+      id: 'ordering',
+      title: 'Restaurant Ordering',
+      description: 'Enable frictionless diner self-ordering directly from table standees.',
+      icon: 'qr-code',
+      items: [
+        { title: 'QR Table Ordering', description: 'Guests scan the table QR code and order immediately without waiting for waitstaff.' },
+        { title: 'Interactive Digital Menu', description: 'Crisp item photos, descriptions, veg/non-veg tags, and live price management.' },
+        { title: 'Real-Time Kitchen Sync', description: 'Instant order alerts with item instructions sent directly to kitchen display.' },
+        { title: 'Order Stage Tracking', description: 'Status progression: Pending → Accepted → Preparing → Ready → Served.' },
+      ],
+    },
+    {
+      id: 'management',
+      title: 'Restaurant Management',
+      description: 'Centralize tables, daily shifts, and operational metrics in one place.',
+      icon: 'layout-dashboard',
+      items: [
+        { title: 'Analytics Dashboard', description: 'Real-time sales revenue, total orders count, and Average Order Value metrics.' },
+        { title: 'Table Management', description: 'Generate and print custom QR standees for regular tables and VIP lounges.' },
+        { title: 'Peak Hours Insights', description: 'Understand busiest dining hours and staff accordingly for faster turn times.' },
+        { title: 'Inventory Tracking', description: 'Monitor essential ingredient stocks and receive low inventory alerts.' },
+      ],
+    },
+    {
+      id: 'billing',
+      title: 'Billing & Payments',
+      description: 'Fast, accurate bills with zero gateway commission fees.',
+      icon: 'credit-card',
+      items: [
+        { title: 'Direct UPI Payments', description: 'Display restaurant UPI QR for direct-to-bank settlement without third-party cuts.' },
+        { title: 'Digital Receipts & Invoices', description: 'Instant PDF invoices and mobile receipts sent directly to customer phones.' },
+        { title: 'Sales Reconciliation', description: 'Daily revenue reports and payment method breakdown (UPI vs Cash).' },
+        { title: 'Quick Discounts', description: 'Apply percentage or flat rupee discounts directly at checkout.' },
+      ],
+    },
+    {
+      id: 'crm',
+      title: 'Customer Loyalty & CRM',
+      description: 'Turn one-time diners into high-frequency repeat regulars.',
+      icon: 'heart-handshake',
+      items: [
+        { title: 'Diner Profile CRM', description: 'Maintain verified customer profiles with phone numbers and lifetime spend.' },
+        { title: 'Automated Loyalty Points', description: 'Issue points on every purchase and let diners redeem points for bill discounts.' },
+        { title: 'Promotional Coupons', description: 'Create time-limited discount codes for festive seasons and special events.' },
+        { title: 'Digital Gift Cards', description: 'Issue and redeem digital prepaid gift vouchers to drive upfront revenue.' },
+      ],
+    },
+  ],
+  workflow: [
+    { step: '01', title: 'Customer Scans QR', description: 'Diner sits at table and scans the high-resolution QR standee with their phone.' },
+    { step: '02', title: 'Browses Digital Menu', description: 'Explores high-res dishes, customizes options, and adds items to order cart.' },
+    { step: '03', title: 'Places Order', description: 'Submits the table order directly without waiting for a waiter.' },
+    { step: '04', title: 'Kitchen Prepares', description: 'Kitchen receives the live ticket with special instructions instantly.' },
+    { step: '05', title: 'Food Served & Billed', description: 'Staff marks order as served, generates bill with direct UPI or cash.' },
+    { step: '06', title: 'Loyalty Points Earned', description: 'Customer receives digital invoice and automated loyalty points for their visit.' },
+  ],
+} as const
+
+export const PRIMEOMS_FAQS = [
+  {
+    question: 'What is PrimeOMS?',
+    answer: 'PrimeOMS is an all-in-one restaurant operations SaaS platform developed and maintained by PrimeSoul Web Solutions. It provides high-resolution QR table menus, contactless table ordering, live kitchen order management (KDS), direct-to-bank UPI billing, and an automated customer loyalty rewards system.',
+  },
+  {
+    question: 'Who is PrimeOMS built for?',
+    answer: 'PrimeOMS is built for standalone restaurants, cafes, fine dining establishments, quick-service diners, food courts, and multi-table food & beverage operations looking to speed up order taking, eliminate paper bill delays, and build direct diner relationships without paying heavy commissions.',
+  },
+  {
+    question: 'Do I need special hardware or proprietary POS machines?',
+    answer: 'No. PrimeOMS runs in any standard modern web browser on laptops, tablets, iPads, or smartphones. Diners scan QR codes directly with their standard phone camera without downloading any third-party app.',
+  },
+  {
+    question: 'Is PrimeOMS built and supported by PrimeSoul Web Solutions?',
+    answer: 'Yes. PrimeOMS is a flagship software product engineered and maintained directly by the PrimeSoul Web Solutions product team. All updates, cloud hosting, bug fixes, and customer support are handled by PrimeSoul.',
+  },
+  {
+    question: 'How much does PrimeOMS cost?',
+    answer: 'PrimeOMS offers two straightforward plans: the Basic Plan at ₹799/month (ideal for small cafes and quick diners) and the Pro Plan at ₹1,499/month (includes full analytics dashboard, customer CRM, loyalty points, coupons, and inventory tracking). Both plans are 100% commission-free.',
+  },
+  {
+    question: 'How do I start my 14-day free trial?',
+    answer: 'Click any "Start 14-Day Free Trial" button or contact us via WhatsApp (+91 8770 404 559). Our team will set up your restaurant profile, upload your digital menu, generate printable QR table standees, and give you full access within 15 minutes with no credit card required.',
+  },
+]
+
 export const PROJECTS: Project[] = [
+  {
+    slug: 'primeoms',
+    title: 'PrimeOMS — Restaurant SaaS',
+    category: 'Product · SaaS',
+    client: 'Built by PrimeSoul',
+    year: '2026',
+    description: 'PrimeSoul\'s flagship restaurant management SaaS platform featuring QR table ordering, live kitchen pipeline, direct UPI billing, and customer loyalty rewards.',
+    problem: 'Traditional restaurants struggle with manual handwritten order taking, slow billing during peak hours, high aggregator commissions, and zero customer data retention.',
+    solution: 'Engineered a unified full-stack restaurant operating system with printable QR table standees, real-time kitchen status pipeline, direct UPI payments, and an automated customer loyalty program.',
+    result: 'Streamlined restaurant operations end-to-end, eliminated manual order errors, accelerated table turnaround times, and gave restaurant owners direct customer loyalty retention.',
+    tech: ['Next.js 14', 'TypeScript', 'Firebase', 'Tailwind CSS', 'QR Engine', 'UPI Integration'],
+    liveUrl: '/primeoms',
+    image: '/images/primeoms-hero-mockup.jpg',
+    imageAlt: 'PrimeOMS restaurant management software dashboard and QR table standee',
+    featured: true,
+    isProduct: true,
+    metrics: [
+      { label: 'Platform', value: 'SaaS' },
+      { label: 'Order Flow', value: 'Instant' },
+      { label: 'Pricing', value: 'From ₹799' },
+    ],
+    color: '#FF5A1F',
+  },
   {
     slug: 'asso-solar-solutions',
     title: 'A&S Solar Solutions',

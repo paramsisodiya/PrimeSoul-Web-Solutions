@@ -9,6 +9,8 @@ import SectionLabel from '@/components/ui/SectionLabel'
 import { collection, getDocs, query, orderBy } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 
+import { PROJECTS } from '@/lib/data'
+
 interface Project {
   id: string
   title: string
@@ -24,6 +26,7 @@ interface Project {
   metrics?: Array<{ label: string; value: string }>
   liveUrl?: string
   color?: string
+  isProduct?: boolean
 }
 
 function slugify(text: string): string {
@@ -31,34 +34,65 @@ function slugify(text: string): string {
 }
 
 export default function PortfolioPage() {
-  const [projects, setProjects] = useState<Project[]>([])
+  const [projects, setProjects] = useState<Project[]>(
+    PROJECTS.map((p, i) => ({
+      id: String(i + 1),
+      title: p.title,
+      slug: p.slug,
+      image: p.image,
+      imageAlt: p.imageAlt,
+      category: p.category,
+      client: p.client,
+      year: p.year,
+      description: p.description,
+      tech: p.tech,
+      metrics: p.metrics,
+      liveUrl: p.liveUrl,
+      color: p.color,
+      isProduct: p.isProduct,
+    }))
+  )
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const snap = await getDocs(query(collection(db, 'portfolio'), orderBy('createdAt', 'desc')))
-        const data = snap.docs.map(d => {
-          const raw = d.data()
-          return {
-            id: d.id,
-            title: raw.title || 'Untitled',
-            slug: raw.slug || slugify(raw.title || 'project'),
-            image: raw.image || '',
-            imageAlt: raw.imageAlt || raw.title || 'Project image',
-            category: raw.category || 'Website',
-            client: raw.client || '',
-            year: raw.year || '',
-            description: raw.description || '',
-            tech: raw.tech || raw.tags || [],
-            metrics: raw.metrics || [],
-            liveUrl: raw.liveUrl || '#',
-            color: raw.color || '#1E3AE0',
-          } as Project
-        })
-        setProjects(data)
+        if (!snap.empty) {
+          const data = snap.docs.map(d => {
+            const raw = d.data()
+            return {
+              id: d.id,
+              title: raw.title || 'Untitled',
+              slug: raw.slug || slugify(raw.title || 'project'),
+              image: raw.image || '',
+              imageAlt: raw.imageAlt || raw.title || 'Project image',
+              category: raw.category || 'Website',
+              client: raw.client || '',
+              year: raw.year || '',
+              description: raw.description || '',
+              tech: raw.tech || raw.tags || [],
+              metrics: raw.metrics || [],
+              liveUrl: raw.liveUrl || '#',
+              color: raw.color || '#1E3AE0',
+              isProduct: raw.isProduct || raw.slug === 'primeoms',
+            } as Project
+          })
+
+          // Ensure PrimeOMS is at top if not present in Firestore
+          const hasPrimeOMS = data.some(p => p.slug === 'primeoms')
+          if (!hasPrimeOMS) {
+            const primeomsProject = PROJECTS.find(p => p.slug === 'primeoms')
+            if (primeomsProject) {
+              data.unshift({
+                id: 'primeoms',
+                ...primeomsProject,
+              })
+            }
+          }
+          setProjects(data)
+        }
       } catch (err) {
         console.error('Error fetching portfolio:', err)
-        setProjects([])
       }
     }
     fetchProjects()
@@ -75,22 +109,22 @@ export default function PortfolioPage() {
         />
         <div className="relative max-w-7xl mx-auto px-6">
           <AnimatedSection className="max-w-2xl">
-            <SectionLabel>Portfolio</SectionLabel>
+            <SectionLabel>Portfolio & Products</SectionLabel>
             <h1
               className="text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-5"
             >
-              Projects That{' '}
+              Work That{' '}
               <span style={{
                 background: 'linear-gradient(135deg, #0a46aa 0%, #1EB4C8 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
               }}>
-                Made a Difference
+                Drives Real Growth
               </span>
             </h1>
             <p className="text-lg text-ink-secondary leading-relaxed">
-              Every project here represents a real client, a real problem, and a solution built from scratch.
+              Explore our client engineering solutions and our own flagship SaaS products built and maintained by PrimeSoul.
             </p>
           </AnimatedSection>
         </div>
@@ -105,16 +139,22 @@ export default function PortfolioPage() {
             </div>
           ) : (
           <div className="grid md:grid-cols-2 gap-8">
-            {projects.map((project, i) => (
+            {projects.map((project, i) => {
+              const isPrimeOMS = project.slug === 'primeoms' || project.isProduct
+              const targetHref = isPrimeOMS ? '/primeoms' : `/portfolio/${project.slug}`
+              return (
               <AnimatedSection key={project.slug || project.id} delay={i * 80}>
                 <div
-                  className="group rounded-3xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
+                  className={`group rounded-3xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1 ${
+                    isPrimeOMS ? 'border-2 border-[#FF5A1F] shadow-xl' : 'border border-[#E2E8F8]'
+                  }`}
                   style={{
-                    border: '1px solid #E2E8F8',
-                    boxShadow: '0 2px 24px -4px rgba(30,58,224,0.06)',
+                    boxShadow: isPrimeOMS
+                      ? '0 10px 40px -10px rgba(255,90,31,0.2)'
+                      : '0 2px 24px -4px rgba(30,58,224,0.06)',
                   }}
                 >
-                  <Link href={`/portfolio/${project.slug}`} className="block">
+                  <Link href={targetHref} className="block">
                     {/* Image */}
                     <div className="relative h-64 overflow-hidden">
                       {project.image ? (
@@ -135,18 +175,21 @@ export default function PortfolioPage() {
                       <div className="absolute top-5 left-5 flex items-center gap-2">
                         {project.category && (
                           <span
-                            className="px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-sm"
-                            style={{ background: 'rgba(255,255,255,0.92)', color: project.color || '#1E3AE0' }}
+                            className="px-3.5 py-1.5 rounded-full text-xs font-bold backdrop-blur-sm"
+                            style={{
+                              background: isPrimeOMS ? '#FF5A1F' : 'rgba(255,255,255,0.92)',
+                              color: isPrimeOMS ? '#FFFFFF' : (project.color || '#1E3AE0')
+                            }}
                           >
-                            {project.category}
+                            {isPrimeOMS ? 'Our Flagship Product' : project.category}
                           </span>
                         )}
                         {project.liveUrl && project.liveUrl !== '#' && (
                           <span
                             className="px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-sm flex items-center gap-1.5"
-                            style={{ background: 'rgba(46,196,196,0.15)', color: '#0D9B9B', backdropFilter: 'blur(8px)' }}
+                            style={{ background: isPrimeOMS ? 'rgba(255,90,31,0.2)' : 'rgba(46,196,196,0.15)', color: isPrimeOMS ? '#FF5A1F' : '#0D9B9B', backdropFilter: 'blur(8px)' }}
                           >
-                            <span className="w-1.5 h-1.5 rounded-full bg-brand-cyan" />
+                            <span className={`w-1.5 h-1.5 rounded-full ${isPrimeOMS ? 'bg-[#FF5A1F]' : 'bg-brand-cyan'}`} />
                             Live
                           </span>
                         )}
@@ -154,8 +197,8 @@ export default function PortfolioPage() {
 
                       {/* Hover overlay button */}
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-white/10 backdrop-blur-sm border border-white/20">
-                          View Case Study
+                        <span className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-black/60 backdrop-blur-md border border-white/20">
+                          {isPrimeOMS ? 'Explore PrimeOMS Product →' : 'View Case Study'}
                         </span>
                       </div>
                     </div>
@@ -164,7 +207,7 @@ export default function PortfolioPage() {
                     <div className="p-7">
                       <div className="flex items-start justify-between gap-4 mb-4">
                         <div>
-                          <h2 className="text-xl font-semibold group-hover:text-brand-navy transition-colors">
+                          <h2 className="text-xl font-semibold group-hover:text-[#FF5A1F] transition-colors">
                             {project.title}
                           </h2>
                           <p className="text-sm text-ink-muted mt-1">
@@ -217,22 +260,27 @@ export default function PortfolioPage() {
                   </Link>
                   {project.liveUrl && project.liveUrl !== '#' && (
                     <div className="px-7 pb-5 -mt-1">
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="ml-auto inline-flex items-center gap-1 text-xs font-semibold text-brand-navy hover:text-brand-cyan transition-colors"
+                      <Link
+                        href={isPrimeOMS ? '/primeoms' : project.liveUrl}
+                        target={isPrimeOMS ? undefined : '_blank'}
+                        rel={isPrimeOMS ? undefined : 'noopener noreferrer'}
+                        className={`ml-auto inline-flex items-center gap-1 text-xs font-semibold ${
+                          isPrimeOMS ? 'text-[#FF5A1F] hover:underline' : 'text-brand-navy hover:text-brand-cyan'
+                        } transition-colors`}
                       >
-                        Live Site
-                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                          <path d="M2 8L8 2M4 2h4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </a>
+                        {isPrimeOMS ? 'Explore Product Page →' : 'Live Site'}
+                        {!isPrimeOMS && (
+                          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                            <path d="M2 8L8 2M4 2h4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </Link>
                     </div>
                   )}
                 </div>
               </AnimatedSection>
-            ))}
+            )
+            })}
           </div>
           )}
         </div>

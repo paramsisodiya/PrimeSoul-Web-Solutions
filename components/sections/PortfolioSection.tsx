@@ -12,6 +12,23 @@ import { ArrowUpRight, Eye } from 'lucide-react'
 
 const FALLBACK_PROJECTS: CaseStudyProject[] = [
   {
+    id: 'primeoms',
+    title: 'PrimeOMS — Restaurant Management SaaS',
+    slug: 'primeoms',
+    image: '/images/primeoms-hero-mockup.jpg',
+    category: 'Flagship Product · SaaS',
+    client: 'Built by PrimeSoul',
+    year: '2026',
+    problem: 'Restaurants suffer from manual handwritten order taking, slow billing bottlenecks, and heavy aggregator commission fees.',
+    solution: 'Engineered a unified restaurant operating system with printable QR table standees, real-time kitchen tracking, direct UPI billing, and customer loyalty CRM.',
+    tech: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'QR Engine', 'Direct UPI'],
+    metrics: [
+      { label: 'Type', value: 'SaaS' },
+      { label: 'Order Flow', value: 'Instant' },
+      { label: 'Pricing', value: 'From ₹799' },
+    ],
+  },
+  {
     id: '1',
     title: 'Madhya Pradesh Darpan',
     slug: 'madhya-pradesh-darpan',
@@ -43,23 +60,6 @@ const FALLBACK_PROJECTS: CaseStudyProject[] = [
       { label: 'Enquiries', value: '+240%' },
       { label: 'Load Time', value: '0.8s' },
       { label: 'Admissions', value: 'Online' },
-    ],
-  },
-  {
-    id: '3',
-    title: 'Maa Saraswati Academy',
-    slug: 'maa-saraswati-academy',
-    image: '/images/team-working.png',
-    category: 'Institutional Portal',
-    client: 'MAA Foundation',
-    year: '2026',
-    problem: 'Legacy website was non-responsive and difficult for parents to navigate on mobile devices.',
-    solution: 'Re-engineered into a modern mobile-first web app with high-speed performance and contact sync.',
-    tech: ['Next.js 14', 'TypeScript', 'Tailwind CSS'],
-    metrics: [
-      { label: 'Mobile Traffic', value: '85%' },
-      { label: 'Speed Index', value: '0.9s' },
-      { label: 'Satisfaction', value: '100%' },
     ],
   },
   {

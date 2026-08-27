@@ -162,15 +162,27 @@ export default function CaseStudyModal({
           </button>
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/contact"
-              onClick={onClose}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold text-white shadow-md hover:scale-105 transition-transform"
-              style={{ background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)' }}
-            >
-              <span>Build Similar Project</span>
-              <CheckCircle2 size={16} />
-            </Link>
+            {project.slug === 'primeoms' ? (
+              <Link
+                href="/primeoms"
+                onClick={onClose}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold text-white shadow-md hover:scale-105 transition-transform"
+                style={{ background: 'linear-gradient(135deg, #FF5A1F 0%, #FF8A4C 100%)' }}
+              >
+                <span>Explore PrimeOMS Product Page</span>
+                <ExternalLink size={16} />
+              </Link>
+            ) : (
+              <Link
+                href="/contact"
+                onClick={onClose}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold text-white shadow-md hover:scale-105 transition-transform"
+                style={{ background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)' }}
+              >
+                <span>Build Similar Project</span>
+                <CheckCircle2 size={16} />
+              </Link>
+            )}
           </div>
         </div>
       </div>

@@ -86,11 +86,11 @@ export default function Footer() {
 
         {/* Main Grid: 4 Columns */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 sm:gap-12 mb-16">
-          {/* Column 1: Brand & Contact Info (5 cols) */}
-          <div className="lg:col-span-5 space-y-6">
+          {/* Column 1: Brand & Contact Info (4 cols) */}
+          <div className="lg:col-span-4 space-y-6">
             <Logo variant="dark" iconSize={40} />
             <p className="text-white/60 text-sm leading-relaxed max-w-md">
-              PrimeSoul Web Solutions is a premier digital agency engineering high-performance websites, custom web applications, and automated growth systems for scaling brands globally.
+              <strong className="text-white font-semibold">Digital Agency + Product Studio</strong>. We engineer high-performance web applications, client solutions, and our own proprietary SaaS products.
             </p>
 
             {/* Direct Contact Details */}
@@ -166,13 +166,13 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Quick Links (3 cols) */}
-          <div className="lg:col-span-3 space-y-4">
+          {/* Column 2: Navigation (2 cols) */}
+          <div className="lg:col-span-2 space-y-4">
             <h4 className="text-white text-xs font-bold uppercase tracking-widest font-heading border-l-2 border-[#1D4ED8] pl-3">
-              Navigation
+              Studio
             </h4>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5 pt-1">
-              {QUICK_LINKS.map((link) => (
+            <ul className="space-y-2 pt-1">
+              {QUICK_LINKS.slice(0, 6).map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -186,19 +186,47 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Services (4 cols) */}
-          <div className="lg:col-span-4 space-y-4">
-            <h4 className="text-white text-xs font-bold uppercase tracking-widest font-heading border-l-2 border-[#00C9A7] pl-3">
-              Our Expertise
+          {/* Column 3: Flagship Products (3 cols) */}
+          <div className="lg:col-span-3 space-y-4">
+            <h4 className="text-white text-xs font-bold uppercase tracking-widest font-heading border-l-2 border-[#FF5A1F] pl-3">
+              Our Products
             </h4>
-            <ul className="space-y-2.5 pt-1">
-              {SERVICES_LINKS.map((service) => (
+            <div className="pt-1">
+              <Link
+                href="/primeoms"
+                className="block p-4 rounded-2xl bg-white/[0.04] border border-[#FF5A1F]/30 hover:border-[#FF5A1F] hover:bg-[#FF5A1F]/10 transition-all group"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-bold text-white group-hover:text-[#FF5A1F] transition-colors">
+                    PrimeOMS
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FF5A1F] text-white font-extrabold uppercase">
+                    Flagship
+                  </span>
+                </div>
+                <p className="text-xs text-white/60 leading-relaxed mb-2.5">
+                  Restaurant operations platform: QR ordering, live kitchen sync, direct UPI billing, and customer loyalty.
+                </p>
+                <span className="text-xs font-bold text-[#FF5A1F] inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  Explore Product →
+                </span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Column 4: Services (3 cols) */}
+          <div className="lg:col-span-3 space-y-4">
+            <h4 className="text-white text-xs font-bold uppercase tracking-widest font-heading border-l-2 border-[#00C9A7] pl-3">
+              Services
+            </h4>
+            <ul className="space-y-2 pt-1">
+              {SERVICES_LINKS.slice(0, 5).map((service) => (
                 <li key={service.href}>
                   <Link
                     href={service.href}
-                    className="text-white/60 hover:text-white text-sm transition-colors duration-200 flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-white/15 transition-all group"
+                    className="text-white/60 hover:text-white text-xs transition-colors duration-200 flex items-center justify-between p-2 rounded-xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 transition-all group"
                   >
-                    <span>{service.label}</span>
+                    <span className="truncate">{service.label}</span>
                     <span className="text-white/30 group-hover:text-[#00C9A7] transition-colors">→</span>
                   </Link>
                 </li>

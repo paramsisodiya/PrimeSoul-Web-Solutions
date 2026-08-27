@@ -13,7 +13,7 @@ export default function JsonLd() {
           '@type': 'ImageObject',
           url: 'https://primesoul.tech/images/logo.png',
         },
-        description: 'PrimeSoul builds premium websites, web applications, and digital experiences for businesses that understand the value of quality.',
+        description: 'PrimeSoul Web Solutions is a premier digital agency and product studio engineering high-performance websites, custom web applications, and proprietary SaaS products including PrimeOMS.',
         foundingDate: '2024',
         founder: {
           '@type': 'Person',

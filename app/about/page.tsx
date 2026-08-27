@@ -109,10 +109,10 @@ export default function AboutPage() {
               </h2>
               <div className="flex flex-col gap-5 mb-8">
                 <p className="text-ink-secondary leading-relaxed">
-                  PrimeSoul Web Solutions is a focused digital agency based in Rajgarh, Madhya Pradesh — helping businesses across India establish a powerful online presence. With 3 years of experience, 35+ successful projects, and a dedicated team of professionals, we combine strategy, design, and technology to deliver real business outcomes.
+                  PrimeSoul Web Solutions is a premier <strong className="text-[#0E0E2C]">Digital Agency and Product Studio</strong> based in Rajgarh, Madhya Pradesh. We partner with ambitious businesses across India to engineer high-performance web applications, conversion-driven websites, and automated growth systems — while also designing, building, and operating our own software products like <Link href="/primeoms" className="text-[#FF5A1F] font-bold hover:underline">PrimeOMS</Link>.
                 </p>
                 <p className="text-ink-secondary leading-relaxed">
-                  PrimeSoul grew from a genuine belief that every business, regardless of size or location, deserves a professional digital presence that actually performs. We obsess over the details that most people won&apos;t notice but will definitely feel: load speeds, interaction quality, the way a headline makes someone lean forward.
+                  PrimeSoul grew from a genuine belief that every business deserves software and web solutions that truly perform. We obsess over the details that most people won&apos;t notice but will definitely feel: load speeds, interaction quality, clean architectures, and sustainable product scalability.
                 </p>
               </div>
 

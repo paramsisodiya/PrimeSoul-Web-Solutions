@@ -7,6 +7,8 @@ import { db } from '@/lib/firebase'
 // Import all sections
 import HeroSection from '@/components/sections/HeroSection'
 import MarqueeSection from '@/components/sections/MarqueeSection'
+import PrimeOMSShowcase from '@/components/sections/PrimeOMSShowcase'
+import ProductStudioSection from '@/components/sections/ProductStudioSection'
 import VideoSection from '@/components/sections/VideoSection'
 import ClientLogos from '@/components/sections/ClientLogos'
 import TrustSection from '@/components/sections/TrustSection'
@@ -32,6 +34,8 @@ interface SectionConfig {
 const SECTION_COMPONENTS: Record<string, React.ComponentType> = {
   hero: HeroSection,
   marquee: MarqueeSection,
+  primeoms: PrimeOMSShowcase,
+  productStudio: ProductStudioSection,
   video: VideoSection,
   clientLogos: ClientLogos,
   trust: TrustSection,
@@ -52,13 +56,15 @@ const SECTION_COMPONENTS: Record<string, React.ComponentType> = {
 const DEFAULT_ORDER: SectionConfig[] = [
   { id: 'hero', label: 'Hero Section', enabled: true },
   { id: 'marquee', label: 'Marquee Strip', enabled: true },
+  { id: 'primeoms', label: 'PrimeOMS Showcase', enabled: true },
+  { id: 'trust', label: 'Trust Section', enabled: true },
+  { id: 'services', label: 'Services', enabled: true },
+  { id: 'productStudio', label: 'Product Studio Evolution', enabled: true },
+  { id: 'portfolio', label: 'Portfolio', enabled: true },
+  { id: 'howWeWork', label: 'How We Work', enabled: true },
+  { id: 'about', label: 'About Section', enabled: true },
   { id: 'video', label: 'Video Section', enabled: true },
   { id: 'clientLogos', label: 'Client Logos', enabled: true },
-  { id: 'trust', label: 'Trust Section', enabled: true },
-  { id: 'about', label: 'About Section', enabled: true },
-  { id: 'services', label: 'Services', enabled: true },
-  { id: 'howWeWork', label: 'How We Work', enabled: true },
-  { id: 'portfolio', label: 'Portfolio', enabled: true },
   { id: 'process', label: 'Our Process', enabled: true },
   { id: 'comparison', label: 'PrimeSoul Advantage', enabled: true },
 

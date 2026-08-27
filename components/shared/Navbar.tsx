@@ -36,22 +36,24 @@ const getServiceIcon = (iconName: string) => {
 }
 
 const NAV_LINKS = [
-  { href: '/', label: 'Home' },
+  { href: '/services', label: 'Services', hasDropdown: 'services' },
+  { href: '/primeoms', label: 'Products', hasDropdown: 'products' },
+  { href: '/portfolio', label: 'Work' },
   { href: '/about', label: 'About' },
   { href: '/why-primesoul', label: 'Why Us' },
-  { href: '/services', label: 'Services', hasDropdown: true },
-  { href: '/portfolio', label: 'Portfolio' },
-  { href: '/clients', label: 'Clients' },
-  { href: '/careers', label: 'Careers' },
+  { href: '/contact', label: 'Contact' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
+  const [productsOpen, setProductsOpen] = useState(false)
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
   const pathname = usePathname()
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const servicesDropdownRef = useRef<HTMLDivElement>(null)
+  const productsDropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -62,7 +64,9 @@ export default function Navbar() {
   useEffect(() => {
     setMenuOpen(false)
     setServicesOpen(false)
+    setProductsOpen(false)
     setMobileServicesOpen(false)
+    setMobileProductsOpen(false)
   }, [pathname])
 
   useEffect(() => {
@@ -72,8 +76,11 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (servicesDropdownRef.current && !servicesDropdownRef.current.contains(e.target as Node)) {
         setServicesOpen(false)
+      }
+      if (productsDropdownRef.current && !productsDropdownRef.current.contains(e.target as Node)) {
+        setProductsOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -106,84 +113,170 @@ export default function Navbar() {
 
           {/* Desktop Nav Links */}
           <nav className="hidden lg:flex items-center gap-7">
-            {NAV_LINKS.map((link) => (
-              link.hasDropdown ? (
-                <div key={link.href} ref={dropdownRef} className="relative">
-                  <button
-                    onClick={() => setServicesOpen(!servicesOpen)}
-                    className={cn(
-                      'text-sm font-semibold transition-colors duration-200 flex items-center gap-1.5 py-1',
-                      pathname?.startsWith('/services')
-                        ? 'text-[#7B2FF2]'
-                        : isDarkHeader
-                        ? 'text-white/80 hover:text-white'
-                        : 'text-ink-secondary hover:text-[#7B2FF2]'
-                    )}
-                  >
-                    <span>{link.label}</span>
-                    <svg
-                      width="12" height="12" viewBox="0 0 12 12" fill="none"
-                      className={cn('transition-transform duration-300', servicesOpen && 'rotate-180')}
+            {NAV_LINKS.map((link) => {
+              if (link.hasDropdown === 'services') {
+                return (
+                  <div key={link.label} ref={servicesDropdownRef} className="relative">
+                    <button
+                      onClick={() => { setServicesOpen(!servicesOpen); setProductsOpen(false) }}
+                      className={cn(
+                        'text-sm font-semibold transition-colors duration-200 flex items-center gap-1.5 py-1',
+                        pathname?.startsWith('/services')
+                          ? 'text-[#7B2FF2]'
+                          : isDarkHeader
+                          ? 'text-white/80 hover:text-white'
+                          : 'text-ink-secondary hover:text-[#7B2FF2]'
+                      )}
                     >
-                      <path d="M3 4.5l3 3 3-3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </button>
+                      <span>{link.label}</span>
+                      <svg
+                        width="12" height="12" viewBox="0 0 12 12" fill="none"
+                        className={cn('transition-transform duration-300', servicesOpen && 'rotate-180')}
+                      >
+                        <path d="M3 4.5l3 3 3-3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
 
-                  {/* Desktop Mega Menu Dropdown */}
-                  <div
-                    className={cn(
-                      'absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[680px] rounded-3xl bg-white/95 backdrop-blur-2xl border border-white/80 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] transition-all duration-300 overflow-hidden z-50',
-                      servicesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-3 pointer-events-none'
-                    )}
-                  >
-                    <div className="flex">
-                      {/* Left Grid */}
-                      <div className="w-[65%] p-4 grid grid-cols-2 gap-2 bg-white/80">
-                        {SERVICE_PAGES.map((service) => (
-                          <Link
-                            key={service.id}
-                            href={`/services/${service.slug}`}
-                            className="flex items-start gap-3 p-3 rounded-2xl hover:bg-[#7B2FF2]/5 transition-all group border border-transparent hover:border-[#7B2FF2]/10"
-                            onClick={() => setServicesOpen(false)}
-                          >
-                            <div
-                              className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110 bg-white shadow-sm border border-surface-border"
-                              style={{ color: service.accent }}
+                    {/* Desktop Mega Menu Dropdown */}
+                    <div
+                      className={cn(
+                        'absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[680px] rounded-3xl bg-white/95 backdrop-blur-2xl border border-white/80 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] transition-all duration-300 overflow-hidden z-50',
+                        servicesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-3 pointer-events-none'
+                      )}
+                    >
+                      <div className="flex">
+                        {/* Left Grid */}
+                        <div className="w-[65%] p-4 grid grid-cols-2 gap-2 bg-white/80">
+                          {SERVICE_PAGES.map((service) => (
+                            <Link
+                              key={service.id}
+                              href={`/services/${service.slug}`}
+                              className="flex items-start gap-3 p-3 rounded-2xl hover:bg-[#7B2FF2]/5 transition-all group border border-transparent hover:border-[#7B2FF2]/10"
+                              onClick={() => setServicesOpen(false)}
                             >
-                              {getServiceIcon(service.icon)}
-                            </div>
-                            <div className="pt-0.5">
-                              <p className="text-xs font-bold text-[#0E0E2C] group-hover:text-[#7B2FF2] transition-colors leading-tight mb-0.5">{service.shortTitle}</p>
-                              <p className="text-[10px] text-ink-muted line-clamp-2 leading-snug">{service.heroTagline}</p>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-
-                      {/* Right Panel */}
-                      <div className="w-[35%] bg-surface-subtle/70 border-l border-surface-border p-6 flex flex-col justify-between backdrop-blur-md">
-                        <div>
-                          <h4 className="text-[10px] font-extrabold uppercase tracking-widest text-[#7B2FF2] mb-3">Why PrimeSoul?</h4>
-                          <p className="text-xs text-ink-secondary leading-relaxed mb-4">
-                            Engineered for speed, high conversion rates, and business growth.
-                          </p>
+                              <div
+                                className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110 bg-white shadow-sm border border-surface-border"
+                                style={{ color: service.accent }}
+                              >
+                                {getServiceIcon(service.icon)}
+                              </div>
+                              <div className="pt-0.5">
+                                <p className="text-xs font-bold text-[#0E0E2C] group-hover:text-[#7B2FF2] transition-colors leading-tight mb-0.5">{service.shortTitle}</p>
+                                <p className="text-[10px] text-ink-muted line-clamp-2 leading-snug">{service.heroTagline}</p>
+                              </div>
+                            </Link>
+                          ))}
                         </div>
 
-                        <div className="space-y-2.5">
-                          <Link href="/services" onClick={() => setServicesOpen(false)} className="flex items-center justify-between p-2.5 bg-white rounded-xl border border-surface-border hover:border-[#7B2FF2]/30 transition-all text-xs font-bold text-[#0E0E2C] hover:text-[#7B2FF2]">
-                            <span>All Services</span>
-                            <span>→</span>
-                          </Link>
-                          <Link href="/contact" onClick={() => setServicesOpen(false)} className="flex items-center justify-between p-2.5 rounded-xl text-xs font-bold text-white shadow-md hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)' }}>
-                            <span>Start Project</span>
-                            <span>→</span>
-                          </Link>
+                        {/* Right Panel */}
+                        <div className="w-[35%] bg-surface-subtle/70 border-l border-surface-border p-6 flex flex-col justify-between backdrop-blur-md">
+                          <div>
+                            <h4 className="text-[10px] font-extrabold uppercase tracking-widest text-[#7B2FF2] mb-3">Why PrimeSoul?</h4>
+                            <p className="text-xs text-ink-secondary leading-relaxed mb-4">
+                              Engineered for speed, high conversion rates, and business growth.
+                            </p>
+                          </div>
+
+                          <div className="space-y-2.5">
+                            <Link href="/services" onClick={() => setServicesOpen(false)} className="flex items-center justify-between p-2.5 bg-white rounded-xl border border-surface-border hover:border-[#7B2FF2]/30 transition-all text-xs font-bold text-[#0E0E2C] hover:text-[#7B2FF2]">
+                              <span>All Services</span>
+                              <span>→</span>
+                            </Link>
+                            <Link href="/contact" onClick={() => setServicesOpen(false)} className="flex items-center justify-between p-2.5 rounded-xl text-xs font-bold text-white shadow-md hover:scale-105 transition-all" style={{ background: 'linear-gradient(135deg, #1E3AE0 0%, #2EC4C4 100%)' }}>
+                              <span>Start Project</span>
+                              <span>→</span>
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ) : (
+                )
+              }
+
+              if (link.hasDropdown === 'products') {
+                return (
+                  <div key={link.label} ref={productsDropdownRef} className="relative">
+                    <button
+                      onClick={() => { setProductsOpen(!productsOpen); setServicesOpen(false) }}
+                      className={cn(
+                        'text-sm font-semibold transition-colors duration-200 flex items-center gap-1.5 py-1',
+                        pathname?.startsWith('/primeoms')
+                          ? 'text-[#FF5A1F]'
+                          : isDarkHeader
+                          ? 'text-white/80 hover:text-white'
+                          : 'text-ink-secondary hover:text-[#FF5A1F]'
+                      )}
+                    >
+                      <span>Products</span>
+                      <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-[#FF5A1F]/15 text-[#FF5A1F] leading-none">
+                        New
+                      </span>
+                      <svg
+                        width="12" height="12" viewBox="0 0 12 12" fill="none"
+                        className={cn('transition-transform duration-300', productsOpen && 'rotate-180')}
+                      >
+                        <path d="M3 4.5l3 3 3-3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+
+                    {/* Products Dropdown Showcase Card */}
+                    <div
+                      className={cn(
+                        'absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[380px] rounded-3xl bg-white/95 backdrop-blur-2xl border border-white/80 shadow-[0_20px_60px_-15px_rgba(255,90,31,0.18)] transition-all duration-300 overflow-hidden z-50 p-5',
+                        productsOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-3 pointer-events-none'
+                      )}
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#FF5A1F] bg-[#FF5A1F]/10 px-2.5 py-1 rounded-full">
+                          Flagship SaaS Product
+                        </span>
+                        <span className="text-[10px] font-bold text-ink-muted">
+                          by PrimeSoul
+                        </span>
+                      </div>
+
+                      <Link
+                        href="/primeoms"
+                        onClick={() => setProductsOpen(false)}
+                        className="group block p-4 rounded-2xl bg-gradient-to-br from-[#FFF7ED] to-white border border-[#FFEDD5] hover:border-[#FF5A1F]/40 hover:shadow-lg transition-all"
+                      >
+                        <div className="flex items-start gap-3.5 mb-2.5">
+                          <div className="w-10 h-10 rounded-xl bg-[#FF5A1F] text-white flex items-center justify-center font-black text-base shadow-md group-hover:scale-105 transition-transform flex-shrink-0">
+                            P
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h4 className="text-sm font-extrabold text-[#0E0E2C] group-hover:text-[#FF5A1F] transition-colors">
+                                PrimeOMS
+                              </h4>
+                              <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                                Live
+                              </span>
+                            </div>
+                            <p className="text-xs text-ink-secondary mt-0.5 font-medium">
+                              Restaurant Operations, Simplified
+                            </p>
+                          </div>
+                        </div>
+
+                        <p className="text-[11px] text-ink-muted leading-relaxed mb-3">
+                          QR Menu • Real-time Orders • Direct UPI Billing • Customer Loyalty & Rewards
+                        </p>
+
+                        <div className="flex items-center justify-between pt-2.5 border-t border-[#FFEDD5] text-xs font-bold text-[#FF5A1F]">
+                          <span>Plans from ₹799/mo</span>
+                          <span className="group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                            Explore PrimeOMS →
+                          </span>
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                )
+              }
+
+              return (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -199,7 +292,7 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               )
-            ))}
+            })}
           </nav>
 
           {/* Desktop Right CTA */}
@@ -260,19 +353,20 @@ export default function Navbar() {
         />
 
         <div className={cn(
-          'relative flex flex-col justify-center h-full px-8 text-white transition-all duration-500',
+          'relative flex flex-col justify-center h-full px-8 text-white transition-all duration-500 overflow-y-auto py-20',
           menuOpen ? 'translate-y-0' : 'translate-y-8'
         )}>
-          <div className="mb-10">
+          <div className="mb-8">
             <Logo variant="dark" />
           </div>
 
           <nav className="flex flex-col gap-3">
+            {/* Mobile Services */}
             <div>
               <button
-                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                onClick={() => { setMobileServicesOpen(!mobileServicesOpen); setMobileProductsOpen(false) }}
                 className={cn(
-                  'w-full text-left text-2xl font-extrabold transition-colors flex items-center justify-between py-1',
+                  'w-full text-left text-xl font-extrabold transition-colors flex items-center justify-between py-1',
                   pathname?.startsWith('/services') ? 'text-[#2EC4C4]' : 'text-white/80 hover:text-white'
                 )}
               >
@@ -291,7 +385,7 @@ export default function Navbar() {
               <div
                 className="overflow-hidden transition-all duration-400 ease-in-out"
                 style={{
-                  maxHeight: mobileServicesOpen ? '360px' : '0px',
+                  maxHeight: mobileServicesOpen ? '320px' : '0px',
                   opacity: mobileServicesOpen ? 1 : 0,
                 }}
               >
@@ -300,7 +394,7 @@ export default function Navbar() {
                     <Link
                       key={service.id}
                       href={`/services/${service.slug}`}
-                      className="text-sm text-white/70 hover:text-[#2EC4C4] transition-colors py-1"
+                      className="text-xs text-white/70 hover:text-[#2EC4C4] transition-colors py-1"
                     >
                       {service.shortTitle}
                     </Link>
@@ -309,17 +403,64 @@ export default function Navbar() {
               </div>
             </div>
 
+            {/* Mobile Products (PrimeOMS) */}
+            <div>
+              <button
+                onClick={() => { setMobileProductsOpen(!mobileProductsOpen); setMobileServicesOpen(false) }}
+                className={cn(
+                  'w-full text-left text-xl font-extrabold transition-colors flex items-center justify-between py-1',
+                  pathname?.startsWith('/primeoms') ? 'text-[#FF5A1F]' : 'text-white/80 hover:text-white'
+                )}
+              >
+                <span className="inline-flex items-center gap-3">
+                  <span className="text-xs font-mono text-[#FF5A1F]">02</span>
+                  <span>Products</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FF5A1F] text-white font-bold uppercase tracking-wider">
+                    PrimeOMS
+                  </span>
+                </span>
+                <svg
+                  width="18" height="18" viewBox="0 0 20 20" fill="none"
+                  className={cn('transition-transform duration-300', mobileProductsOpen && 'rotate-180')}
+                >
+                  <path d="M5 8l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+
+              <div
+                className="overflow-hidden transition-all duration-400 ease-in-out"
+                style={{
+                  maxHeight: mobileProductsOpen ? '200px' : '0px',
+                  opacity: mobileProductsOpen ? 1 : 0,
+                }}
+              >
+                <div className="pl-8 pt-3 pb-2 border-l border-white/10 ml-3">
+                  <Link
+                    href="/primeoms"
+                    className="block p-3 rounded-xl bg-white/10 border border-white/15 hover:bg-white/15 transition-all"
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-bold text-white text-sm">PrimeOMS SaaS</span>
+                      <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#FF5A1F] text-white font-bold">₹799/mo</span>
+                    </div>
+                    <p className="text-[11px] text-white/70">Restaurant QR ordering & operations platform</p>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
             {[
-              { href: '/portfolio', label: 'Portfolio', num: '02' },
-              { href: '/contact', label: 'Contact', num: '03' },
-              { href: '/careers', label: 'Careers', num: '04' },
-              { href: '/audit', label: 'Free Audit', num: '05' },
+              { href: '/portfolio', label: 'Work', num: '03' },
+              { href: '/about', label: 'About', num: '04' },
+              { href: '/why-primesoul', label: 'Why Us', num: '05' },
+              { href: '/contact', label: 'Contact', num: '06' },
+              { href: '/audit', label: 'Free Audit', num: '07' },
             ].map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'text-2xl font-extrabold transition-colors py-1',
+                  'text-xl font-extrabold transition-colors py-1',
                   pathname === item.href ? 'text-[#2EC4C4]' : 'text-white/80 hover:text-white'
                 )}
               >
@@ -331,7 +472,7 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <div className="mt-10 flex flex-col gap-3">
+          <div className="mt-8 flex flex-col gap-3">
             <Link
               href="/contact"
               className="w-full text-center py-3.5 rounded-full text-sm font-bold text-white shadow-xl hover:scale-105 transition-transform"
