@@ -53,13 +53,38 @@ export default function BlogPostPage() {
     if (!slug) return
     const fetchBlog = async () => {
       try {
-        const snap = await getDocs(query(collection(db, 'blogs'), where('slug', '==', slug), limit(1)))
-        if (snap.empty) { setNotFound(true); return }
-        const docData = snap.docs[0].data()
-        if ((docData as any).status !== 'published') { setNotFound(true); return }
-        setBlog({ id: snap.docs[0].id, ...docData } as Blog)
+        let docData: any = null
+        let docId = ''
+
+        try {
+          const snap = await getDocs(query(collection(db, 'blogs'), where('slug', '==', slug), limit(1)))
+          if (!snap.empty) {
+            docData = snap.docs[0].data()
+            docId = snap.docs[0].id
+          }
+        } catch (queryErr) {
+          console.warn('Slug query failed, falling back to full collection search:', queryErr)
+          const snap = await getDocs(collection(db, 'blogs'))
+          const match = snap.docs.find(d => (d.data() as any).slug === slug)
+          if (match) {
+            docData = match.data()
+            docId = match.id
+          }
+        }
+
+        if (!docData) {
+          setNotFound(true)
+          return
+        }
+
+        if (docData.status && docData.status !== 'published') {
+          setNotFound(true)
+          return
+        }
+
+        setBlog({ id: docId, ...docData } as Blog)
       } catch (err) {
-        console.error(err)
+        console.error('Error fetching blog:', err)
         setNotFound(true)
       } finally {
         setLoading(false)

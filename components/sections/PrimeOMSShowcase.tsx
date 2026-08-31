@@ -81,11 +81,16 @@ export default function PrimeOMSShowcase() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0D24]/80 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity" />
 
-                {/* Floating Badge */}
-                <div className="absolute top-4 left-4 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-xs font-bold text-white">
+                {/* Floating Badge linking to live app */}
+                <a
+                  href="https://primeoms.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute top-4 left-4 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/75 hover:bg-black/90 backdrop-blur-md border border-white/20 text-xs font-bold text-white transition-all hover:scale-105"
+                >
                   <span className="w-2 h-2 rounded-full bg-[#FF5A1F] animate-pulse" />
-                  <span>Live Product Demo Available</span>
-                </div>
+                  <span>Live App: primeoms.vercel.app ↗</span>
+                </a>
 
                 {/* Bottom Overlay Card */}
                 <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-black/75 backdrop-blur-xl border border-white/15 flex items-center justify-between">
@@ -143,10 +148,10 @@ export default function PrimeOMSShowcase() {
             </AnimatedSection>
 
             {/* CTAs */}
-            <AnimatedSection delay={400} className="pt-2 flex flex-wrap items-center gap-3.5">
+            <AnimatedSection delay={400} className="pt-2 flex flex-wrap items-center gap-3">
               <Link
                 href="/primeoms"
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-bold text-white shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-bold text-white shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
                 style={{
                   background: 'linear-gradient(135deg, #FF5A1F 0%, #FF8A4C 100%)',
                   boxShadow: '0 10px 30px -5px rgba(255,90,31,0.4)',
@@ -156,12 +161,24 @@ export default function PrimeOMSShowcase() {
                 <ArrowRight size={16} />
               </Link>
 
-              <Link
-                href="/contact?product=primeoms"
-                className="inline-flex items-center justify-center px-6 py-3.5 rounded-2xl text-sm font-semibold text-white/90 bg-white/10 hover:bg-white/15 border border-white/15 transition-all duration-300"
+              <a
+                href="https://primeoms.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-2xl text-sm font-semibold text-white/90 bg-white/10 hover:bg-white/20 border border-white/15 transition-all duration-300 hover:scale-105"
               >
-                Book a Live Demo
-              </Link>
+                <span>Launch App</span>
+                <ArrowRight size={14} className="opacity-75" />
+              </a>
+
+              <a
+                href="https://primeoms.vercel.app/signup"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-4 py-3.5 rounded-2xl text-xs font-bold text-[#FF8A4C] hover:text-white transition-colors"
+              >
+                Sign Up Free →
+              </a>
             </AnimatedSection>
           </div>
         </div>

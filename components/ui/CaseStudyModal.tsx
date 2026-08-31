@@ -161,17 +161,28 @@ export default function CaseStudyModal({
             Close Case Study
           </button>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             {project.slug === 'primeoms' ? (
-              <Link
-                href="/primeoms"
-                onClick={onClose}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold text-white shadow-md hover:scale-105 transition-transform"
-                style={{ background: 'linear-gradient(135deg, #FF5A1F 0%, #FF8A4C 100%)' }}
-              >
-                <span>Explore PrimeOMS Product Page</span>
-                <ExternalLink size={16} />
-              </Link>
+              <>
+                <a
+                  href="https://primeoms.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold text-white shadow-md hover:scale-105 transition-transform"
+                  style={{ background: 'linear-gradient(135deg, #FF5A1F 0%, #FF8A4C 100%)' }}
+                >
+                  <span>Launch Live App ↗</span>
+                  <ExternalLink size={15} />
+                </a>
+
+                <Link
+                  href="/primeoms"
+                  onClick={onClose}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold text-[#0E0E2C] bg-surface-subtle hover:bg-white border border-surface-border transition-transform hover:scale-105"
+                >
+                  <span>Product Overview</span>
+                </Link>
+              </>
             ) : (
               <Link
                 href="/contact"

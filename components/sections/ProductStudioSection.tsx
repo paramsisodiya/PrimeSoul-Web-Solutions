@@ -117,13 +117,24 @@ export default function ProductStudioSection() {
                 </ul>
               </div>
 
-              <Link
-                href="/primeoms"
-                className="inline-flex items-center gap-2 text-sm font-bold text-[#FF5A1F] hover:text-[#0E0E2C] transition-colors group-hover:translate-x-1 duration-300"
-              >
-                <span>Discover PrimeOMS SaaS</span>
-                <ArrowRight size={16} />
-              </Link>
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <Link
+                  href="/primeoms"
+                  className="inline-flex items-center gap-1.5 text-sm font-bold text-[#FF5A1F] hover:text-[#0E0E2C] transition-colors group-hover:translate-x-0.5 duration-300"
+                >
+                  <span>Discover PrimeOMS SaaS</span>
+                  <ArrowRight size={15} />
+                </Link>
+
+                <a
+                  href="https://primeoms.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-ink-muted hover:text-[#FF5A1F] transition-colors underline underline-offset-2"
+                >
+                  <span>Open Live Web App ↗</span>
+                </a>
+              </div>
             </div>
           </AnimatedSection>
         </div>

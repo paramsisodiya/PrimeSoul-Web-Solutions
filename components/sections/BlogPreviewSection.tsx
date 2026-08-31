@@ -27,15 +27,33 @@ export default function BlogPreviewSection() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const snap = await getDocs(
-          query(
-            collection(db, 'blogs'),
-            orderBy('createdAt', 'desc')
-          )
-        )
-        const items = snap.docs.map(d => ({ id: d.id, ...d.data() } as BlogPost))
-        const publishedPosts = items.filter(post => post.published === true || (post as any).status === 'published')
-        setPosts(publishedPosts.slice(0, 3))
+        let items: BlogPost[] = []
+        try {
+          const snap = await getDocs(query(collection(db, 'blogs'), where('status', '==', 'published')))
+          items = snap.docs.map(d => ({ id: d.id, ...d.data() } as BlogPost))
+        } catch (queryErr) {
+          console.warn('Filtered blog preview query failed, falling back to direct collection fetch:', queryErr)
+          const fallbackSnap = await getDocs(collection(db, 'blogs'))
+          items = fallbackSnap.docs
+            .map(d => ({ id: d.id, ...d.data() } as BlogPost))
+            .filter(post => post.published === true || (post as any).status === 'published' || !(post as any).status)
+        }
+
+        // Sort descending by createdAt / publishedAt
+        items.sort((a: any, b: any) => {
+          const getTime = (val: any) => {
+            if (!val) return 0
+            if (typeof val.toMillis === 'function') return val.toMillis()
+            if (val.seconds) return val.seconds * 1000
+            if (typeof val === 'string' || typeof val === 'number') return new Date(val).getTime() || 0
+            return 0
+          }
+          const timeA = getTime(a.createdAt) || getTime(a.publishedAt)
+          const timeB = getTime(b.createdAt) || getTime(b.publishedAt)
+          return timeB - timeA
+        })
+
+        setPosts(items.slice(0, 3))
       } catch (err) {
         console.error('Error fetching blog posts:', err)
         setPosts([])

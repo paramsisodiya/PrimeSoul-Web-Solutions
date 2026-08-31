@@ -64,6 +64,7 @@ export default function PrimeOMSPage() {
         applicationCategory: 'BusinessApplication',
         description: 'PrimeOMS is an all-in-one restaurant management platform for QR ordering, digital menus, billing, customer engagement and everyday restaurant operations.',
         url: 'https://primesoul.tech/primeoms',
+        sameAs: ['https://primeoms.vercel.app/'],
         image: 'https://primesoul.tech/images/primeoms-hero-mockup.jpg',
         creator: {
           '@type': 'Organization',

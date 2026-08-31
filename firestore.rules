@@ -25,9 +25,9 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
-    // Blogs — anyone can read published, only admin can write
+    // Blogs — anyone can read, only admin can write
     match /blogs/{blogId} {
-      allow read: if resource.data.status == 'published' || isAdmin();
+      allow read: if true;
       allow create, update, delete: if isAdmin();
     }
 

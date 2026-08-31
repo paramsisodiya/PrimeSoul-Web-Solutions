@@ -271,6 +271,27 @@ export default function Navbar() {
                           </span>
                         </div>
                       </Link>
+
+                      <div className="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-surface-border">
+                        <a
+                          href="https://primeoms.vercel.app/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setProductsOpen(false)}
+                          className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-surface-subtle hover:bg-[#FF5A1F]/10 hover:text-[#FF5A1F] text-xs font-bold text-[#0E0E2C] transition-colors text-center"
+                        >
+                          <span>Open App ↗</span>
+                        </a>
+                        <a
+                          href="https://primeoms.vercel.app/signup"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setProductsOpen(false)}
+                          className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A3D] text-xs font-bold text-white shadow-sm transition-colors text-center"
+                        >
+                          <span>Sign Up Free</span>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 )
@@ -430,21 +451,40 @@ export default function Navbar() {
               <div
                 className="overflow-hidden transition-all duration-400 ease-in-out"
                 style={{
-                  maxHeight: mobileProductsOpen ? '200px' : '0px',
+                  maxHeight: mobileProductsOpen ? '320px' : '0px',
                   opacity: mobileProductsOpen ? 1 : 0,
                 }}
               >
-                <div className="pl-8 pt-3 pb-2 border-l border-white/10 ml-3">
+                <div className="pl-8 pt-3 pb-2 border-l border-white/10 ml-3 space-y-2">
                   <Link
                     href="/primeoms"
                     className="block p-3 rounded-xl bg-white/10 border border-white/15 hover:bg-white/15 transition-all"
                   >
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-bold text-white text-sm">PrimeOMS SaaS</span>
+                      <span className="font-bold text-white text-sm">PrimeOMS Overview</span>
                       <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#FF5A1F] text-white font-bold">₹799/mo</span>
                     </div>
                     <p className="text-[11px] text-white/70">Restaurant QR ordering & operations platform</p>
                   </Link>
+
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <a
+                      href="https://primeoms.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center p-2 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all text-center"
+                    >
+                      Open App ↗
+                    </a>
+                    <a
+                      href="https://primeoms.vercel.app/signup"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center p-2 rounded-lg bg-[#FF5A1F] hover:bg-[#FF7A3D] text-xs font-bold text-white transition-all text-center"
+                    >
+                      Sign Up Free
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

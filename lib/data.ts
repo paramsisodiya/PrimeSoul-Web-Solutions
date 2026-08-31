@@ -46,6 +46,8 @@ export const PRIMEOMS_PRODUCT = {
   heroHeadline: 'Smarter Restaurant Operations. Simpler Ordering.',
   heroDescription: 'PrimeOMS brings restaurant operations into one powerful platform — from digital menus and QR table ordering to billing, customer loyalty, and everyday kitchen workflows.',
   liveUrl: '/primeoms',
+  officialUrl: 'https://primeoms.vercel.app/',
+  signupUrl: 'https://primeoms.vercel.app/signup',
   pricing: {
     basic: {
       name: 'Basic',

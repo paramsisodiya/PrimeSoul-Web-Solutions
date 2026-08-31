@@ -157,14 +157,23 @@ export default function PrimeOMSFeatureTabs() {
               ))}
             </div>
 
-            <div className="pt-2">
+            <div className="pt-3 flex flex-wrap items-center gap-4">
+              <a
+                href="https://primeoms.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FF5A1F] text-white text-xs sm:text-sm font-bold shadow-md hover:bg-[#FF7A3D] transition-all hover:scale-105"
+              >
+                <span>Launch Live App ↗</span>
+              </a>
+
               <a
                 href="https://wa.me/918770404559?text=Hi%20PrimeSoul%2C%20I'd%20like%20to%20see%20a%20live%20walkthrough%20of%20the%20PrimeOMS%20dashboard."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#FF8A4C] hover:text-white transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#FF8A4C] hover:text-white transition-colors"
               >
-                <span>Request Custom Demo Session →</span>
+                <span>Custom Demo →</span>
               </a>
             </div>
           </AnimatedSection>

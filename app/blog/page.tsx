@@ -33,11 +33,33 @@ export default function BlogPage() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const snap = await getDocs(query(collection(db, 'blogs'), orderBy('createdAt', 'desc')))
-        const all = snap.docs.map(d => ({ id: d.id, ...d.data() } as Blog))
-        setBlogs(all.filter(b => (b as any).status === 'published'))
+        let items: Blog[] = []
+        try {
+          const snap = await getDocs(query(collection(db, 'blogs'), where('status', '==', 'published')))
+          items = snap.docs.map(d => ({ id: d.id, ...d.data() } as Blog))
+        } catch (queryErr) {
+          console.warn('Filtered blog query failed, falling back to direct collection fetch:', queryErr)
+          const fallbackSnap = await getDocs(collection(db, 'blogs'))
+          items = fallbackSnap.docs
+            .map(d => ({ id: d.id, ...d.data() } as Blog))
+            .filter(b => (b as any).status === 'published' || !(b as any).status)
+        }
+
+        // Sort descending by createdAt
+        items.sort((a, b) => {
+          const getTime = (val: any) => {
+            if (!val) return 0
+            if (typeof val.toMillis === 'function') return val.toMillis()
+            if (val.seconds) return val.seconds * 1000
+            if (typeof val === 'string' || typeof val === 'number') return new Date(val).getTime() || 0
+            return 0
+          }
+          return getTime(b.createdAt) - getTime(a.createdAt)
+        })
+
+        setBlogs(items)
       } catch (err) {
-        console.error(err)
+        console.error('Error fetching blogs:', err)
       } finally {
         setLoading(false)
       }

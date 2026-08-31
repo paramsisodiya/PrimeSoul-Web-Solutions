@@ -100,7 +100,7 @@ export default function PrimeOMSPricing() {
               </div>
 
               <a
-                href={`https://wa.me/918770404559?text=Hi%20PrimeSoul%2C%20I'd%20like%20to%20start%20my%2014-Day%20Free%20Trial%20for%20the%20PrimeOMS%20Basic%20Plan%20(${annual ? 'Annual' : 'Monthly'}).`}
+                href="https://primeoms.vercel.app/signup"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 py-4 rounded-2xl text-sm font-bold text-[#0E0E2C] bg-[#FAFAFE] hover:bg-[#0E0E2C] hover:text-white border border-[#E2E8F8] transition-all duration-300 shadow-sm"
@@ -165,7 +165,7 @@ export default function PrimeOMSPricing() {
               </div>
 
               <a
-                href={`https://wa.me/918770404559?text=Hi%20PrimeSoul%2C%20I'd%20like%20to%20start%20my%2014-Day%20Free%20Trial%20for%20the%20PrimeOMS%20Pro%20Plan%20(${annual ? 'Annual' : 'Monthly'}).`}
+                href="https://primeoms.vercel.app/signup"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 py-4 rounded-2xl text-sm font-bold text-white shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
@@ -180,6 +180,21 @@ export default function PrimeOMSPricing() {
             </div>
           </AnimatedSection>
         </div>
+
+        {/* Live App Link Footer Callout */}
+        <AnimatedSection delay={300} className="text-center mt-10">
+          <p className="text-xs sm:text-sm text-ink-muted flex items-center justify-center gap-2">
+            <span>Already have an active PrimeOMS restaurant account?</span>
+            <a
+              href="https://primeoms.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#FF5A1F] font-bold hover:underline inline-flex items-center gap-1"
+            >
+              Sign In to Web App (primeoms.vercel.app) →
+            </a>
+          </p>
+        </AnimatedSection>
       </div>
     </section>
   )

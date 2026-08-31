@@ -36,13 +36,26 @@ export default function PrimeOMSBuiltByPrimeSoul() {
             </div>
           </div>
 
-          <div className="flex-shrink-0">
+          <div className="flex flex-col sm:flex-row items-center gap-3 flex-shrink-0">
+            <a
+              href="https://primeoms.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-bold text-white shadow-lg transition-all hover:scale-105 text-center"
+              style={{
+                background: 'linear-gradient(135deg, #FF5A1F 0%, #FF8A4C 100%)',
+                boxShadow: '0 8px 25px -5px rgba(255,90,31,0.4)',
+              }}
+            >
+              <span>Open Live App</span>
+              <ArrowRight size={16} />
+            </a>
+
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-bold text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all hover:scale-105"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-semibold text-white/90 bg-white/10 hover:bg-white/20 border border-white/20 transition-all hover:scale-105 text-center"
             >
-              <span>Visit PrimeSoul Studio</span>
-              <ArrowRight size={16} />
+              <span>PrimeSoul Studio</span>
             </Link>
           </div>
         </AnimatedSection>

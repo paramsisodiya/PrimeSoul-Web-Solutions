@@ -191,7 +191,7 @@ export default function Footer() {
             <h4 className="text-white text-xs font-bold uppercase tracking-widest font-heading border-l-2 border-[#FF5A1F] pl-3">
               Our Products
             </h4>
-            <div className="pt-1">
+            <div className="pt-1 space-y-3">
               <Link
                 href="/primeoms"
                 className="block p-4 rounded-2xl bg-white/[0.04] border border-[#FF5A1F]/30 hover:border-[#FF5A1F] hover:bg-[#FF5A1F]/10 transition-all group"
@@ -208,9 +208,28 @@ export default function Footer() {
                   Restaurant operations platform: QR ordering, live kitchen sync, direct UPI billing, and customer loyalty.
                 </p>
                 <span className="text-xs font-bold text-[#FF5A1F] inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                  Explore Product →
+                  Explore Product Overview →
                 </span>
               </Link>
+
+              <div className="flex items-center gap-2 text-xs">
+                <a
+                  href="https://primeoms.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 text-center py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 transition-all font-semibold"
+                >
+                  Live App ↗
+                </a>
+                <a
+                  href="https://primeoms.vercel.app/signup"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 text-center py-2 px-3 rounded-xl bg-[#FF5A1F]/20 hover:bg-[#FF5A1F] text-[#FF8A4C] hover:text-white border border-[#FF5A1F]/30 transition-all font-bold"
+                >
+                  Sign Up Free
+                </a>
+              </div>
             </div>
           </div>
 
