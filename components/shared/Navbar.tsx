@@ -102,10 +102,10 @@ export default function Navbar() {
           className={cn(
             'max-w-7xl mx-auto px-5 sm:px-7 py-3 sm:py-3.5 rounded-full transition-all duration-500 flex items-center justify-between',
             scrolled
-              ? 'bg-white/85 backdrop-blur-2xl border border-white/60 shadow-[0_12px_40px_-10px_rgba(123,47,242,0.18)]'
+              ? 'bg-white backdrop-blur-2xl border border-white/80 shadow-[0_12px_40px_-10px_rgba(123,47,242,0.18)]'
               : isDarkHeader
               ? 'bg-[#0E0E2C]/75 backdrop-blur-xl border border-white/10 shadow-2xl'
-              : 'bg-white/70 backdrop-blur-xl border border-white/50 shadow-md'
+              : 'bg-white backdrop-blur-xl border border-white/80 shadow-md'
           )}
         >
           {/* Brand Logo */}
