@@ -12,7 +12,7 @@ export default function PrimeOMSBuiltByPrimeSoul() {
         <AnimatedSection className="max-w-4xl mx-auto rounded-3xl p-8 sm:p-12 bg-white/[0.03] border border-white/10 backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-4 max-w-xl text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-3">
-              <Logo variant="dark" iconSize={32} />
+              <Logo variant="dark" iconSize={40} />
             </div>
 
             <h3 className="text-xl sm:text-2xl font-extrabold text-white">

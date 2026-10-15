@@ -9,7 +9,7 @@ interface LogoProps {
   variant?: 'light' | 'dark'
 }
 
-export default function Logo({ className = '', iconSize = 38, variant = 'light' }: LogoProps) {
+export default function Logo({ className = '', iconSize = 48, variant = 'light' }: LogoProps) {
   const isDark = variant === 'dark'
 
   return (
@@ -23,7 +23,7 @@ export default function Logo({ className = '', iconSize = 38, variant = 'light' 
           src="/images/logo-animation_1.gif"
           alt="PrimeSoul Web Solutions"
           fill
-          className="object-contain"
+          className="object-contain scale-110"
           unoptimized
           priority
         />

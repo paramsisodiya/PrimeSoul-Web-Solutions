@@ -88,7 +88,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 sm:gap-12 mb-16">
           {/* Column 1: Brand & Contact Info (4 cols) */}
           <div className="lg:col-span-4 space-y-6">
-            <Logo variant="dark" iconSize={40} />
+            <Logo variant="dark" iconSize={50} />
             <p className="text-white/60 text-sm leading-relaxed max-w-md">
               <strong className="text-white font-semibold">Digital Agency + Product Studio</strong>. We engineer high-performance web applications, client solutions, and our own proprietary SaaS products.
             </p>
