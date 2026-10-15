@@ -27,7 +27,7 @@ interface SiteSettings {
 const defaultSettings: SiteSettings = {
   siteName: 'PrimeSoul Web Solutions',
   tagline: 'Premium Digital Agency',
-  email: 'paramsisodiya061@gmail.com',
+  email: 'info@primesoul.tech',
   phone: '',
   whatsapp: '',
   address: 'Rajgarh',

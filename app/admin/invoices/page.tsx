@@ -380,7 +380,7 @@ export default function InvoiceGeneratorPage() {
   ${invNotes ? `<div class="notes"><strong>Terms & Notes:</strong> ${invNotes}</div>` : ''}
 
   <div class="footer">
-    <p>PrimeSoul Web Solutions · Rajgarh, MP, India · primesoulwebsolutions@gmail.com · +91 8770 404 559</p>
+    <p>PrimeSoul Web Solutions · Rajgarh, MP, India · info@primesoul.tech · +91 8770 404 559</p>
   </div>
 
   <script>window.onload=()=>window.print()</script>

@@ -9,21 +9,25 @@ interface LogoProps {
   variant?: 'light' | 'dark'
 }
 
-export default function Logo({ className = '', iconSize = 48, variant = 'light' }: LogoProps) {
+export default function Logo({ className = '', iconSize = 42, variant = 'light' }: LogoProps) {
   const isDark = variant === 'dark'
 
   return (
     <Link href="/" className={`inline-flex items-center gap-3 group select-none ${className}`}>
       {/* Logo Icon Mark */}
       <div
-        className="relative flex-shrink-0"
+        className={`relative flex-shrink-0 rounded-xl overflow-hidden transition-all duration-300 group-hover:scale-105 ${
+          isDark
+            ? 'bg-white shadow-[0_4px_14px_rgba(0,0,0,0.35)] ring-1 ring-white/20'
+            : ''
+        }`}
         style={{ width: iconSize, height: iconSize }}
       >
         <Image
           src="/images/logo-animation_1.gif"
           alt="PrimeSoul Web Solutions"
           fill
-          className="object-contain scale-110"
+          className="object-contain scale-105"
           unoptimized
           priority
         />

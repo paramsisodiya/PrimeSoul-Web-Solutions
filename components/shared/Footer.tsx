@@ -88,7 +88,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 sm:gap-12 mb-16">
           {/* Column 1: Brand & Contact Info (4 cols) */}
           <div className="lg:col-span-4 space-y-6">
-            <Logo variant="dark" iconSize={50} />
+            <Logo variant="dark" iconSize={42} />
             <p className="text-white/60 text-sm leading-relaxed max-w-md">
               <strong className="text-white font-semibold">Digital Agency + Product Studio</strong>. We engineer high-performance web applications, client solutions, and our own proprietary SaaS products.
             </p>
@@ -96,13 +96,13 @@ export default function Footer() {
             {/* Direct Contact Details */}
             <div className="space-y-3 pt-2">
               <a
-                href="mailto:primesoulwebsolutions@gmail.com"
+                href="mailto:info@primesoul.tech"
                 className="flex items-center gap-3 text-sm text-white/70 hover:text-[#00C9A7] transition-colors group"
               >
                 <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-[#00C9A7]/50 group-hover:bg-[#00C9A7]/10 transition-all">
                   <Mail size={15} className="text-[#00C9A7]" />
                 </div>
-                <span>primesoulwebsolutions@gmail.com</span>
+                <span>info@primesoul.tech</span>
               </a>
 
               <a

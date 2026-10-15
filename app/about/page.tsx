@@ -150,9 +150,9 @@ export default function AboutPage() {
 
               {/* Contact info */}
               <div className="flex flex-col gap-3 mb-8">
-                <a href="mailto:primesoulwebsolutions@gmail.com" className="flex items-center gap-3 text-sm text-ink-secondary hover:text-ink transition-colors">
+                <a href="mailto:info@primesoul.tech" className="flex items-center gap-3 text-sm text-ink-secondary hover:text-ink transition-colors">
                   <EmailIcon />
-                  primesoulwebsolutions@gmail.com
+                  info@primesoul.tech
                 </a>
                 <a href="tel:8770404559" className="flex items-center gap-3 text-sm text-ink-secondary hover:text-ink transition-colors">
                   <PhoneIcon />

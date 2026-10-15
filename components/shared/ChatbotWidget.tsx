@@ -172,7 +172,7 @@ const QA_DATABASE: QAItem[] = [
       'are you human', 'bot ho kya', 'robot ho', 'ai ho', 'real person',
       'insaan ho ya robot', 'human ya ai', 'chatbot', 'automated',
     ],
-    reply: 'Main PrimeSoul AI Assistant hoon — ek smart chatbot jo aapke sawalon ka turant jawab deta hai! 🤖\n\nLekin agar aap kisi real person se baat karna chahein toh:\n📱 WhatsApp: 8770404559\n📧 Email: paramsisodiya061@gmail.com',
+    reply: 'Main PrimeSoul AI Assistant hoon — ek smart chatbot jo aapke sawalon ka turant jawab deta hai! 🤖\n\nLekin agar aap kisi real person se baat karna chahein toh:\n📱 WhatsApp: 8770404559\n📧 Email: info@primesoul.tech',
     options: ['📞 Contact', '💬 Open WhatsApp'],
   },
   {
@@ -783,7 +783,7 @@ const QA_DATABASE: QAItem[] = [
       'get in touch', 'contact details', 'contact info', 'contact karo',
       'kaise contact kare', 'how to contact', 'reach out',
     ],
-    reply: '📞 Contact Information:\n\n📱 WhatsApp: 8770404559 (fastest!)\n📧 Email: paramsisodiya061@gmail.com\n📍 Location: Rajgarh, Madhya Pradesh\n🌐 Website: primesoul.tech\n📋 Contact Form: primesoul.tech/contact\n📅 Free Call Book: calendly.com/paramsisodiya061/30min\n\n⏰ Response time: 2-4 ghante mein!',
+    reply: '📞 Contact Information:\n\n📱 WhatsApp: 8770404559 (fastest!)\n📧 Email: info@primesoul.tech\n📍 Location: Rajgarh, Madhya Pradesh\n🌐 Website: primesoul.tech\n📋 Contact Form: primesoul.tech/contact\n📅 Free Call Book: calendly.com/paramsisodiya061/30min\n\n⏰ Response time: 2-4 ghante mein!',
     options: ['💬 Open WhatsApp', 'Go to Contact Page'],
   },
   {
@@ -812,7 +812,7 @@ const QA_DATABASE: QAItem[] = [
       'email', 'mail', 'gmail', 'email address', 'email id', 'mail id',
       'email karo', 'mail karo', 'email bhejo',
     ],
-    reply: '📧 Email:\n\nparamsisodiya061@gmail.com\n\nEmail par detailed project brief bhej sakte hain. Lekin quick response ke liye WhatsApp better hai: 8770404559 📱',
+    reply: '📧 Email:\n\ninfo@primesoul.tech\n\nEmail par detailed project brief bhej sakte hain. Lekin quick response ke liye WhatsApp better hai: 8770404559 📱',
     options: ['💬 Open WhatsApp', '📞 Contact'],
   },
   {
@@ -947,7 +947,7 @@ const QA_DATABASE: QAItem[] = [
       'recruitment', 'position', 'apply', 'resume bhejo',
       'job opening', 'koi vacancy hai',
     ],
-    reply: '💼 Careers at PrimeSoul:\n\nHum talented logon ki talash mein rehte hain!\n\n🔍 Current interests:\n• Web Developers (React/Next.js)\n• Graphic Designers\n• Digital Marketing Executives\n• Content Writers\n• Sales & Business Development\n\n📧 Resume bhejein: paramsisodiya061@gmail.com\n🌐 Career page: primesoul.tech/careers\n\nSubject line mein position likhen! 📩',
+    reply: '💼 Careers at PrimeSoul:\n\nHum talented logon ki talash mein rehte hain!\n\n🔍 Current interests:\n• Web Developers (React/Next.js)\n• Graphic Designers\n• Digital Marketing Executives\n• Content Writers\n• Sales & Business Development\n\n📧 Resume bhejein: info@primesoul.tech\n🌐 Career page: primesoul.tech/careers\n\nSubject line mein position likhen! 📩',
     options: ['📞 Contact'],
   },
   {
@@ -978,7 +978,7 @@ const QA_DATABASE: QAItem[] = [
       'saath kaam karna', 'joint venture', 'associate', 'agency partnership',
       'white label', 'outsource', 'subcontract',
     ],
-    reply: '🤝 Collaboration & Partnership:\n\nHum freelancers aur agencies ke saath collaborate karte hain!\n\n✅ White-label services available\n✅ Project-based collaboration\n✅ Referral partnership program\n✅ Agency-to-agency outsourcing\n\nInterested? Email karein details ke saath: paramsisodiya061@gmail.com',
+    reply: '🤝 Collaboration & Partnership:\n\nHum freelancers aur agencies ke saath collaborate karte hain!\n\n✅ White-label services available\n✅ Project-based collaboration\n✅ Referral partnership program\n✅ Agency-to-agency outsourcing\n\nInterested? Email karein details ke saath: info@primesoul.tech',
     options: ['📞 Contact'],
   },
 
@@ -1089,7 +1089,7 @@ const QA_DATABASE: QAItem[] = [
       'government', 'sarkari', 'tender', 'government project',
       'municipality', 'nagar palika', 'panchayat', 'government website',
     ],
-    reply: '🏛️ Government Projects:\n\nHum government aur semi-government organizations ke liye bhi kaam karte hain:\n\n✅ Government portal design\n✅ Tender-compliant documentation\n✅ Accessibility standards\n✅ Bilingual support (Hindi/English)\n\nDetails ke liye formal inquiry bhejein: paramsisodiya061@gmail.com',
+    reply: '🏛️ Government Projects:\n\nHum government aur semi-government organizations ke liye bhi kaam karte hain:\n\n✅ Government portal design\n✅ Tender-compliant documentation\n✅ Accessibility standards\n✅ Bilingual support (Hindi/English)\n\nDetails ke liye formal inquiry bhejein: info@primesoul.tech',
     options: ['📞 Contact'],
   },
   {
@@ -1157,7 +1157,7 @@ const QA_DATABASE: QAItem[] = [
       'problem hai', 'issue hai', 'not happy', 'not satisfied',
       'disappointed', 'unhappy', 'galat kiya',
     ],
-    reply: '😔 Aapko koi problem hai toh hum solve karenge!\n\n✅ Hum 100% satisfaction guarantee dete hain\n✅ Free revisions until happy\n✅ Direct founder se baat kar sakte hain\n\nPlease seedha call karein: 8770404559\nYa email karein: paramsisodiya061@gmail.com\n\nHum zaroor solution nikalenge! 🤝',
+    reply: '😔 Aapko koi problem hai toh hum solve karenge!\n\n✅ Hum 100% satisfaction guarantee dete hain\n✅ Free revisions until happy\n✅ Direct founder se baat kar sakte hain\n\nPlease seedha call karein: 8770404559\nYa email karein: info@primesoul.tech\n\nHum zaroor solution nikalenge! 🤝',
     options: ['📞 Contact', '💬 Open WhatsApp'],
   },
   {

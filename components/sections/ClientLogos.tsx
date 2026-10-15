@@ -1,50 +1,44 @@
 'use client'
 
+import Image from 'next/image'
 import AnimatedSection from '@/components/ui/AnimatedSection'
-import { Sun, GraduationCap, Monitor, ShoppingBag, Activity, Zap } from 'lucide-react'
 
 const CLIENT_ITEMS = [
   {
     name: 'A&S Solar Solutions',
-    category: 'Clean Energy',
-    icon: Sun,
-    gradient: 'from-[#F59E0B] to-[#EF4444]',
-    badge: 'Solar Energy'
+    category: 'Clean Energy · Web Platform',
+    image: '/images/project-solar.png',
+    badge: 'Solar Tech',
   },
   {
     name: 'SVNS Educational School',
-    category: 'EdTech & Education',
-    icon: GraduationCap,
-    gradient: 'from-[#3B82F6] to-[#1D4ED8]',
-    badge: 'Education'
+    category: 'EdTech & Student Portal',
+    image: '/images/project-school.png',
+    badge: 'Education',
   },
   {
     name: 'Param Web Solutions',
-    category: 'Digital Portfolio',
-    icon: Monitor,
-    gradient: 'from-[#10B981] to-[#059669]',
-    badge: 'Web App'
+    category: 'Creative Portfolio',
+    image: '/images/project-portfolio.png',
+    badge: 'Portfolio',
   },
   {
-    name: 'Apex E-Commerce Store',
-    category: 'Retail & E-Com',
-    icon: ShoppingBag,
-    gradient: 'from-[#EC4899] to-[#8B5CF6]',
-    badge: 'E-Commerce'
+    name: 'PrimeOMS Restaurant OS',
+    category: 'Restaurant SaaS & KDS',
+    image: '/images/primeoms-dashboard.jpg',
+    badge: 'Flagship SaaS',
   },
   {
-    name: 'HealthPulse Clinic',
-    category: 'Healthcare Tech',
-    icon: Activity,
-    gradient: 'from-[#06B6D4] to-[#3B82F6]',
-    badge: 'Healthcare'
+    name: 'Urban Goods E-Commerce',
+    category: 'Retail & Mobile Shopping',
+    image: '/images/mobile-app-showcase.png',
+    badge: 'E-Commerce',
   },
   {
-    name: 'FinTech Growth SaaS',
-    category: 'SaaS & Automation',
-    icon: Zap,
-    gradient: 'from-[#8B5CF6] to-[#D946EF]',
-    badge: 'Automation'
+    name: 'PrimeOMS Live Pipeline',
+    category: 'Kitchen Order Management',
+    image: '/images/primeoms-orders.jpg',
+    badge: 'Operations',
   },
 ]
 
@@ -88,29 +82,36 @@ export default function ClientLogos() {
       <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
         <div className="flex items-center gap-4 sm:gap-6 w-max animate-marquee-left hover:[animation-play-state:paused] py-2">
           {marqueeItems.map((client, index) => {
-            const IconComponent = client.icon
             return (
               <div
                 key={`${client.name}-${index}`}
-                className="group relative flex items-center gap-4 px-5 sm:px-6 py-3.5 sm:py-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-[#00C9A7]/50 transition-all duration-300 min-w-[240px] sm:min-w-[280px] shadow-lg hover:shadow-[0_10px_30px_-10px_rgba(0,201,167,0.25)] hover:-translate-y-1 cursor-pointer"
+                className="group relative flex items-center gap-3.5 px-4 sm:px-5 py-3 sm:py-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#00C9A7]/50 transition-all duration-300 min-w-[270px] sm:min-w-[310px] shadow-lg hover:shadow-[0_10px_30px_-10px_rgba(0,201,167,0.25)] hover:-translate-y-1 cursor-pointer"
               >
-                {/* Glowing Icon Container */}
-                <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${client.gradient} p-0.5 flex-shrink-0 shadow-md transition-transform duration-300 group-hover:scale-110`}>
-                  <div className="w-full h-full bg-[#080B1E] rounded-[10px] flex items-center justify-center text-white">
-                    <IconComponent size={20} strokeWidth={2} />
-                  </div>
+                {/* Real Project Image Thumbnail */}
+                <div className="relative w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-white/15 bg-black/40 shadow-inner transition-transform duration-300 group-hover:scale-105 group-hover:border-[#00C9A7]/60">
+                  <Image
+                    src={client.image}
+                    alt={client.name}
+                    fill
+                    className="object-cover object-top"
+                    sizes="48px"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                 </div>
 
                 {/* Text Info */}
-                <div className="flex flex-col text-left">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-white group-hover:text-[#00C9A7] transition-colors leading-tight">
-                      {client.name}
+                <div className="flex flex-col text-left min-w-0">
+                  <span className="text-sm font-bold text-white group-hover:text-[#00C9A7] transition-colors leading-tight truncate">
+                    {client.name}
+                  </span>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-[11px] font-semibold text-white/50 group-hover:text-white/80 transition-colors truncate">
+                      {client.category}
+                    </span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-[#00C9A7] font-mono font-medium flex-shrink-0">
+                      {client.badge}
                     </span>
                   </div>
-                  <span className="text-[11px] font-semibold text-white/50 group-hover:text-white/80 transition-colors mt-0.5">
-                    {client.category}
-                  </span>
                 </div>
 
                 {/* Corner Glow Accent on Hover */}

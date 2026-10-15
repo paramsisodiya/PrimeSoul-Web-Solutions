@@ -45,7 +45,7 @@ export default function PrivacyPage() {
         </ul>
 
         <h2>6. Contact Us</h2>
-        <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:primesoulwebsolutions@gmail.com" className="text-brand-primary">primesoulwebsolutions@gmail.com</a>.</p>
+        <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:info@primesoul.tech" className="text-brand-primary">info@primesoul.tech</a>.</p>
       </div>
     </section>
   )

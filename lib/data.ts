@@ -7,7 +7,7 @@ export const AGENCY = {
     role: 'Founder',
     location: 'Rajgarh, Madhya Pradesh',
     bio: 'Visionary behind PrimeSoul, driving the agency\'s direction, client relationships, and overall growth strategy. Our team combines design, engineering, and strategy to deliver premium digital products.',
-    email: 'primesoulwebsolutions@gmail.com',
+    email: 'info@primesoul.tech',
     phone: '8770404559',
     whatsapp: '918770404559',
   },
