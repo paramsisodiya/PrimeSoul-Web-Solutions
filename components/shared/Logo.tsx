@@ -20,10 +20,11 @@ export default function Logo({ className = '', iconSize = 38, variant = 'light' 
         style={{ width: iconSize, height: iconSize }}
       >
         <Image
-          src={isDark ? '/images/logo-dark.png' : '/images/logo.png'}
+          src="/images/logo-animation_1.gif"
           alt="PrimeSoul Web Solutions"
           fill
           className="object-contain"
+          unoptimized
           priority
         />
       </div>
